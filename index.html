@@ -423,6 +423,8 @@
   .voterow{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:10px 2px;border-bottom:1px dashed var(--line)}
   .voterow .vn{font-size:14.5px}
   .voterow .vn small{display:block;color:var(--ink-soft);font-size:12px}
+  .vghead{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:20px 0 4px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+  .vghead:first-child{margin-top:4px}
   .voterow .vn a{color:inherit;text-decoration:none;border-bottom:1.5px solid rgba(232,71,122,.5);font-weight:600}
   .voterow .vn a:active{color:var(--cerise)}
   .vbtns{display:flex;gap:4px}
@@ -1748,7 +1750,43 @@ async function put(kind,k,v){
 }
 
 const CHECKS=[['pass','Passports ×2 in the bag'],['gc','Yulia: green card + Russian passport together'],['eta','Re-check eTA guidance on canada.ca'],['jb','Reserve Joe Beef — Tuesday'],['tan','Reserve Tanière³ — Thursday'],['sun','Pick Sunday dinner (vote below!)'],['bank','Tell the credit cards you\'re traveling'],['roam','Roaming plans on — both phones'],['maps','Download offline Google Maps: MTL + QC'],['bags','Book Sunday-morning luggage storage'],['fit','Pack dressy outfits for the big dinners'],['rain','Rain layer + comfy walking shoes']];
-const VOTES=[['sun-damas','Damas','Sunday dinner','https://www.damas.ca/'],['sun-maj','Le Majestique','Sunday dinner','https://restobarmajestique.com/'],['mon-violon','Le Violon','Monday dinner','https://le-violon.ca/'],['mon-lemeac','Leméac','Monday dinner','https://www.restaurantlemeac.com/'],['mon-plong','Le Plongeoir','Monday dinner','https://www.plongeoir.ca/'],['mon-jos','Joséphine','Monday dinner','https://www.google.com/search?q=Jos%C3%A9phine+restaurant+Saint-Denis+Montreal'],['tue-joebeef','Joe Beef','Tuesday dinner','https://www.joebeef.com/'],['tue-lux','Lux La Lumière','Tuesday dinner','https://www.google.com/search?q=Lux+La+Lumi%C3%A8re+restaurant+Montreal'],['wed-savini','Savini','Wednesday · Québec','https://lesavini.ca/'],['wed-steak','Steak Avenue','Wednesday · Québec','https://steakavenue.com/'],['thu-taniere','Tanière³','Thursday · Québec','https://www.taniere3.com/'],['thu-boulay','Chez Boulay','Thursday · Québec','https://chezboulay.com/']];
+const VGROUPS=[
+ {label:'Montréal · breakfast & cafés',items:[
+  ['mtl-bf-olimpico','Café Olimpico','https://cafeolimpico.com/'],
+  ['mtl-bf-stviateur','St-Viateur Bagel','https://www.stviateurbagel.com/'],
+  ['mtl-bf-fairmount','Fairmount Bagel','https://fairmountbagel.com/'],
+  ['mtl-bf-butterblume','Le Butterblume (brunch)','https://www.lebutterblume.com/']]},
+ {label:'Montréal · lunch',items:[
+  ['mtl-lu-jeantalon','Jean-Talon Market graze','https://www.google.com/maps/search/?api=1&query=Jean-Talon%20Market%20Montreal'],
+  ['mtl-lu-larrys','larrys','https://www.google.com/search?q=larrys+restaurant+Mile+End+Montreal'],
+  ['mtl-lu-lexpress',"L'Express (classic bistro)",'https://www.restaurantlexpress.com/'],
+  ['mtl-lu-atwater','Atwater Market + canal picnic','https://www.google.com/maps/search/?api=1&query=Atwater%20Market%20Montreal']]},
+ {label:'Sunday · dinner',items:[
+  ['sun-damas','Damas','https://www.damas.ca/'],
+  ['sun-maj','Le Majestique','https://restobarmajestique.com/']]},
+ {label:'Monday · dinner',items:[
+  ['mon-violon','Le Violon','https://le-violon.ca/'],
+  ['mon-lemeac','Leméac','https://www.restaurantlemeac.com/'],
+  ['mon-plong','Le Plongeoir','https://www.plongeoir.ca/'],
+  ['mon-jos','Joséphine','https://www.google.com/search?q=Jos%C3%A9phine+restaurant+Saint-Denis+Montreal']]},
+ {label:'Tuesday · dinner',items:[
+  ['tue-joebeef','Joe Beef','https://www.joebeef.com/'],
+  ['tue-lux','Lux La Lumière','https://www.google.com/search?q=Lux+La+Lumi%C3%A8re+restaurant+Montreal']]},
+ {label:'Québec · breakfast & cafés',items:[
+  ['qc-bf-paillard','Paillard','https://www.paillard.ca/'],
+  ['qc-bf-smith','Café La Maison Smith','https://www.google.com/search?q=Caf%C3%A9+La+Maison+Smith+Place-Royale+Quebec'],
+  ['qc-bf-buche','La Bûche (big Québécois)','https://www.restolabuche.com/']]},
+ {label:'Québec · lunch',items:[
+  ['qc-lu-lapin','Le Lapin Sauté','https://lapinsaute.com/'],
+  ['qc-lu-chicshack','Chic Shack (poutine/burgers)','https://www.google.com/search?q=Chic+Shack+Quebec+City'],
+  ['qc-lu-antiquaire',"Buffet de l'Antiquaire (diner)",'https://www.google.com/search?q=Buffet+de+l%27Antiquaire+Quebec']]},
+ {label:'Wednesday · dinner (Québec)',items:[
+  ['wed-savini','Savini','https://lesavini.ca/'],
+  ['wed-steak','Steak Avenue','https://steakavenue.com/']]},
+ {label:'Thursday · dinner (Québec)',items:[
+  ['thu-taniere','Tanière³','https://www.taniere3.com/'],
+  ['thu-boulay','Chez Boulay','https://chezboulay.com/']]}
+];
 const VOPTS=[['yes','👍'],['maybe','😐'],['no','👎']];
 
 function renderTrip(){
@@ -1764,10 +1802,12 @@ function renderTrip(){
   }
   // votes
   const vw=$('#votes'); if(vw){ vw.innerHTML='';
-    VOTES.forEach(([k,name,grp,url])=>{
+    VGROUPS.forEach(g=>{
+      const hd=document.createElement('div'); hd.className='vghead'; hd.textContent=g.label; vw.appendChild(hd);
+      g.items.forEach(([k,name,url])=>{
       const cur=state.vote[k]||{};
       const row=document.createElement('div'); row.className='voterow';
-      row.innerHTML='<div class="vn"><a href="'+url+'" target="_blank" rel="noopener">'+name+' ↗</a><small>'+grp+'</small></div>';
+      row.innerHTML='<div class="vn"><a href="'+url+'" target="_blank" rel="noopener">'+name+' ↗</a></div>';
       ['M','Y'].forEach(p=>{
         const col=document.createElement('div');
         col.innerHTML='<div class="vwho">'+(p==='M'?'MIKE':'YULIA')+'</div>';
@@ -1782,6 +1822,7 @@ function renderTrip(){
         col.appendChild(bs); row.appendChild(col);
       });
       vw.appendChild(row);
+      });
     });
   }
   // notes
