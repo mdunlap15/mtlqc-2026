@@ -423,6 +423,16 @@
   .voterow{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:10px 2px;border-bottom:1px dashed var(--line)}
   .voterow .vn{font-size:14.5px}
   .voterow .vn small{display:block;color:var(--ink-soft);font-size:12px}
+  .winecard{display:grid;grid-template-columns:64px 1fr;gap:13px;padding:13px 0;border-bottom:1px dashed var(--line)}
+  .winecard.nothumb{grid-template-columns:1fr}
+  .winethumb{width:64px;height:84px;object-fit:cover;border-radius:10px;border:1px solid var(--line);background:var(--paper-2)}
+  .winename{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:16.5px;line-height:1.2}
+  .winemeta{font-size:12.5px;color:var(--ink-soft);margin-top:2px}
+  .winesum{font-size:13.5px;margin-top:6px;line-height:1.45}
+  .winelinks{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+  .winelinks a{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:100px;border:1px solid var(--line);color:var(--ink);text-decoration:none}
+  .winelinks a.buy{border-color:rgba(23,153,138,.5);color:#0d6f63}
+  .winelinks a.rate{border-color:rgba(232,71,122,.45);color:var(--cerise)}
   .vchips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
   .vchip{font-size:13.5px;padding:8px 13px;border-radius:100px;border:1px solid var(--line);background:var(--paper-2);cursor:pointer;font-family:"Inter";transition:all .14s ease}
   .vchip:active{transform:scale(.94)}
@@ -1302,6 +1312,16 @@
       <div class="acts" style="margin-top:14px"><button class="act site" id="recapcopy" type="button">Copy trip recap</button></div>
     </div>
 
+    <div class="grp"><h3>Wine journal</h3>
+      <p class="gsub">Snap the label — the sommelier reads it, links to the vintage, the maker, and where to buy. Or type it in.</p>
+      <div class="acts" style="margin-bottom:10px">
+        <label class="act site" style="cursor:pointer">📷 Snap label<input id="winephoto" type="file" accept="image/*" capture="environment" hidden /></label>
+      </div>
+      <div class="exform" style="grid-template-columns:1fr auto"><input id="winetext" type="text" placeholder="…or type: producer, wine, year" /><button id="wineadd" type="button">ID it</button></div>
+      <div id="winestatus" class="wx" style="display:block;margin:4px 0 8px"></div>
+      <div id="wines"></div>
+    </div>
+
     <div class="grp"><h3>Notes</h3>
       <div class="exform" style="grid-template-columns:1fr auto"><input id="notein" type="text" placeholder="e.g. Damas looks amazing 😍" /><button id="noteadd" type="button">Add</button></div>
       <div id="notes"></div>
@@ -1830,6 +1850,7 @@ function renderTrip(){
     nw.innerHTML=items.map(([k,n])=>'<div class="exrow"><span>'+(n.by==='M'?'Mike':'Yulia')+': '+String(n.text).replace(/</g,'&lt;')+'</span></div>').join('')||'<p class="gsub">No notes yet.</p>';
   }
   renderVisits();
+  renderWines();
   // expenses
   const ew=$('#exlist'); if(ew){ const items=Object.entries(state.expense).sort((a,b)=>a[0]<b[0]?1:-1);
     ew.innerHTML=items.slice(0,40).map(([k,x])=>'<div class="exrow"><span>'+String(x.desc||'—').replace(/</g,'&lt;')+' <small style="color:var(--ink-soft)">('+(x.by==='M'?'Mike':'Yulia')+')</small></span><b>$'+Number(x.amt).toFixed(2)+'</b></div>').join('')||'<p class="gsub">Nothing logged yet.</p>';
@@ -1844,6 +1865,64 @@ localLoad();
 document.addEventListener('tabshow',e=>{ if(e.detail==='trip'){ sbInit().then(renderTrip); } });
 renderTrip();
 
+
+
+// ---------- WINE JOURNAL ----------
+function slugQ(s){ return encodeURIComponent(String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().replace(/\s+/g,'+')); }
+function wineLinks(w){
+  const name=[w.producer,w.cuvee].filter(Boolean).join(' ')||w.cuvee||w.producer||'';
+  const full=(name+' '+(w.vintage||'')).trim();
+  return '<div class="winelinks">'
+    +'<a class="buy" target="_blank" rel="noopener" href="https://www.wine-searcher.com/find/'+slugQ(name)+(w.vintage?'/'+encodeURIComponent(w.vintage):'')+'">Buy · Wine-Searcher</a>'
+    +'<a class="rate" target="_blank" rel="noopener" href="https://www.vivino.com/search/wines?q='+slugQ(full)+'">Vivino</a>'
+    +'<a target="_blank" rel="noopener" href="https://www.google.com/search?q='+slugQ((w.producer||name)+' winery '+(w.region||''))+'">The maker</a>'
+    +'</div>';
+}
+function renderWines(){
+  const w=$('#wines'); if(!w) return; state.wine=state.wine||{};
+  const items=Object.entries(state.wine).sort((a,b)=>a[0]<b[0]?1:-1);
+  w.innerHTML=items.map(([k,e])=>{
+    const d=e.data||{}; const esc=s=>String(s||'').replace(/</g,'&lt;');
+    const name=esc([d.producer,d.cuvee].filter(Boolean).join(' · ')||'Unidentified bottle');
+    const meta=[d.vintage,esc(d.region),esc((d.grapes||[]).join(', ')),esc(d.style)].filter(Boolean).join(' · ');
+    const when=(e.at||'')+(e.by?' · '+(e.by==='M'?'Mike':'Yulia'):'');
+    return '<div class="winecard'+(e.thumb?'':' nothumb')+'">'
+      +(e.thumb?'<img class="winethumb" src="'+e.thumb+'" alt="label" />':'')
+      +'<div><div class="winename">'+name+'</div>'
+      +'<div class="winemeta">'+meta+(meta?' · ':'')+when+'</div>'
+      +(d.summary?'<div class="winesum">'+esc(d.summary)+'</div>':'')
+      +wineLinks(d)+'</div></div>';
+  }).join('')||'<p class="gsub">No bottles yet. Santé!</p>';
+}
+async function identifyWine(payload, thumb){
+  $('#winestatus').textContent='🍷 Reading the label…';
+  let data=null;
+  if(CFG.CONCIERGE_URL){
+    try{
+      const r=await fetch(CFG.CONCIERGE_URL.replace(/\/$/,'')+'/wine',{method:'POST',headers:{'Content-Type':'application/json','X-Trip-Key':CFG.TRIP_KEY||'mtlqc'},body:JSON.stringify(payload)});
+      const j=await r.json(); if(j.wine) data=j.wine;
+    }catch(e){}
+  }
+  if(!data) data={producer:'',cuvee:payload.text||'Bottle (identify later)',vintage:'',region:'',country:'',grapes:[],style:'',summary: payload.text?'Saved offline — links search on your text.':'Saved offline — photo kept; re-ID later.',confidence:'low'};
+  await put('wine',Date.now().toString(),{data,thumb:thumb||null,by:me||'?',at:new Date().toISOString().slice(0,10)});
+  $('#winestatus').textContent='';
+  renderWines(); toast(data.confidence==='low'?'Saved (low confidence — check it)':'Added: '+(data.producer||data.cuvee));
+}
+function downscale(file){
+  return new Promise((res,rej)=>{
+    const go=(bmp,wd,ht)=>{ const MAX=600, sc=Math.min(1,MAX/Math.max(wd,ht));
+      const c=document.createElement('canvas'); c.width=Math.round(wd*sc); c.height=Math.round(ht*sc);
+      c.getContext('2d').drawImage(bmp,0,0,c.width,c.height); res(c.toDataURL('image/jpeg',0.82)); };
+    if(window.createImageBitmap){ createImageBitmap(file,{imageOrientation:'from-image'}).then(b=>go(b,b.width,b.height)).catch(()=>{ const i=new Image(); i.onload=()=>go(i,i.naturalWidth,i.naturalHeight); i.onerror=rej; i.src=URL.createObjectURL(file); }); }
+    else { const i=new Image(); i.onload=()=>go(i,i.naturalWidth,i.naturalHeight); i.onerror=rej; i.src=URL.createObjectURL(file); }
+  });
+}
+$('#winephoto').addEventListener('change',async e=>{
+  const f=e.target.files&&e.target.files[0]; if(!f) return; e.target.value='';
+  try{ const img=await downscale(f); identifyWine({image:img}, img); }
+  catch(err){ toast('Could not read that photo'); }
+});
+$('#wineadd').onclick=()=>{ const t=$('#winetext').value.trim(); if(!t) return; $('#winetext').value=''; identifyWine({text:t}, null); };
 
 // ---------- VISITED TRACKER ----------
 const VISITV = V.filter(v=>['eat','drink','cafe','see'].includes(v.cat));
