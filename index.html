@@ -423,6 +423,8 @@
   .voterow{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:10px 2px;border-bottom:1px dashed var(--line)}
   .voterow .vn{font-size:14.5px}
   .voterow .vn small{display:block;color:var(--ink-soft);font-size:12px}
+  .voterow .vn a{color:inherit;text-decoration:none;border-bottom:1.5px solid rgba(232,71,122,.5);font-weight:600}
+  .voterow .vn a:active{color:var(--cerise)}
   .vbtns{display:flex;gap:4px}
   .vbtns button{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--paper-2);cursor:pointer;font-size:15px;opacity:.45}
   .vbtns button[aria-pressed="true"]{opacity:1;border-color:var(--midnight);background:#fff}
@@ -1746,7 +1748,7 @@ async function put(kind,k,v){
 }
 
 const CHECKS=[['pass','Passports ×2 in the bag'],['gc','Yulia: green card + Russian passport together'],['eta','Re-check eTA guidance on canada.ca'],['jb','Reserve Joe Beef — Tuesday'],['tan','Reserve Tanière³ — Thursday'],['sun','Pick Sunday dinner (vote below!)'],['bank','Tell the credit cards you\'re traveling'],['roam','Roaming plans on — both phones'],['maps','Download offline Google Maps: MTL + QC'],['bags','Book Sunday-morning luggage storage'],['fit','Pack dressy outfits for the big dinners'],['rain','Rain layer + comfy walking shoes']];
-const VOTES=[['sun-damas','Damas','Sunday dinner'],['sun-maj','Le Majestique','Sunday dinner'],['mon-violon','Le Violon','Monday dinner'],['mon-lemeac','Leméac','Monday dinner'],['mon-plong','Le Plongeoir','Monday dinner'],['mon-jos','Joséphine','Monday dinner'],['tue-joebeef','Joe Beef','Tuesday dinner'],['tue-lux','Lux La Lumière','Tuesday dinner'],['wed-savini','Savini','Wednesday · Québec'],['wed-steak','Steak Avenue','Wednesday · Québec'],['thu-taniere','Tanière³','Thursday · Québec'],['thu-boulay','Chez Boulay','Thursday · Québec']];
+const VOTES=[['sun-damas','Damas','Sunday dinner','https://www.damas.ca/'],['sun-maj','Le Majestique','Sunday dinner','https://restobarmajestique.com/'],['mon-violon','Le Violon','Monday dinner','https://le-violon.ca/'],['mon-lemeac','Leméac','Monday dinner','https://www.restaurantlemeac.com/'],['mon-plong','Le Plongeoir','Monday dinner','https://www.plongeoir.ca/'],['mon-jos','Joséphine','Monday dinner','https://www.google.com/search?q=Jos%C3%A9phine+restaurant+Saint-Denis+Montreal'],['tue-joebeef','Joe Beef','Tuesday dinner','https://www.joebeef.com/'],['tue-lux','Lux La Lumière','Tuesday dinner','https://www.google.com/search?q=Lux+La+Lumi%C3%A8re+restaurant+Montreal'],['wed-savini','Savini','Wednesday · Québec','https://lesavini.ca/'],['wed-steak','Steak Avenue','Wednesday · Québec','https://steakavenue.com/'],['thu-taniere','Tanière³','Thursday · Québec','https://www.taniere3.com/'],['thu-boulay','Chez Boulay','Thursday · Québec','https://chezboulay.com/']];
 const VOPTS=[['yes','👍'],['maybe','😐'],['no','👎']];
 
 function renderTrip(){
@@ -1762,10 +1764,10 @@ function renderTrip(){
   }
   // votes
   const vw=$('#votes'); if(vw){ vw.innerHTML='';
-    VOTES.forEach(([k,name,grp])=>{
+    VOTES.forEach(([k,name,grp,url])=>{
       const cur=state.vote[k]||{};
       const row=document.createElement('div'); row.className='voterow';
-      row.innerHTML='<div class="vn">'+name+'<small>'+grp+'</small></div>';
+      row.innerHTML='<div class="vn"><a href="'+url+'" target="_blank" rel="noopener">'+name+' ↗</a><small>'+grp+'</small></div>';
       ['M','Y'].forEach(p=>{
         const col=document.createElement('div');
         col.innerHTML='<div class="vwho">'+(p==='M'?'MIKE':'YULIA')+'</div>';
