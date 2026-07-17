@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Montréal + Québec — Mike & Yulia</title>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="MTL + Québec" />
+<meta name="application-name" content="MTL + Québec" />
+<meta name="theme-color" content="#101A33" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="apple-touch-icon" href="icon-180.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+<!-- iOS web-app install support -->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="MTL + QC" />
+<meta name="theme-color" content="#101A33" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --midnight:#101A33;
+    --midnight-2:#182548;
+    --paper:#F6F0E4;
+    --paper-2:#FBF7EF;
+    --ink:#1B2338;
+    --ink-soft:#54607C;
+    --marigold:#F4B333;
+    --cerise:#E8477A;
+    --teal:#17998A;
+    --line:#E2D8C4;
+    --line-dark:#2C3A5E;
+    --shadow:0 1px 0 rgba(16,26,51,.04), 0 8px 30px rgba(16,26,51,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+  .wrap{max-width:940px;margin:0 auto;padding:0 20px}
+
+  .mono{font-family:"Space Mono",monospace}
+  .eyebrow{
+    font-family:"Space Mono",monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:var(--midnight);
+    color:var(--paper);
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--marigold);
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(120% 90% at 12% -10%, rgba(232,71,122,.28), transparent 55%),
+      radial-gradient(120% 90% at 92% 8%, rgba(244,179,51,.22), transparent 55%),
+      radial-gradient(100% 120% at 80% 120%, rgba(23,153,138,.20), transparent 60%);
+    pointer-events:none;
+  }
+  .hero .wrap{position:relative;padding:46px 20px 40px}
+  .hero .eyebrow{color:rgba(246,240,228,.7)}
+  .titleblock{margin:14px 0 0}
+  .titleblock h1{
+    font-family:"Bricolage Grotesque",sans-serif;
+    font-weight:800;
+    font-size:clamp(44px,10.5vw,104px);
+    line-height:.92;
+    letter-spacing:-.02em;
+    margin:0;
+    text-transform:uppercase;
+  }
+  .titleblock h1 .amp{
+    display:inline-block;color:var(--marigold);
+    transform:translateY(2px);font-weight:600;
+  }
+  .titleblock h1 .q{color:var(--cerise)}
+  .sub{
+    margin:20px 0 0;max-width:56ch;
+    font-size:clamp(15px,2.2vw,18px);color:rgba(246,240,228,.86);
+  }
+  .facts{
+    display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;
+  }
+  .fact{
+    border:1px solid var(--line-dark);
+    border-radius:100px;
+    padding:7px 14px;
+    font-family:"Space Mono",monospace;
+    font-size:12px;letter-spacing:.02em;
+    color:rgba(246,240,228,.92);
+    background:rgba(255,255,255,.02);
+  }
+  .fact b{color:var(--marigold);font-weight:700}
+
+  /* ---------- APP CHROME ---------- */
+  .appchrome{
+    position:sticky;top:0;z-index:30;
+    background:rgba(246,240,228,.92);
+    backdrop-filter:saturate(140%) blur(12px);
+    -webkit-backdrop-filter:saturate(140%) blur(12px);
+    border-bottom:1px solid var(--line);
+    padding-top:env(safe-area-inset-top);
+    user-select:none;-webkit-user-select:none;
+  }
+  body[data-tab="home"] .appchrome{display:none}
+  .appbar{display:flex;align-items:center;justify-content:center;height:46px}
+  .appbar .brand{
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:15px;
+    letter-spacing:.02em;color:var(--ink);
+  }
+  .appbar .brand .plus{color:var(--cerise)}
+  .daystrip{display:none;gap:8px;overflow-x:auto;padding:2px 14px 12px;scrollbar-width:none}
+  .daystrip::-webkit-scrollbar{display:none}
+  body[data-tab="days"] .daystrip{display:flex}
+  .chip{
+    flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:1px;
+    min-width:56px;padding:7px 10px 6px;border-radius:14px;
+    border:1px solid var(--line);background:var(--paper-2);cursor:pointer;
+    transition:transform .12s ease, background .15s ease, border-color .15s ease;
+    touch-action:manipulation;
+  }
+  .chip .dw{font-family:"Space Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+  .chip .dn{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:17px;line-height:1.1;color:var(--ink)}
+  .chip:active{transform:scale(.93)}
+  .chip[aria-selected="true"]{background:var(--midnight);border-color:var(--midnight)}
+  .chip[aria-selected="true"] .dw{color:var(--marigold)}
+  .chip[aria-selected="true"] .dn{color:var(--paper)}
+
+  /* floating bottom dock */
+  .tabbar{
+    position:fixed;z-index:40;
+    left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom));
+    max-width:520px;margin:0 auto;
+    display:flex;justify-content:space-around;align-items:stretch;
+    background:rgba(16,26,51,.96);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border:1px solid var(--line-dark);border-radius:22px;
+    padding:8px 6px;
+    box-shadow:0 10px 34px rgba(16,26,51,.35);
+    user-select:none;-webkit-user-select:none;
+  }
+  .tbtn{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+    background:none;border:0;cursor:pointer;padding:5px 0 3px;border-radius:14px;
+    color:rgba(246,240,228,.52);
+    font-family:"Space Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+    transition:color .15s ease, transform .12s ease;
+    touch-action:manipulation;
+  }
+  .tbtn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .tbtn:active{transform:scale(.9)}
+  .tbtn[aria-selected="true"]{color:var(--marigold)}
+  body{padding-bottom:calc(92px + env(safe-area-inset-bottom))}
+  body:not([data-tab="home"]) .hero{display:none}
+
+  /* ---------- PANELS ---------- */
+  main{padding:34px 0 10px}
+  .panel{display:none}
+  .panel.is-active{display:block;animation:fade .28s ease}
+  .panel.is-active.slide-l{animation:slideL .28s cubic-bezier(.22,.9,.3,1)}
+  .panel.is-active.slide-r{animation:slideR .28s cubic-bezier(.22,.9,.3,1)}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @keyframes slideL{from{opacity:0;transform:translateX(34px)}to{opacity:1;transform:none}}
+  @keyframes slideR{from{opacity:0;transform:translateX(-34px)}to{opacity:1;transform:none}}
+
+  /* touch feel */
+  a,button{touch-action:manipulation}
+  .card{transition:transform .16s ease, border-color .16s ease}
+  .card:active{transform:scale(.985)}
+
+  .phead{margin-bottom:8px}
+  .phead .kicker{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .phead .no{
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
+    font-size:15px;color:var(--cerise);letter-spacing:.04em;
+  }
+  .phead h2{
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
+    font-size:clamp(28px,5.4vw,44px);line-height:1.02;letter-spacing:-.015em;
+    margin:6px 0 0;
+  }
+  .phead .lede{margin:12px 0 0;max-width:60ch;color:var(--ink-soft);font-size:15.5px}
+
+  /* time blocks */
+  .block{
+    display:grid;grid-template-columns:104px 1fr;gap:22px;
+    padding:26px 0;border-top:1px solid var(--line);
+  }
+  .block:first-of-type{border-top:0}
+  .block .when{position:relative}
+  .when .t{
+    font-family:"Space Mono",monospace;font-size:12px;font-weight:700;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--ink);
+  }
+  .when .sub{margin:4px 0 0;font-size:12px;color:var(--ink-soft);font-family:"Inter"}
+  @media(max-width:620px){
+    .block{grid-template-columns:1fr;gap:12px}
+    .when{display:flex;align-items:baseline;gap:10px}
+    .when .sub{margin:0}
+  }
+
+  .body p{margin:0 0 12px}
+  .body p:last-child{margin-bottom:0}
+
+  /* venue cards */
+  .cards{display:grid;gap:12px;margin-top:2px}
+  .card{
+    display:block;text-decoration:none;
+    background:var(--paper-2);border:1px solid var(--line);border-radius:14px;
+    padding:15px 16px;box-shadow:var(--shadow);
+    transition:transform .16s ease, border-color .16s ease;
+  }
+  .card:hover{transform:translateY(-2px);border-color:var(--marigold)}
+  .card:focus-visible{outline:3px solid var(--cerise);outline-offset:2px}
+  .card .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .card h4{
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:18px;
+    margin:0;letter-spacing:-.01em;
+  }
+  .card .arrow{color:var(--ink-soft);font-size:13px;flex:0 0 auto;font-family:"Space Mono",monospace}
+  .card:hover .arrow{color:var(--cerise)}
+  .card .note{margin:6px 0 0;font-size:14.5px;color:var(--ink)}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
+  .tag{
+    font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-soft);
+    border:1px solid var(--line);border-radius:100px;padding:3px 9px;
+  }
+  .tag.hot{color:var(--cerise);border-color:rgba(232,71,122,.4)}
+  .tag.warm{color:#B07A00;border-color:rgba(244,179,51,.5)}
+
+  /* callouts */
+  .call{
+    border-radius:16px;padding:18px 18px;margin:22px 0;
+    border:1px solid var(--line);background:var(--paper-2);
+  }
+  .call .ct{
+    font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;margin:0 0 8px;display:flex;align-items:center;gap:8px;
+  }
+  .call p{margin:0 0 10px}
+  .call p:last-child{margin-bottom:0}
+  .call.fire{background:linear-gradient(180deg,rgba(232,71,122,.09),rgba(244,179,51,.07));border-color:rgba(232,71,122,.32)}
+  .call.fire .ct{color:var(--cerise)}
+  .call.comedy{background:rgba(244,179,51,.10);border-color:rgba(244,179,51,.42)}
+  .call.comedy .ct{color:#B07A00}
+  .call.note .ct{color:var(--teal)}
+  .call.swap{background:var(--midnight);color:var(--paper);border-color:var(--midnight)}
+  .call.swap .ct{color:var(--marigold)}
+  .call.swap a{color:var(--marigold)}
+
+  .dot{width:7px;height:7px;border-radius:50%;display:inline-block}
+  .dot.c{background:var(--cerise)} .dot.m{background:var(--marigold)} .dot.t{background:var(--teal)}
+
+  /* QC feature */
+  .qc{
+    background:var(--midnight);color:var(--paper);border-radius:20px;
+    padding:26px 22px;margin:6px 0 24px;position:relative;overflow:hidden;
+  }
+  .qc::after{
+    content:"";position:absolute;right:-40px;top:-40px;width:220px;height:220px;
+    background:radial-gradient(circle,rgba(23,153,138,.4),transparent 68%);pointer-events:none;
+  }
+  .qc h3{
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:800;
+    font-size:clamp(24px,4.6vw,34px);margin:8px 0 0;letter-spacing:-.01em;position:relative;
+  }
+  .qc .eyebrow{color:rgba(246,240,228,.7)}
+  .qc p{color:rgba(246,240,228,.9);position:relative;margin:12px 0 0;max-width:60ch}
+  .rail{
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;position:relative;
+  }
+  @media(max-width:620px){.rail{grid-template-columns:1fr}}
+  .rail .leg{border:1px solid var(--line-dark);border-radius:12px;padding:14px}
+  .rail .leg .h{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--marigold)}
+  .rail .leg .big{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:20px;margin:6px 0 2px}
+  .rail .leg .sm{font-size:12.5px;color:rgba(246,240,228,.7)}
+
+  /* index groups */
+  .grp{margin:30px 0}
+  .grp h3{
+    font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:22px;
+    margin:0 0 4px;letter-spacing:-.01em;
+  }
+  .grp .gsub{color:var(--ink-soft);font-size:14px;margin:0 0 14px}
+
+  /* footer */
+  /* bookings tracker */
+  .bookings{display:grid;gap:14px;margin-top:8px}
+  @media(min-width:640px){.bookings{grid-template-columns:1fr 1fr}}
+  .bk{border-radius:16px;padding:16px 17px;background:var(--paper-2);border:1px solid var(--line);box-shadow:var(--shadow);position:relative}
+  .bk.todo{background:transparent;border-style:dashed;box-shadow:none}
+  .bk-top{display:flex;align-items:flex-start;gap:12px}
+  .bk-top .grow{flex:1}
+  .bk-kind{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+  .bk-title{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:19px;letter-spacing:-.01em;margin-top:3px}
+  .bk-badge{flex:0 0 auto;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 9px;border-radius:100px;border:1px solid var(--line);color:var(--ink-soft);white-space:nowrap}
+  .bk-badge.ok{background:rgba(23,153,138,.12);border-color:rgba(23,153,138,.45);color:#0d6f63}
+  .bk-badge.wait{background:rgba(244,179,51,.12);border-color:rgba(244,179,51,.55);color:#9a6b00}
+  .bk-line{width:34px;height:3px;border-radius:3px;background:var(--marigold);margin:12px 0 0}
+  .bk.flight .bk-line{background:var(--cerise)}
+  .bk.stay .bk-line{background:var(--teal)}
+  .bk-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px 16px;margin-top:14px}
+  .bk-cell{display:flex;flex-direction:column;gap:2px}
+  .bk-cell .k{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+  .bk-cell .v{font-size:14px;font-weight:500;line-height:1.35}
+  .bk-cell .v.code{font-family:"Space Mono",monospace;font-weight:700;letter-spacing:.1em;font-size:15px}
+  .bk-hint{margin:12px 0 0;font-size:13.5px;color:var(--ink-soft)}
+  .bk-hint b{color:var(--ink)}
+  .bk-listing{display:inline-block;margin-top:7px;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--cerise);text-decoration:none;border-bottom:1px solid rgba(232,71,122,.4);transition:color .15s ease,border-color .15s ease}
+  .bk-listing:hover{color:var(--ink);border-color:var(--ink)}
+
+  /* iOS install hint */
+  .install{
+    display:none;
+    position:fixed;left:12px;right:12px;bottom:calc(96px + env(safe-area-inset-bottom));z-index:60;
+    max-width:520px;margin:0 auto;
+    background:var(--midnight);color:var(--paper);
+    border:1px solid var(--line-dark);border-radius:16px;
+    padding:14px 44px 14px 16px;
+    box-shadow:0 10px 34px rgba(16,26,51,.35);
+    font-size:13.5px;line-height:1.45;
+  }
+  .install b{color:var(--marigold)}
+  .install .x{
+    position:absolute;top:8px;right:8px;
+    background:transparent;border:0;color:rgba(246,240,228,.7);
+    font-size:20px;line-height:1;cursor:pointer;padding:6px;
+  }
+  .install .icn{display:inline-block;transform:translateY(1px)}
+  body.show-install .install{display:block}
+
+  footer{background:var(--midnight);color:rgba(246,240,228,.7);margin-top:40px;border-top:3px solid var(--cerise)}
+  footer .wrap{padding:28px 20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;align-items:center}
+  footer .sig{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;color:var(--paper);font-size:18px}
+  footer .mono{font-size:12px}
+
+  :focus-visible{outline:3px solid var(--cerise);outline-offset:2px}
+  /* installed-app polish */
+  a,button{-webkit-tap-highlight-color:rgba(232,71,122,.18)}
+  @media (display-mode: standalone){
+    footer .wrap{padding-bottom:calc(28px + env(safe-area-inset-bottom))}
+    .daystrip{padding-left:calc(14px + env(safe-area-inset-left));padding-right:calc(14px + env(safe-area-inset-right))}
+    body{overscroll-behavior-y:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body data-tab="home">
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">A Sunday-to-Friday summer plan · flying from NYC · home base: a Mile-End Airbnb</div>
+    <div class="titleblock">
+      <h1>Montréal<br><span class="amp">+</span> <span class="q">Québec</span></h1>
+    </div>
+    <p class="sub">Bagels warm off the wood fire, natural wine on Laurier, a skyline from the mountain, and — if you're game — a whole day in the old city up the river. Built for the two of you.</p>
+
+    <div class="facts">
+      <span class="fact"><b>Sun → Fri</b> Jul 19–24</span>
+      <span class="fact"><b>5</b> nights · <b>2</b> in Québec</span>
+      <span class="fact"><b>Mile End</b> home base</span>
+      <span class="fact"><b>Mike</b> &amp; Yulia</span>
+    </div>
+  </div>
+</header>
+
+<header class="appchrome">
+  <div class="appbar"><span class="brand">MONTRÉAL <span class="plus">+</span> QUÉBEC</span></div>
+  <div class="daystrip" role="tablist" aria-label="Days">
+    <button class="chip" role="tab" aria-selected="true"  data-day="sun"><span class="dw">Sun</span><span class="dn">19</span></button>
+    <button class="chip" role="tab" aria-selected="false" data-day="mon"><span class="dw">Mon</span><span class="dn">20</span></button>
+    <button class="chip" role="tab" aria-selected="false" data-day="tue"><span class="dw">Tue</span><span class="dn">21</span></button>
+    <button class="chip" role="tab" aria-selected="false" data-day="wed"><span class="dw">Wed</span><span class="dn">22</span></button>
+    <button class="chip" role="tab" aria-selected="false" data-day="thu"><span class="dw">Thu</span><span class="dn">23</span></button>
+    <button class="chip" role="tab" aria-selected="false" data-day="fri"><span class="dw">Fri</span><span class="dn">24</span></button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ BEFORE YOU GO ============ -->
+  <section class="panel is-active" id="plan" role="tabpanel">
+    <div class="phead">
+      <div class="kicker"><span class="no">00</span><span class="eyebrow">Sort this first</span></div>
+      <h2>Before you go</h2>
+      <p class="lede">Two short flights, one document check for Yulia, and the little logistics that make the rest easy.</p>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Flights</div></div>
+      <div class="body">
+        <p><b>Both booked:</b> American 4550 out (LGA 8:19 AM → YUL 9:54 AM, Sun Jul 19) and Delta 5449 back (YUL 7:44 PM → LGA 9:20 PM, Fri Jul 24) — an early arrival and an evening return, so you get full days on both ends. It's an international hop, so <b>both of you need passports</b> — full details live in the <b>Bookings</b> tab.</p>
+        <p>From YUL to Mile End is 20–30 minutes: a taxi/Uber runs roughly <b>$45 CAD</b>, or the <b>747 airport bus</b> feeds the metro if you're traveling light.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Yulia's docs</div><div class="sub">green card + Russian passport</div></div>
+      <div class="body">
+        <p>Carry the <b>valid green card and the valid Russian passport together</b> — the border officer will want both. Under the current federal guidance, lawful permanent residents of the U.S. are exempt from the electronic travel authorization (eTA) when flying to Canada, and just need proof of status plus a passport from their country of nationality.</p>
+        <p>Rules on this have shifted before, so <b>double-check on canada.ca a week or two out</b>. If there's any doubt, an eTA is a five-minute online form and about <b>CAD $7</b> — cheap insurance, worth doing rather than risking the gate.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Your week</div></div>
+      <div class="body">
+        <div class="call comedy">
+          <p class="ct"><span class="dot m"></span>Just for Laughs is on all week</p>
+          <p><b>Good timing.</b> The festival runs Jul 15–26, so it covers your whole stay — the Quartier des Spectacles downtown becomes the comedy capital of the world, with ticketed headliners indoors and plenty of free outdoor shows and street performers most evenings. Grab tickets early if there's a name you want.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Good to know</div></div>
+      <div class="body">
+        <p><b>Money:</b> Canadian dollars; cards work everywhere; tip 15–20%. <b>Language:</b> French first — a "bonjour / merci" goes a long way, and everyone flips to English easily. <b>Getting around:</b> Mile End is walkable, the metro is quick (Laurier &amp; Rosemont stations), and BIXI bikes are all over. You'll barely need a car — the train handles Québec City (see Wednesday).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BOOKINGS ============ -->
+  <section class="panel" id="bookings" role="tabpanel">
+    <div class="phead">
+      <div class="kicker"><span class="no">✦</span><span class="eyebrow">Your confirmations &amp; logistics</span></div>
+      <h2>Bookings tracker</h2>
+      <p class="lede">Everything you've locked in, in one place — with slots for what's still to come. One down so far; the rest fills in as you book. Add details right here as they land.</p>
+    </div>
+
+    <div class="bookings">
+
+      <div class="bk flight">
+        <div class="bk-top">
+          <div class="grow">
+            <div class="bk-kind">Flight · Outbound</div>
+            <div class="bk-title">New York → Montréal</div>
+          </div>
+          <span class="bk-badge ok">Confirmed</span>
+        </div>
+        <div class="bk-line"></div>
+        <div class="bk-grid">
+          <div class="bk-cell"><span class="k">Date</span><span class="v">Sun, Jul 19</span></div>
+          <div class="bk-cell"><span class="k">Route</span><span class="v">LGA 8:19 AM → YUL 9:54 AM</span></div>
+          <div class="bk-cell"><span class="k">Flight</span><span class="v">AA 4550 · American Eagle (Republic)</span></div>
+          <div class="bk-cell"><span class="k">Seats · class</span><span class="v">2F &amp; 2D · Business (J)</span></div>
+          <div class="bk-cell"><span class="k">Confirmation</span><span class="v code">NGQLCZ</span></div>
+          <div class="bk-cell"><span class="k">Lands</span><span class="v">~10 AM · full first day ahead</span></div>
+        </div>
+      </div>
+
+      <div class="bk flight">
+        <div class="bk-top">
+          <div class="grow">
+            <div class="bk-kind">Flight · Return</div>
+            <div class="bk-title">Montréal → New York</div>
+          </div>
+          <span class="bk-badge ok">Confirmed</span>
+        </div>
+        <div class="bk-line"></div>
+        <div class="bk-grid">
+          <div class="bk-cell"><span class="k">Date</span><span class="v">Fri, Jul 24</span></div>
+          <div class="bk-cell"><span class="k">Route</span><span class="v">YUL 7:44 PM → LGA 9:20 PM</span></div>
+          <div class="bk-cell"><span class="k">Flight</span><span class="v">DL 5449 · Delta Connection (Endeavor)</span></div>
+          <div class="bk-cell"><span class="k">Seats · class</span><span class="v">13D &amp; 13C · Delta Main (N)</span></div>
+          <div class="bk-cell"><span class="k">Confirmation</span><span class="v code">GXHKSM</span></div>
+          <div class="bk-cell"><span class="k">Bonus</span><span class="v">Evening flight = a full final day</span></div>
+        </div>
+      </div>
+
+      <div class="bk stay">
+        <div class="bk-top">
+          <div class="grow">
+            <div class="bk-kind">Stay · Montréal (nights 1–3)</div>
+            <div class="bk-title">Authentic Vintage Apartment · Mile End</div>
+            <a class="bk-listing" href="https://www.airbnb.com/rooms/861698604113052000?" target="_blank" rel="noopener">View the listing ↗</a>
+          </div>
+          <span class="bk-badge ok">Confirmed</span>
+        </div>
+        <div class="bk-line"></div>
+        <div class="bk-grid">
+          <div class="bk-cell"><span class="k">Check-in</span><span class="v">Sun Jul 19 · after 4:00 PM</span></div>
+          <div class="bk-cell"><span class="k">Checkout</span><span class="v">Wed Jul 22 · by 11:00 AM</span></div>
+          <div class="bk-cell"><span class="k">Address</span><span class="v">5579 Av du Parc, Montréal, QC H2V 4S8</span></div>
+          <div class="bk-cell"><span class="k">Host · guests</span><span class="v">Sam · 2 adults</span></div>
+          <div class="bk-cell"><span class="k">Lockbox</span><span class="v">Right of the main door, below the 5577 mailbox — code <b>4896</b>, then turn the knob ¼ clockwise &amp; pull</span></div>
+          <div class="bk-cell"><span class="k">Keys</span><span class="v">Two on a green wristband (building + apartment); a spare set is on the living-room shelf</span></div>
+        </div>
+        <p class="bk-hint"><b>Quiet after 11 PM</b> — the building is 115 years old with creaky floors, so keep late hours to the living room. <b>Arrival gap:</b> you land ~10 AM but check-in is firm at 4 PM (no early check-in) — stash the bags at a Mile End luggage-storage point (Bounce / LuggageHero / Radical, ~$6–8/bag) and start the day light. Street parking is metered (Mobicité app, spot PL495 out front, free 9 PM–9 AM) if you end up with a car.</p>
+      </div>
+
+      <div class="bk stay">
+        <div class="bk-top">
+          <div class="grow">
+            <div class="bk-kind">Stay · Québec City (nights 4–5)</div>
+            <div class="bk-title">Le Manoir d'Auteuil</div>
+            <a class="bk-listing" href="https://www.manoirdauteuil.com/" target="_blank" rel="noopener">View the hotel ↗</a>
+          </div>
+          <span class="bk-badge ok">Confirmed</span>
+        </div>
+        <div class="bk-line"></div>
+        <div class="bk-grid">
+          <div class="bk-cell"><span class="k">Check-in</span><span class="v">Wed Jul 22 · 4:00 PM (desk closes 10 PM)</span></div>
+          <div class="bk-cell"><span class="k">Checkout</span><span class="v">Fri Jul 24 · 11:00 AM</span></div>
+          <div class="bk-cell"><span class="k">Address</span><span class="v">49 Rue d'Auteuil, Québec City, G1R 4C2</span></div>
+          <div class="bk-cell"><span class="k">Room · guests</span><span class="v">Superior Room, nonsmoking · 2 adults</span></div>
+          <div class="bk-cell"><span class="k">Itinerary #</span><span class="v code">72076835922132</span></div>
+          <div class="bk-cell"><span class="k">Booked via</span><span class="v">Hotels.com · paid $757.46</span></div>
+        </div>
+        <p class="bk-hint"><b>Two nights in Old Québec</b> — a heritage manor right inside the walls on Rue d'Auteuil. No after-hours check-in (front desk closes at 10 PM), so aim to arrive before then; you'll get check-in instructions by email ~24h out. Min check-in age 21.</p>
+      </div>
+
+      <div class="bk">
+        <div class="bk-top">
+          <div class="grow">
+            <div class="bk-kind">Train · To Québec</div>
+            <div class="bk-title">Montréal → Québec City</div>
+          </div>
+          <span class="bk-badge ok">Confirmed</span>
+        </div>
+        <div class="bk-line"></div>
+        <div class="bk-grid">
+          <div class="bk-cell"><span class="k">Date</span><span class="v">Wed Jul 22</span></div>
+          <div class="bk-cell"><span class="k">Time</span><span class="v">Dep 8:36 AM → Arr 11:47 AM</span></div>
+          <div class="bk-cell"><span class="k">Train · car</span><span class="v">VIA #22 · Car 4 · Economy</span></div>
+          <div class="bk-cell"><span class="k">Seats</span><span class="v">3A (Yulia, window) · 3B (Mike, aisle)</span></div>
+        </div>
+        <p class="bk-hint"><b>Early start:</b> check out of the Airbnb by ~8 and roll to Gare Centrale. You're in Québec before noon — bags at the hotel desk until the 4 PM check-in, and a full first afternoon ahead.</p>
+      </div>
+
+      <div class="bk">
+        <div class="bk-top">
+          <div class="grow">
+            <div class="bk-kind">Train · Back to MTL</div>
+            <div class="bk-title">Québec City → Montréal</div>
+          </div>
+          <span class="bk-badge ok">Confirmed</span>
+        </div>
+        <div class="bk-line"></div>
+        <div class="bk-grid">
+          <div class="bk-cell"><span class="k">Date</span><span class="v">Fri Jul 24</span></div>
+          <div class="bk-cell"><span class="k">Time</span><span class="v">Dep 12:32 PM → Arr 3:54 PM</span></div>
+          <div class="bk-cell"><span class="k">Train · car</span><span class="v">VIA #37 · Car 5 · Economy</span></div>
+          <div class="bk-cell"><span class="k">Seats</span><span class="v">6D (Yulia, window) · 6C (Mike, aisle)</span></div>
+        </div>
+        <p class="bk-hint"><b>Your airport route:</b> check out at 11, catch the 12:32, arrive Gare Centrale 3:54 PM — a short taxi to YUL for the 7:44 flight. Comfortable, but it's fixed timing, so don't linger over lunch.</p>
+      </div>
+
+    </div>
+
+    <div class="grp" style="margin-top:30px">
+      <h3>Tables worth reserving</h3>
+      <p class="gsub">Not bookings exactly, but both fill weeks out — lock them in early.</p>
+      <div class="bookings">
+        <div class="bk todo">
+          <div class="bk-top">
+            <div class="grow">
+              <div class="bk-kind">Dinner · Tue Jul 21</div>
+              <div class="bk-title">Joe Beef</div>
+            </div>
+            <span class="bk-badge wait">Reserve</span>
+          </div>
+          <p class="bk-hint">The big Montréal night, before you head up the river. Reserve well ahead.</p>
+        </div>
+        <div class="bk todo">
+          <div class="bk-top">
+            <div class="grow">
+              <div class="bk-kind">Dinner · Thu Jul 23 · Québec</div>
+              <div class="bk-title">Tanière³</div>
+            </div>
+            <span class="bk-badge wait">Reserve</span>
+          </div>
+          <p class="bk-hint">#9 in North America — the big Québec night. Books out well ahead; lock it in now (or Chez Boulay as backup).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SUNDAY ============ -->
+  <section class="panel" id="sun" role="tabpanel">
+    <div class="phead">
+      <div class="kicker"><span class="no">01</span><span class="eyebrow">Sunday · Jul 19</span></div>
+      <h2>Land &amp; settle into Mile&nbsp;End</h2>
+      <p class="lede">Day one has one fixed point — the World Cup final at 3 PM. Land around 10, stash the bags (check-in isn't until 4), ease in with a coffee and a warm bagel, then go find a crowd for the match.</p>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Late morning</div><div class="sub">stash the bags</div></div>
+      <div class="body">
+        <p>Sam can't do an early check-in, so the easy move is to drop the bags rather than haul them for six hours. Several luggage-storage points sit right in Mile End — reserve one through <b>Bounce</b>, <b>LuggageHero</b>, or <b>Radical Storage</b> (~<b>$6–8 CAD per bag</b>, tucked inside host cafés and shops, booked in the app), then collect them on your way in before 4 PM. <span style="color:var(--ink-soft)">Montréal's train station has no lockers, so the app networks are the way to go.</span></p>
+        <p>Rather keep the bags with you? The comfortable, bag-friendly play is a long welcome brunch on a terrasse plus the open-air Jean-Talon Market — and save the Mont Royal climb for Monday.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Afternoon</div><div class="sub">ease in</div></div>
+      <div class="body">
+        <p>Start where the neighborhood starts — a cappuccino at the counter, then a warm bagel eaten on the sidewalk. Wander Bernard and St-Viateur and the murals down St-Laurent (the Main).</p>
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Olimpico%20124%20Rue%20Saint%20Viateur%20Ouest%20Montreal">
+            <div class="top"><h4>Café Olimpico</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">The 50-year-old Italian counter that set the Mile End coffee standard. Order a cappuccino, take it outside, watch the street.</p>
+            <div class="tags"><span class="tag">Café</span><span class="tag">St-Viateur O.</span><span class="tag warm">Open daily</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=St-Viateur%20Bagel%20263%20Rue%20Saint%20Viateur%20Ouest%20Montreal">
+            <div class="top"><h4>St-Viateur Bagel</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">Hand-rolled and wood-fired, sold warm since 1957. Get a sesame straight from the oven. You'll eat it before you get home.</p>
+            <div class="tags"><span class="tag">Icon</span><span class="tag">Open 24h</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">3 PM</div><div class="sub">the final</div></div>
+      <div class="body">
+        <p>The World Cup final kicks off at 3 PM — worth building the afternoon around. Grab a spot with a crowd by about 2 to get a seat (it runs ~2 hours, longer with extra time). Three near-home options by mood:</p>
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Bruno%20Sport%20Bar%20313%20Rue%20Beaubien%20Est%20Montreal">
+            <div class="top"><h4>Bruno Sport Bar</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">The crowd. A beloved Italian sports bar in Little Italy with screens everywhere — it packs out for big matches and won't take reservations, so arrive by ~1:30. The surest bet for real atmosphere.</p>
+            <div class="tags"><span class="tag">Sports bar</span><span class="tag">Little Italy</span><span class="tag warm">Arrive early</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Club%20Social%20180%20Rue%20Saint-Viateur%20Ouest%20Montreal">
+            <div class="top"><h4>Café Club Social</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">Closest to home (~5-min walk) and the local pick — an old-school Italian café that Tourisme Montréal rates one of the best soccer spots in the city. Small, so get there early.</p>
+            <div class="tags"><span class="tag">Italian café</span><span class="tag">Mile End</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Monsieur%20Ricard%204543%20Avenue%20du%20Parc%20Montreal">
+            <div class="top"><h4>Monsieur Ricard</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">The convenient one — right on Avenue du Parc, an 8-minute walk south. A casual Plateau bar showing the match, with a terrasse. Open from 2 PM.</p>
+            <div class="tags"><span class="tag">Bar</span><span class="tag">Av du Parc</span></div>
+          </a>
+        </div>
+        <p style="color:var(--ink-soft);font-size:14px">If a nation you're pulling for is in it, the community bars are the party — L'Barouf (St-Denis) for France, Bar St-Laurent Frappé (the Main) for Portugal or Brazil.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Dinner</div></div>
+      <div class="body">
+        <p>Two very different first-night moods, both open on a Sunday — pick by the energy you're after:</p>
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Damas%20restaurant%201209%20Avenue%20Van%20Horne%20Outremont%20Montreal">
+            <div class="top"><h4>Damas</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">The special one, and a ~5-minute walk on Van Horne. Acclaimed upscale Syrian — charcoal grills, generous mezze, a proper wine list, a gorgeous room. The way to open the trip in style.</p>
+            <div class="tags"><span class="tag">Syrian</span><span class="tag">Outremont</span><span class="tag hot">$$$$ · reserve</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Le%20Majestique%204105%20Boul%20Saint-Laurent%20Montreal">
+            <div class="top"><h4>Le Majestique</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">The fun one. A buzzy, eclectic Montréal institution on the Main — excellent oysters, playful sharing plates, cocktails and natural wine. Loud, alive, open late. Short cab south.</p>
+            <div class="tags"><span class="tag">Oysters · small plates</span><span class="tag">The Main</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Nightcap</div><div class="sub">your plan: a last glass</div></div>
+      <div class="body">
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Le%20Rouge%20Gorge%201234%20Avenue%20du%20Mont-Royal%20Est%20Montreal">
+            <div class="top"><h4>Le Rouge Gorge</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">Cap the night here — wine bar up front, speakeasy tucked downstairs, and open on a Sunday when half the block isn't. A short hop across the Plateau from either dinner.</p>
+            <div class="tags"><span class="tag">Wine bar</span><span class="tag">Plateau</span><span class="tag warm">Open Sun</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MONDAY ============ -->
+  <section class="panel" id="mon" role="tabpanel">
+    <div class="phead">
+      <div class="kicker"><span class="no">02</span><span class="eyebrow">Monday · Jul 20</span></div>
+      <h2>The mountain, the market, the Main</h2>
+      <p class="lede">The one big view, a long graze through Little Italy, and an easy neighborhood dinner before jazz in the basement.</p>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Morning</div><div class="sub">get up high</div></div>
+      <div class="body">
+        <p>Good espresso first, then up Mont Royal. Take bus 11 (or the stairs if you're feeling it) to the lookout for the postcard skyline, and walk back down through the park.</p>
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Even%20267%20Rue%20Saint-Zotique%20Ouest%20Montreal">
+            <div class="top"><h4>Café Even</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">Serious single-origin espresso in a calm room off the tourist track. Locals rate it the best cup in the city.</p>
+            <div class="tags"><span class="tag">Café</span><span class="tag">St-Zotique O.</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Kondiaronk%20Belvedere%20Mount%20Royal%20Montreal">
+            <div class="top"><h4>Kondiaronk Belvédère</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">The skyline view every Montréal photo is taken from. Duck into the chalet for shade, then wander back down toward Beaver Lake.</p>
+            <div class="tags"><span class="tag">View</span><span class="tag">Mont Royal</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Lunch</div><div class="sub">come hungry</div></div>
+      <div class="body">
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Jean-Talon%20Market%207070%20Avenue%20Henri-Julien%20Montreal">
+            <div class="top"><h4>Jean-Talon Market</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">Open-air market in Little Italy — graze cheese, shuck oysters, Québec strawberries in July. Lunch is whatever you pick up along the aisles.</p>
+            <div class="tags"><span class="tag">Market</span><span class="tag">Little Italy</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Afternoon</div><div class="sub">slow it down</div></div>
+      <div class="body">
+        <p>Drift the Plateau — Avenue du Mont-Royal, the murals, the indie shops and record stores. When it's time for an aperitivo, this one's built for the two of you:</p>
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Mauve%20Vin%20%26%20Fleurs%201493%20Avenue%20Laurier%20Est%20Montreal">
+            <div class="top"><h4>Mauve — Vin &amp; Fleurs</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">A natural-wine bar inside a flower shop on Laurier Est. Order a glass, share a board, leave with a bouquet. Hard to beat for a date.</p>
+            <div class="tags"><span class="tag">Wine + flowers</span><span class="tag">Laurier E.</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Dinner</div><div class="sub">your pick</div></div>
+      <div class="body">
+        <p>Four good ways to eat well on a Monday — all near home and all open tonight:</p>
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Le%20Violon%204720%20Rue%20Marquette%20Montreal">
+            <div class="top"><h4>Le Violon</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">The showpiece — #15 on North America's 50 Best Restaurants. Chef Danny Smiles' refined, seasonal cooking in a warm Plateau room; à la carte or tasting menu, with an approachable wine list. One of the few of this calibre open Monday — reserve ahead.</p>
+            <div class="tags"><span class="tag hot">NA's 50 Best</span><span class="tag">Plateau</span><span class="tag">Reserve</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Lem%C3%A9ac%201045%20Avenue%20Laurier%20Ouest%20Outremont%20Montreal">
+            <div class="top"><h4>Leméac</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">A beloved French brasserie in Outremont, a short walk away. Michelin-mentioned, classic bistro cooking, a deep wine list, and polished-but-easy service. The proper sit-down dinner.</p>
+            <div class="tags"><span class="tag">French brasserie</span><span class="tag">Outremont</span><span class="tag hot">Reserve</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Le%20Plongeoir%205350%20Boul%20Saint-Laurent%20Montreal">
+            <div class="top"><h4>Le Plongeoir</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">The most "you," and closest to home — a tiny Mile End natural-wine bar with sharp small plates and staff who'll pour tastes before you commit. Lighter and low-key before Tuesday's big feast.</p>
+            <div class="tags"><span class="tag">Natural wine</span><span class="tag">Mile End</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Joséphine%204007%20Rue%20Saint-Denis%20Montreal">
+            <div class="top"><h4>Joséphine</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">For a seafood mood — an intimate St-Denis room known for pristine oysters and a daily fish special. Date-night, and a real deal for the quality.</p>
+            <div class="tags"><span class="tag">Oysters · seafood</span><span class="tag">Plateau</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Nightcap</div><div class="sub">into the basement</div></div>
+      <div class="body">
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Di%C3%A8se%20Onze%20Live%20Jazz%20Bar%204115%20Rue%20Saint-Denis%20Montreal">
+            <div class="top"><h4>Dièse Onze</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">Candlelit basement jazz on St-Denis — close, warm, feels like a private show. (Closed Wednesdays, so tonight's the night for it.)</p>
+            <div class="tags"><span class="tag">Live jazz</span><span class="tag">Plateau</span><span class="tag hot">Reserve a table</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TUESDAY / OLD MONTRÉAL ============ -->
+  <section class="panel" id="tue" role="tabpanel">
+    <div class="phead">
+      <div class="kicker"><span class="no">03</span><span class="eyebrow">Tuesday · Jul 21</span></div>
+      <h2>Old Montréal, art &amp; the big dinner</h2>
+      <p class="lede">Cobblestones and the waterfront by day, then the meal you plan the trip around — your last Montréal night before heading up the river.</p>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Morning</div><div class="sub">down to the water</div></div>
+      <div class="body">
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Notre-Dame%20Basilica%20110%20Rue%20Notre-Dame%20Ouest%20Montreal">
+            <div class="top"><h4>Notre-Dame Basilica</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">A cobalt-and-gold interior that stops you at the door. The stained glass tells Montréal's own story rather than the Bible's — go early before the crowds.</p>
+            <div class="tags"><span class="tag">Landmark</span><span class="tag">Ticketed</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Vieux-Port%20de%20Montreal%20Old%20Port">
+            <div class="top"><h4>Vieux-Port &amp; Old Montréal</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">Wander the waterfront and Place Jacques-Cartier. Best in the softer light of late afternoon or early evening.</p>
+            <div class="tags"><span class="tag">Old town</span><span class="tag">Riverside</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Afternoon</div><div class="sub">your pick</div></div>
+      <div class="body">
+        <p>One of two moods, depending on the weather and your legs:</p>
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Montreal%20Museum%20of%20Fine%20Arts%201380%20Rue%20Sherbrooke%20Ouest">
+            <div class="top"><h4>Museum of Fine Arts</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">A sprawling, easy-to-wander collection across several pavilions — a cool refuge on a hot afternoon (open till 5).</p>
+            <div class="tags"><span class="tag">Art</span><span class="tag">Sherbrooke O.</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=March%C3%A9%20Atwater%20138%20Avenue%20Atwater%20Montreal">
+            <div class="top"><h4>Atwater Market + Lachine Canal</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">Smaller market on the canal — grab cheese, charcuterie and a coffee, then walk the water. Little Burgundy is right here for dinner.</p>
+            <div class="tags"><span class="tag">Market</span><span class="tag">Canal walk</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Dinner</div><div class="sub">the splurge</div></div>
+      <div class="body">
+        <p>Make tonight the meal — the big one before you leave town. Two ways to go, both open Tuesdays:</p>
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Joe%20Beef%202491%20Rue%20Notre-Dame%20Ouest%20Montreal">
+            <div class="top"><h4>Joe Beef</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">The iconic Montréal feast in Little Burgundy — lobster spaghetti, oysters, smoked-meat croquettes, a serious wine list. Reserve well ahead; this one books out.</p>
+            <div class="tags"><span class="tag">$$$$</span><span class="tag hot">Reserve now</span><span class="tag">Little Burgundy</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Lux%20La%20Lumi%C3%A8re%20214%20Rue%20Bernard%20Ouest%20Montreal">
+            <div class="top"><h4>Lux La Lumière</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">Tiny, candlelit, bohemian — home cooking and a deep natural-wine list run by a hands-on owner. The romantic wildcard, and back near your Airbnb.</p>
+            <div class="tags"><span class="tag">Wine-led</span><span class="tag">Bernard O.</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Nightcap</div><div class="sub">a view or a set</div></div>
+      <div class="body">
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Terrasse%20Nelligan%20106%20Rue%20Saint-Paul%20Ouest%20Montreal">
+            <div class="top"><h4>Terrasse Nelligan</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">Rooftop over the Old Port with a clean panorama of the river. A spritz up here as the light goes is the easy win.</p>
+            <div class="tags"><span class="tag">Rooftop</span><span class="tag">Old Montréal</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Upstairs%20Jazz%20Bar%20%26%20Grill%201254%20Rue%20Mackay%20Montreal">
+            <div class="top"><h4>Upstairs Jazz Bar &amp; Grill</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">Downtown club with real programming most nights. Go for the later set, order a drink, let the band run.</p>
+            <div class="tags"><span class="tag">Live jazz</span><span class="tag hot">Reserve</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WEDNESDAY / TO QUÉBEC CITY ============ -->
+  <section class="panel" id="wed" role="tabpanel">
+    <div class="phead">
+      <div class="kicker"><span class="no">04</span><span class="eyebrow">Wednesday · Jul 22</span></div>
+      <h2>Up the river to Québec City</h2>
+      <p class="lede">You're doing this properly — two nights, not a rushed day trip. A relaxed ride up, an afternoon in the old city, and the cobblestones to yourselves once the day-trippers clear out. Québec gets all of Thursday, too.</p>
+    </div>
+
+    <div class="qc">
+      <div class="eyebrow">The train · booked</div>
+      <h3>An early ride up, into the old town by noon</h3>
+      <p>Québec City is about three hours by VIA Rail, straight into Gare du Palais in the heart of the old town — no transfers, no airport shuffle. Your 8:36 departure means an early check-out from the Airbnb (leave by ~8), but the reward is a full first afternoon in Québec. Sit on the right for river glimpses.</p>
+      <div class="rail">
+        <div class="leg">
+          <div class="h">Wed · to Québec</div>
+          <div class="big">VIA #22 · Car 4</div>
+          <div class="sm">Montréal 8:36 AM → Québec 11:47 AM. Seats 3A (window) &amp; 3B (aisle), Economy.</div>
+        </div>
+        <div class="leg">
+          <div class="h">Fri · back to MTL</div>
+          <div class="big">VIA #37 · Car 5</div>
+          <div class="sm">Québec 12:32 PM → Montréal 3:54 PM, then straight to the airport — see the Friday page. Seats 6C &amp; 6D.</div>
+        </div>
+      </div>
+      <p style="font-size:13.5px">Both legs are confirmed — full details, seats and train numbers live in the Bookings tab.</p>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Afternoon</div><div class="sub">on foot</div></div>
+      <div class="body">
+        <p>You'll pull in around noon — leave the bags at the hotel, grab a quick lunch, then wander. Start up top around the Château and the boardwalk, then drop into the lower town — the oldest streets on the continent.</p>
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Ch%C3%A2teau%20Frontenac%20Terrasse%20Dufferin%20Quebec%20City">
+            <div class="top"><h4>Château Frontenac &amp; Terrasse Dufferin</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">The most-photographed hotel on earth and the boardwalk beneath it, looking out over the St. Lawrence. Walk the ramparts from here.</p>
+            <div class="tags"><span class="tag">Haute-Ville</span><span class="tag">River views</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Quartier%20Petit%20Champlain%20Quebec%20City">
+            <div class="top"><h4>Quartier Petit-Champlain &amp; Place-Royale</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">Cobblestones, tiny boutiques, the funicular down (or the Breakneck Stairs). Place-Royale is where the whole city started in 1608.</p>
+            <div class="tags"><span class="tag">Basse-Ville</span><span class="tag">Walkable</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Your hotel</div><div class="sub">two nights, in the walls</div></div>
+      <div class="body">
+        <p>You're booked at <b>Le Manoir d'Auteuil</b> (49 Rue d'Auteuil) — a heritage manor right inside the old-town walls, a short walk from the Château and the ramparts. Two nights, checking out Friday morning. One thing to plan around: <b>the front desk closes at 10 PM and there's no after-hours check-in</b>, so aim to arrive before then. Full details are in the Bookings tab.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Dinner</div><div class="sub">the easy first night</div></div>
+      <div class="body">
+        <p>Keep tonight relaxed after the train — save the big blowout for tomorrow. Two solid choices near the hotel:</p>
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Savini%20Vieux-Quebec%2032%20Rue%20Sainte-Anne%20Quebec%20City">
+            <div class="top"><h4>Savini</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">Polished Italian and a good wine list on Rue Ste-Anne — the calm, grown-up choice for your first night in town.</p>
+            <div class="tags"><span class="tag">Italian</span><span class="tag">Rue Ste-Anne</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Steak%20Avenue%20Vieux-Quebec%2015%20Rue%20du%20Sault-au-Matelot%20Quebec%20City">
+            <div class="top"><h4>Steak Avenue</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">A tucked-away lower-town steakhouse that locals rave about — filet, wagyu, a charming patio, near-perfect reviews.</p>
+            <div class="tags"><span class="tag">Steak</span><span class="tag">Basse-Ville</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Nightcap</div><div class="sub">a hidden bar</div></div>
+      <div class="body">
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Le%20Bijou%20Salon%20%C3%A0%20cocktails%202%20Rue%20Pierre-Olivier-Chauveau%20Quebec%20City">
+            <div class="top"><h4>Le Bijou</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">A jewel-box cocktail salon that often has live jazz — check the night. Your kind of after-dinner room.</p>
+            <div class="tags"><span class="tag">Cocktails</span><span class="tag warm">Jazz some nights</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Vieux%20Carr%C3%A9%2036%20Rue%20Saint-Pierre%20Quebec%20City">
+            <div class="top"><h4>Vieux Carré</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">A speakeasy hidden inside a Michelin-listed restaurant — inventive cocktails and some of the best oysters in the city.</p>
+            <div class="tags"><span class="tag">Speakeasy</span><span class="tag">Basse-Ville</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THURSDAY / QUÉBEC → MONTRÉAL ============ -->
+  <section class="panel" id="thu" role="tabpanel">
+    <div class="phead">
+      <div class="kicker"><span class="no">05</span><span class="eyebrow">Thursday · Jul 23</span></div>
+      <h2>A full day in Québec City</h2>
+      <p class="lede">The payoff of two nights — a whole unhurried day in the old city, the morning to yourselves before the day-trippers, and the best dinner of the trip waiting at the end of it.</p>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Morning</div><div class="sub">before the crowds</div></div>
+      <div class="body">
+        <p>The day-trippers won't roll in till midday, so the cobblestones are yours. A proper breakfast, a slow loop of the ramparts and Terrasse Dufferin, maybe the funicular for the view.</p>
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Restaurant%20La%20Buche%2049%20Rue%20Saint-Louis%20Quebec%20City">
+            <div class="top"><h4>La Bûche</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">Cabin-kitsch done right — a big Québécois breakfast of maple everything, crêpes and thick-cut bacon. Hearty and fun.</p>
+            <div class="tags"><span class="tag">Québécois</span><span class="tag">Rue St-Louis</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20La%20Maison%20Smith%20Notre-Dame%20Quebec%20City">
+            <div class="top"><h4>Café La Maison Smith</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">Or keep it light: coffee and a croissant on the little square by the church in the lower town — the prettiest people-watching in Québec.</p>
+            <div class="tags"><span class="tag">Café</span><span class="tag">Place-Royale</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Afternoon</div><div class="sub">go deeper</div></div>
+      <div class="body">
+        <p>With a full day, get beyond the postcard blocks. Two easy ways to spend it:</p>
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Plains%20of%20Abraham%20Quebec%20City">
+            <div class="top"><h4>Plains of Abraham &amp; the Citadelle</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">The clifftop battlefield park turned green expanse, with the star-shaped Citadelle — still an active fort — at its edge. History, ramparts and river views; catch the changing of the guard in summer.</p>
+            <div class="tags"><span class="tag">History</span><span class="tag">Haute-Ville</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Montmorency%20Falls%20Quebec%20City">
+            <div class="top"><h4>Montmorency Falls</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">A thundering waterfall taller than Niagara, 15 minutes from town — walk the suspension bridge across the top or ride the cable car. Dramatic and easy to reach.</p>
+            <div class="tags"><span class="tag">Nature</span><span class="tag">15 min out</span></div>
+          </a>
+        </div>
+        <p style="color:var(--ink-soft);font-size:14px">Wine-and-cider detour: Île d'Orléans, 20 minutes across the bridge, is a bucolic island of farms, vineyards and cider houses — a lovely half-day if you rent a car or grab a tour.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Dinner</div><div class="sub">the big one</div></div>
+      <div class="body">
+        <p>Tonight's the night to go all out — and staying over unlocks the table I couldn't get you before:</p>
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Tani%C3%A8re3%207%20Rue%20du%20Don-de-Dieu%20Quebec%20City">
+            <div class="top"><h4>Tanière³</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">#9 on North America's 50 Best Restaurants — an underground, stone-vaulted tasting-menu experience many call the best meal in Canada. It was closed the night you arrived, but it's open tonight. It books out well ahead — reserve now.</p>
+            <div class="tags"><span class="tag hot">NA's 50 Best</span><span class="tag">Tasting menu</span><span class="tag hot">Reserve now</span></div>
+          </a>
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Chez%20Boulay%20bistro%20bor%C3%A9al%20Quebec%20City">
+            <div class="top"><h4>Chez Boulay</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">If Tanière³ is full: a warm, acclaimed "boreal" bistro built on Nordic Québec ingredients — game, foraged flavours, a strong local wine list. A destination in its own right.</p>
+            <div class="tags"><span class="tag">Boreal bistro</span><span class="tag">Upper town</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FRIDAY / FLY HOME ============ -->
+  <section class="panel" id="fri" role="tabpanel">
+    <div class="phead">
+      <div class="kicker"><span class="no">06</span><span class="eyebrow">Friday · Jul 24</span></div>
+      <h2>Québec, then the evening flight home</h2>
+      <p class="lede">A calm last Québec morning, the ride back to Montréal in the early afternoon, and on to the 7:44 PM flight. No rush — but a travel day rather than a lazy one, so keep an eye on the train.</p>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Morning</div><div class="sub">last of Québec</div></div>
+      <div class="body">
+        <p>Check-out is 11 AM. Grab a proper breakfast, one final wander of the ramparts or Petit-Champlain, and pick up any edible souvenirs — maple, cider, a wedge of Québec cheese — before you roll the bags to Gare du Palais.</p>
+        <div class="cards">
+          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Paillard%201097%20Rue%20Saint-Jean%20Quebec%20City">
+            <div class="top"><h4>Paillard</h4><span class="arrow">Map ↗</span></div>
+            <p class="note">A bustling café-boulangerie on Rue Saint-Jean — big windows, great coffee, croissants and macarons. An easy, cheerful last Québec breakfast near the walls.</p>
+            <div class="tags"><span class="tag">Café · bakery</span><span class="tag">Rue Saint-Jean</span></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">Midday</div><div class="sub">ride back</div></div>
+      <div class="body">
+        <p>Your train is <b>VIA #37</b>, leaving Gare du Palais at <b>12:32 PM</b> and reaching Gare Centrale at <b>3:54 PM</b> (Car 5, seats 6C &amp; 6D). Check out at 11, and it's a short roll to the station. From Gare Centrale it's a quick taxi to YUL.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="when"><div class="t">~5 PM</div><div class="sub">to YUL</div></div>
+      <div class="body">
+        <p>You're at Gare Centrale by 3:54 — time for a quick bite nearby if you like, one last Montréal moment, then taxi to YUL to be there around <b>5 PM</b>. YUL has <b>U.S. pre-clearance</b> — you clear American customs in Montréal before you board — so leave the full ~2.5 hours for check-in and the line.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INDEX ============ -->
+  <section class="panel" id="index" role="tabpanel">
+    <div class="phead">
+      <div class="kicker"><span class="no">07</span><span class="eyebrow">Everything in one place</span></div>
+      <h2>The index</h2>
+      <p class="lede">All the food, wine and music from the plan — plus a few extras — sorted so you can improvise.</p>
+    </div>
+
+    <div class="grp">
+      <h3>Dinners to book</h3>
+      <p class="gsub">The ones worth a reservation.</p>
+      <div class="cards">
+        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Joe%20Beef%202491%20Rue%20Notre-Dame%20Ouest%20Montreal"><div class="top"><h4>Joe Beef</h4><span class="arrow">Map ↗</span></div><p class="note">The Montréal feast. Little Burgundy. Books out.</p><div class="tags"><span class="tag hot">$$$$</span></div></a>
+        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Leila%20restaurant%205439%20Boul%20Saint-Laurent%20Montreal"><div class="top"><h4>Leila</h4><span class="arrow">Map ↗</span></div><p class="note">Mediterranean small plates, best table in Mile End.</p><div class="tags"><span class="tag">Mile End</span></div></a>
+        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=%C3%8Ele%20Flottante%20176%20Rue%20Saint%20Viateur%20Ouest%20Montreal"><div class="top"><h4>Île Flottante</h4><span class="arrow">Map ↗</span></div><p class="note">Blind tasting menu. Wed–Sat only.</p><div class="tags"><span class="tag">Tasting</span></div></a>
+        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Gino%27s%20Negroni%20%26%20Lasagna%204639%20Boul%20Saint-Laurent%20Montreal"><div class="top"><h4>Gino's Negroni &amp; Lasagna</h4><span class="arrow">Map ↗</span></div><p class="note">Negroni Sbagliato, then lasagna. Easy night.</p><div class="tags"><span class="tag">The Main</span></div></a>
+      </div>
+    </div>
+
+    <div class="grp">
+      <h3>Wine bars</h3>
+      <p class="gsub">Mike's stretch of the map. A glass, a board, no agenda.</p>
+      <div class="cards">
+        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Mauve%20Vin%20%26%20Fleurs%201493%20Avenue%20Laurier%20Est%20Montreal"><div class="top"><h4>Mauve — Vin &amp; Fleurs</h4><span class="arrow">Map ↗</span></div><p class="note">Natural wine inside a flower shop. Laurier Est.</p><div class="tags"><span class="tag">Date night</span></div></a>
+        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=La%20Buvette%20Chez%20Simone%204869%20Avenue%20du%20Parc%20Montreal"><div class="top"><h4>La Buvette Chez Simone</h4><span class="arrow">Map ↗</span></div><p class="note">The neighborhood classic — rotisserie chicken, a crowd. Closed Sun–Mon.</p><div class="tags"><span class="tag">Parc Ave</span></div></a>
+        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Bar%20Henrietta%20115%20Avenue%20Laurier%20Ouest%20Montreal"><div class="top"><h4>Bar Henrietta</h4><span class="arrow">Map ↗</span></div><p class="note">Raw fish and small plates on Laurier. Easy to linger.</p><div class="tags"><span class="tag">Laurier O.</span></div></a>
+        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caviste%20Ninja%2029%20Rue%20Beaubien%20Est%20Montreal"><div class="top"><h4>Caviste Ninja</h4><span class="arrow">Map ↗</span></div><p class="note">Tiny natural-wine cave near Beaubien — bottle + board.</p><div class="tags"><span class="tag">Little Italy</span></div></a>
+      </div>
+    </div>
+
+    <div class="grp">
+      <h3>Coffee &amp; bagels</h3>
+      <p class="gsub">The morning circuit.</p>
+      <div class="cards">
+        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Olimpico%20124%20Rue%20Saint%20Viateur%20Ouest%20Montreal"><div class="top"><h4>Café Olimpico</h4><span class="arrow">Map ↗</span></div><p class="note">The old-school Italian counter. The standard.</p><div class="tags"><span class="tag">St-Viateur O.</span></div></a>
+        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Alphabet%205765%20Rue%20Clark%20Montreal"><div class="top"><h4>Café Alphabet</h4><span class="arrow">Map ↗</span></div><p class="note">The freddo everyone films. Bright corner, house roast.</p><div class="tags"><span class="tag">Clark</span></div></a>
+        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=St-Viateur%20Bagel%20263%20Rue%20Saint%20Viateur%20Ouest%20Montreal"><div class="top"><h4>St-Viateur Bagel</h4><span class="arrow">Map ↗</span></div><p class="note">Wood-fired since 1957. Sesame, warm, now.</p><div class="tags"><span class="tag">Icon</span></div></a>
+        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Fairmount%20Bagel%2074%20Avenue%20Fairmount%20Ouest%20Montreal"><div class="top"><h4>Fairmount Bagel</h4><span class="arrow">Map ↗</span></div><p class="note">The rival. Settle it for yourselves.</p><div class="tags"><span class="tag">Icon</span></div></a>
+      </div>
+    </div>
+
+    <div class="grp">
+      <h3>Live music &amp; late</h3>
+      <p class="gsub">Something on most nights — check what's booked.</p>
+      <div class="cards">
+        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Casa%20Del%20Popolo%204873%20Boul%20Saint-Laurent%20Montreal"><div class="top"><h4>Casa del Popolo</h4><span class="arrow">Map ↗</span></div><p class="note">Mile End's little room — indie &amp; experimental. Walkable.</p><div class="tags"><span class="tag">St-Laurent</span></div></a>
+        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Di%C3%A8se%20Onze%20Live%20Jazz%20Bar%204115%20Rue%20Saint-Denis%20Montreal"><div class="top"><h4>Dièse Onze</h4><span class="arrow">Map ↗</span></div><p class="note">Basement jazz, candlelit. Closed Wed.</p><div class="tags"><span class="tag">Plateau</span></div></a>
+        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Upstairs%20Jazz%20Bar%20%26%20Grill%201254%20Rue%20Mackay%20Montreal"><div class="top"><h4>Upstairs Jazz</h4><span class="arrow">Map ↗</span></div><p class="note">Downtown club, real programming, late sets.</p><div class="tags"><span class="tag">Downtown</span></div></a>
+        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Bootlegger%20Cocktail%20Bar%203481%20Boul%20Saint-Laurent%20Montreal"><div class="top"><h4>Bootlegger</h4><span class="arrow">Map ↗</span></div><p class="note">Prohibition cocktails + jazz nights + happy-hour oysters.</p><div class="tags"><span class="tag">The Main</span></div></a>
+        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Modavie%201%20Rue%20Saint-Paul%20Ouest%20Montreal"><div class="top"><h4>Modavie</h4><span class="arrow">Map ↗</span></div><p class="note">Old Montréal bistro with nightly jazz upstairs — dinner + set in one.</p><div class="tags"><span class="tag">Old Montréal</span></div></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="sig">Bon voyage, Mike &amp; Yulia.</div>
+    <div class="mono">Montréal + Québec · 4 nights · tap any spot to open the map</div>
+  </div>
+</footer>
+
+<nav class="tabbar" role="tablist" aria-label="Sections">
+  <button class="tbtn" role="tab" aria-selected="false" data-tabbtn="home">
+    <svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg>
+    Home
+  </button>
+  <button class="tbtn" role="tab" aria-selected="true" data-tabbtn="days">
+    <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+    Days
+  </button>
+  <button class="tbtn" role="tab" aria-selected="false" data-tabbtn="bookings">
+    <svg viewBox="0 0 24 24"><path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4Z"/><path d="M14 6v12" stroke-dasharray="2.6 2.6"/></svg>
+    Bookings
+  </button>
+  <button class="tbtn" role="tab" aria-selected="false" data-tabbtn="index">
+    <svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r=".9" fill="currentColor"/><circle cx="4" cy="12" r=".9" fill="currentColor"/><circle cx="4" cy="18" r=".9" fill="currentColor"/></svg>
+    Index
+  </button>
+</nav>
+
+<div class="install" role="dialog" aria-label="Install this itinerary as an app">
+  <button class="x" type="button" aria-label="Dismiss" onclick="document.body.classList.remove('show-install')">×</button>
+  <b>Put this on your home screen:</b> tap the <span class="icn">Share</span> button <span class="icn">(the square with the ↑)</span> in Safari, then <b>“Add to Home Screen.”</b> It'll install like an app — its own icon, full screen, one tap away.
+</div>
+
+<script>
+  // ----- Offline support (hosted) -----
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(()=>{}));
+  }
+
+  // ----- iOS install hint: show on iPhone/iPad Safari when not already installed -----
+  (function(){
+    var ua = navigator.userAgent || '';
+    var isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    if (isIOS && !standalone) document.body.classList.add('show-install');
+  })();
+
+  // ----- App navigation: bottom dock + day chips -----
+  const DAYS = ['sun','mon','tue','wed','thu','fri'];
+  const TABPANEL = { home:'plan', bookings:'bookings', index:'index' };
+  const panels = Array.from(document.querySelectorAll('.panel'));
+  const dockBtns = Array.from(document.querySelectorAll('.tbtn'));
+  const chips = Array.from(document.querySelectorAll('.chip'));
+  let currentTab = 'home';
+  let currentDay = 'sun';
+
+  function showPanelEl(id, slide){
+    panels.forEach(p => {
+      p.classList.remove('is-active','slide-l','slide-r');
+      if(p.id === id){
+        p.classList.add('is-active');
+        if(slide) p.classList.add(slide);
+      }
+    });
+    window.scrollTo({top:0, behavior:'auto'});
+  }
+  function render(slide){
+    document.body.dataset.tab = currentTab;
+    dockBtns.forEach(b => b.setAttribute('aria-selected', String(b.dataset.tabbtn === currentTab)));
+    chips.forEach(c => c.setAttribute('aria-selected', String(c.dataset.day === currentDay)));
+    if(currentTab === 'days'){
+      showPanelEl(currentDay, slide);
+      const activeChip = chips.find(c => c.dataset.day === currentDay);
+      if(activeChip) activeChip.scrollIntoView({inline:'center', block:'nearest', behavior:'smooth'});
+    } else {
+      showPanelEl(TABPANEL[currentTab], null);
+    }
+  }
+  function setTab(tab){ if(tab === currentTab){ window.scrollTo({top:0,behavior:'smooth'}); return; } currentTab = tab; render(null); }
+  function setDay(day, slide){ currentDay = day; currentTab = 'days'; render(slide); }
+
+  dockBtns.forEach(b => b.addEventListener('click', () => setTab(b.dataset.tabbtn)));
+  chips.forEach(c => c.addEventListener('click', () => {
+    const from = DAYS.indexOf(currentDay), to = DAYS.indexOf(c.dataset.day);
+    setDay(c.dataset.day, to > from ? 'slide-l' : (to < from ? 'slide-r' : null));
+  }));
+
+  // ----- Swipe between days -----
+  let tX = null, tY = null;
+  document.addEventListener('touchstart', e => {
+    if(currentTab !== 'days' || e.touches.length !== 1) { tX = null; return; }
+    if(e.target.closest('.daystrip, .tabbar')) { tX = null; return; }
+    tX = e.touches[0].clientX; tY = e.touches[0].clientY;
+  }, {passive:true});
+  document.addEventListener('touchend', e => {
+    if(tX === null || currentTab !== 'days') return;
+    const dx = e.changedTouches[0].clientX - tX;
+    const dy = e.changedTouches[0].clientY - tY;
+    tX = null;
+    if(Math.abs(dx) < 64 || Math.abs(dy) > 56) return;
+    const i = DAYS.indexOf(currentDay);
+    if(dx < 0 && i < DAYS.length - 1) setDay(DAYS[i+1], 'slide-l');
+    else if(dx > 0 && i > 0) setDay(DAYS[i-1], 'slide-r');
+  }, {passive:true});
+
+  // ----- Smart start: during the trip, open today's page -----
+  (function(){
+    const now = new Date();
+    const tripDay = { '2026-07-19':'sun','2026-07-20':'mon','2026-07-21':'tue','2026-07-22':'wed','2026-07-23':'thu','2026-07-24':'fri' };
+    const key = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+    if(tripDay[key]){ currentTab = 'days'; currentDay = tripDay[key]; }
+    render(null);
+  })();
+</script>
+</body>
+</html>
