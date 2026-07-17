@@ -155,7 +155,7 @@
     background:rgba(16,26,51,.96);
     backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
     border:1px solid var(--line-dark);border-radius:22px;
-    padding:8px 6px;
+    padding:8px 2px;
     box-shadow:0 10px 34px rgba(16,26,51,.35);
     user-select:none;-webkit-user-select:none;
   }
@@ -163,7 +163,7 @@
     flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
     background:none;border:0;cursor:pointer;padding:5px 0 3px;border-radius:14px;
     color:rgba(246,240,228,.52);
-    font-family:"Space Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+    font-family:"Space Mono",monospace;font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;
     transition:color .15s ease, transform .12s ease;
     touch-action:manipulation;
   }
@@ -1315,20 +1315,46 @@
   <section class="panel" id="trip" role="tabpanel">
     <div class="phead">
       <div class="kicker"><span class="no">✦</span><span class="eyebrow">Shared between your two phones</span></div>
-      <h2>Our trip</h2>
+      <h2>Notes &amp; spending</h2>
     </div>
-    <div id="whoblock">
-      <p class="gsub" style="margin:0 0 8px">Whose phone is this?</p>
-      <div class="who"><button type="button" data-who="M">Mike</button><button type="button" data-who="Y">Yulia</button></div>
-    </div>
+    <div class="whoslot"></div>
     <div id="tripsetup" class="setupcard" style="margin-bottom:18px" hidden><b>Sync is off</b> (saving on this phone only). To sync between phones: create a Supabase project, run <code>supabase/schema.sql</code> in the SQL editor, and put the URL + anon key in <code>config.js</code>.</div>
 
+    <div class="grp"><h3>Notes</h3>
+      <div class="exform" style="grid-template-columns:1fr auto"><input id="notein" type="text" placeholder="e.g. Damas looks amazing 😍" /><button id="noteadd" type="button">Add</button></div>
+      <div id="notes"></div>
+    </div>
+
+    <div class="grp"><h3>Spending</h3>
+      <div class="exform"><input id="examt" type="number" inputmode="decimal" placeholder="CAD" /><input id="exdesc" type="text" placeholder="What was it?" /><button id="exadd" type="button">Log</button></div>
+      <div id="exlist"></div>
+      <div class="extot" id="extot"></div>
+    </div>
+  </section>
+
+
+  <!-- ============ VOTE ============ -->
+  <section class="panel" id="vote" role="tabpanel">
+    <div class="phead">
+      <div class="kicker"><span class="no">✦</span><span class="eyebrow">Synced between your phones</span></div>
+      <h2>Vote</h2>
+    </div>
+    <div class="whoslot"></div>
     <div class="grp"><h3>Vote on Restaurants</h3>
       <p class="gsub">👍 yes · 😐 maybe · 👎 pass — you'll both see each other's votes.</p>
       <div id="votes"></div>
     </div>
 
-    <div class="grp"><h3>Where we actually went</h3>
+  </section>
+
+  <!-- ============ JOURNAL ============ -->
+  <section class="panel" id="journal" role="tabpanel">
+    <div class="phead">
+      <div class="kicker"><span class="no">✦</span><span class="eyebrow">The trip, as it actually happened</span></div>
+      <h2>Journal</h2>
+    </div>
+    <div class="whoslot"></div>
+    <div class="grp"><h3>Where we went</h3>
       <p class="gsub">Tap what you visit as you go — the recap writes itself.</p>
       <div class="extot" id="vsum" style="margin:0 0 10px"></div>
       <div id="visits"></div>
@@ -1358,16 +1384,6 @@
       <div id="meals"></div>
     </div>
 
-    <div class="grp"><h3>Notes</h3>
-      <div class="exform" style="grid-template-columns:1fr auto"><input id="notein" type="text" placeholder="e.g. Damas looks amazing 😍" /><button id="noteadd" type="button">Add</button></div>
-      <div id="notes"></div>
-    </div>
-
-    <div class="grp"><h3>Spending</h3>
-      <div class="exform"><input id="examt" type="number" inputmode="decimal" placeholder="CAD" /><input id="exdesc" type="text" placeholder="What was it?" /><button id="exadd" type="button">Log</button></div>
-      <div id="exlist"></div>
-      <div class="extot" id="extot"></div>
-    </div>
   </section>
 
   <!-- ============ TOOLKIT ============ -->
@@ -1401,6 +1417,7 @@
       <button class="mitem" data-go="plan"><b>Before you go</b><span>Flights, docs, the plan</span></button>
       <button class="mitem" data-go="bookings"><b>Bookings</b><span>Confirmations & calendar</span></button>
       <button class="mitem" data-go="index"><b>The index</b><span>Every spot + fresh finds</span></button>
+      <button class="mitem" data-go="trip"><b>Notes &amp; spending</b><span>Shared notes · expense log</span></button>
       <button class="mitem" data-go="toolkit"><b>Toolkit</b><span>Menu decoder · emergency</span></button>
     </div>
   </section>
@@ -1428,9 +1445,13 @@
     <svg viewBox="0 0 24 24"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7a2.5 2.5 0 0 1-2.5 2.5H10l-4.6 3.6c-.6.5-1.4 0-1.4-.7Z"/></svg>
     Chat
   </button>
-  <button class="tbtn" role="tab" aria-selected="false" data-tabbtn="trip">
-    <svg viewBox="0 0 24 24"><circle cx="8.5" cy="8" r="3"/><circle cx="16" cy="9.5" r="2.4"/><path d="M3.5 19c.6-3 2.7-4.7 5-4.7s4.4 1.7 5 4.7M13.4 19c.4-2 1.6-3.3 3.1-3.6 1.8-.3 3.6.9 4 3.6"/></svg>
-    Trip
+  <button class="tbtn" role="tab" aria-selected="false" data-tabbtn="vote">
+    <svg viewBox="0 0 24 24"><path d="M5 12.5 10 17 19 6.5"/><rect x="3.5" y="3.5" width="17" height="17" rx="4"/></svg>
+    Vote
+  </button>
+  <button class="tbtn" role="tab" aria-selected="false" data-tabbtn="journal">
+    <svg viewBox="0 0 24 24"><path d="M5 4.5A2 2 0 0 1 7 2.5h11.5v17H7a2 2 0 0 0-2 2Z"/><path d="M5 19.5v-15M9 6.5h6M9 10h6"/></svg>
+    Journal
   </button>
   <button class="tbtn" role="tab" aria-selected="false" data-tabbtn="more">
     <svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg>
@@ -1461,8 +1482,8 @@
 
   // ----- App navigation: bottom dock + day chips -----
   const DAYS = ['sun','mon','tue','wed','thu','fri'];
-  const TABPANEL = { home:'plan', bookings:'bookings', index:'index', map:'map', chat:'chat', trip:'trip', toolkit:'toolkit', more:'more' };
-  const DOCK = { plan:'more', bookings:'more', index:'more', toolkit:'more', more:'more', map:'map', chat:'chat', trip:'trip' };
+  const TABPANEL = { home:'plan', bookings:'bookings', index:'index', map:'map', chat:'chat', trip:'trip', vote:'vote', journal:'journal', toolkit:'toolkit', more:'more' };
+  const DOCK = { plan:'more', bookings:'more', index:'more', toolkit:'more', more:'more', map:'map', chat:'chat', trip:'more', vote:'vote', journal:'journal' };
   const panels = Array.from(document.querySelectorAll('.panel'));
   const dockBtns = Array.from(document.querySelectorAll('.tbtn'));
   const chips = Array.from(document.querySelectorAll('.chip'));
@@ -1790,9 +1811,13 @@ document.addEventListener('tabshow',e=>{ if(e.detail==='chat') initChat(); });
 // ---------- SHARED TRIP (Supabase w/ local fallback) ----------
 let sb=null, me=null;
 try{ me=localStorage.getItem('mtlqc-who'); }catch(e){}
-function setWho(w){ me=w; try{localStorage.setItem('mtlqc-who',w);}catch(e){} $$('.who button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.who===w))); }
-$$('.who button').forEach(b=>b.onclick=()=>{ setWho(b.dataset.who); renderTrip(); });
-if(me) setWho(me);
+function renderWho(){
+  $$('.whoslot').forEach(sl=>{
+    sl.innerHTML='<p class="gsub" style="margin:0 0 8px">Whose phone is this?</p><div class="who"><button type="button" data-who="M"'+(me==='M'?' aria-pressed="true"':' aria-pressed="false"')+'>Mike</button><button type="button" data-who="Y"'+(me==='Y'?' aria-pressed="true"':' aria-pressed="false"')+'>Yulia</button></div>';
+  });
+  $$('.who button').forEach(b=>b.onclick=()=>{ me=b.dataset.who; try{localStorage.setItem('mtlqc-who',me);}catch(e){} renderWho(); renderTrip(); });
+}
+renderWho();
 
 const state={check:{},vote:{},note:{},expense:{}};
 function localLoad(){ try{ const s=JSON.parse(localStorage.getItem('mtlqc-shared')||'{}'); Object.assign(state,s);}catch(e){} }
@@ -1917,7 +1942,7 @@ $('#noteadd').onclick=()=>{ const t=$('#notein').value.trim(); if(!t) return; pu
 $('#exadd').onclick=()=>{ const a=parseFloat($('#examt').value); const d=$('#exdesc').value.trim(); if(!a||a<=0) return; put('expense',Date.now().toString(),{amt:a,desc:d,by:me||'?'}); $('#examt').value=''; $('#exdesc').value=''; };
 fetch('https://api.frankfurter.app/latest?from=CAD&to=USD').then(r=>r.json()).then(d=>{ window._usd=d.rates.USD; renderTrip(); }).catch(()=>{});
 localLoad();
-document.addEventListener('tabshow',e=>{ if(e.detail==='trip'){ sbInit().then(renderTrip); } });
+document.addEventListener('tabshow',e=>{ if(['trip','vote','journal'].includes(e.detail)){ sbInit().then(renderTrip); } });
 renderTrip();
 
 
@@ -2113,7 +2138,7 @@ $('#recapcopy').onclick=()=>{
 // ---------- MORE menu ----------
 $$('.mitem').forEach(b=>b.onclick=()=>{
   const id=b.dataset.go;
-  const tabByPanel={plan:'home',bookings:'bookings',index:'index',toolkit:'toolkit'};
+  const tabByPanel={plan:'home',bookings:'bookings',index:'index',toolkit:'toolkit',trip:'trip'};
   document.dispatchEvent(new CustomEvent('gotab',{detail:tabByPanel[id]}));
 });
 
