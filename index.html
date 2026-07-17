@@ -1284,9 +1284,7 @@
     </div>
     <div id="tripsetup" class="setupcard" style="margin-bottom:18px" hidden><b>Sync is off</b> (saving on this phone only). To sync between phones: create a Supabase project, run <code>supabase/schema.sql</code> in the SQL editor, and put the URL + anon key in <code>config.js</code>.</div>
 
-    <div class="grp"><h3>Checklist</h3><div class="check" id="checklist"></div></div>
-
-    <div class="grp"><h3>Vote on the open picks</h3>
+    <div class="grp"><h3>Vote on Restaurants</h3>
       <p class="gsub">👍 yes · 😐 maybe · 👎 pass — you'll both see each other's votes.</p>
       <div id="votes"></div>
     </div>
@@ -1749,7 +1747,6 @@ async function put(kind,k,v){
   if(sb){ try{ await sb.from('mtlqc_items').upsert({trip_id:CFG.TRIP_ID,kind,k,v,updated_at:new Date().toISOString()},{onConflict:'trip_id,kind,k'}); }catch(e){} }
 }
 
-const CHECKS=[['pass','Passports ×2 in the bag'],['gc','Yulia: green card + Russian passport together'],['eta','Re-check eTA guidance on canada.ca'],['jb','Reserve Joe Beef — Tuesday'],['tan','Reserve Tanière³ — Thursday'],['sun','Pick Sunday dinner (vote below!)'],['bank','Tell the credit cards you\'re traveling'],['roam','Roaming plans on — both phones'],['maps','Download offline Google Maps: MTL + QC'],['bags','Book Sunday-morning luggage storage'],['fit','Pack dressy outfits for the big dinners'],['rain','Rain layer + comfy walking shoes']];
 const VGROUPS=[
  {label:'Montréal · breakfast & cafés',items:[
   ['mtl-bf-olimpico','Café Olimpico','https://cafeolimpico.com/'],
@@ -1790,16 +1787,6 @@ const VGROUPS=[
 const VOPTS=[['yes','👍'],['maybe','😐'],['no','👎']];
 
 function renderTrip(){
-  // checklist
-  const cw=$('#checklist'); if(cw){ cw.innerHTML='';
-    CHECKS.forEach(([id,label])=>{
-      const cur=state.check[id]||{}; const l=document.createElement('label');
-      const c=document.createElement('input'); c.type='checkbox'; c.checked=!!cur.done;
-      const s=document.createElement('span'); s.textContent=label+(cur.done&&cur.by?'  · '+(cur.by==='M'?'Mike':'Yulia'):'');
-      c.onchange=()=>put('check',id,{done:c.checked,by:me||'?'});
-      l.append(c,s); cw.appendChild(l);
-    });
-  }
   // votes
   const vw=$('#votes'); if(vw){ vw.innerHTML='';
     VGROUPS.forEach(g=>{
