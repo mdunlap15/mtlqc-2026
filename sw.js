@@ -1,7 +1,7 @@
 // MTL + Québec — offline support
 // Strategy: network-first for the page itself (so edits you push go live),
 // cache-first for everything else (fonts, icons) so it all works offline.
-const CACHE = 'mtlqc-v2';
+const CACHE = 'mtlqc-v3';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-180.png', './trip.ics'];
 
 self.addEventListener('install', (e) => {
@@ -20,8 +20,9 @@ self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET') return;
 
-  // Live data (weather): always network, never cache
-  if (new URL(req.url).hostname.endsWith('open-meteo.com')) return;
+  // Live data & APIs: always network, never cache
+  const host = new URL(req.url).hostname;
+  if (['open-meteo.com','supabase.co','railway.app','frankfurter.app','openstreetmap.org'].some((d) => host === d || host.endsWith('.' + d))) return;
 
   // Page navigations: try network (fresh content), fall back to cache (offline)
   if (req.mode === 'navigate') {

@@ -11,6 +11,9 @@
 <meta name="application-name" content="MTL + Québec" />
 <meta name="theme-color" content="#101A33" />
 <link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="config.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 <link rel="apple-touch-icon" href="icon-180.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
 <!-- iOS web-app install support -->
@@ -169,6 +172,7 @@
   .tbtn[aria-selected="true"]{color:var(--marigold)}
   body{padding-bottom:calc(92px + env(safe-area-inset-bottom))}
   body:not([data-tab="home"]) .hero{display:none}
+  body[data-tab="map"] main, body[data-tab="chat"] main{padding-top:20px}
 
   /* ---------- PANELS ---------- */
   main{padding:34px 0 10px}
@@ -393,6 +397,60 @@
   #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
   #a2hs{display:none;margin-top:10px;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border-radius:100px;border:0;background:var(--marigold);color:var(--midnight);font-weight:700;cursor:pointer}
   #a2hs.on{display:inline-block}
+
+  /* --- v3: map / chat / trip / toolkit / more --- */
+  #lmap{height:min(58vh,480px);border-radius:16px;border:1px solid var(--line);z-index:1}
+  .mapctl{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  .mfilter[aria-pressed="true"]{background:var(--midnight);color:var(--paper);border-color:var(--midnight)}
+  .nearlist{margin-top:14px}
+  .nearrow{display:flex;justify-content:space-between;gap:10px;padding:10px 2px;border-bottom:1px dashed var(--line);font-size:14.5px}
+  .nearrow b{font-weight:600}
+  .nearrow .dist{font-family:"Space Mono",monospace;font-size:12px;color:var(--ink-soft);white-space:nowrap}
+  .chatbox{display:flex;flex-direction:column;gap:10px;min-height:52vh}
+  .msgs{flex:1;display:flex;flex-direction:column;gap:10px}
+  .msg{max-width:88%;padding:11px 14px;border-radius:16px;font-size:15px;line-height:1.45;white-space:pre-wrap}
+  .msg.u{align-self:flex-end;background:var(--midnight);color:var(--paper);border-bottom-right-radius:6px}
+  .msg.a{align-self:flex-start;background:var(--paper-2);border:1px solid var(--line);border-bottom-left-radius:6px}
+  .msg.a.think{color:var(--ink-soft);font-style:italic}
+  .chatin{display:flex;gap:8px;position:sticky;bottom:calc(96px + env(safe-area-inset-bottom))}
+  .chatin input{flex:1;padding:13px 16px;border-radius:100px;border:1px solid var(--line);background:var(--paper-2);font:inherit;font-size:15px}
+  .chatin button{border:0;border-radius:100px;padding:0 20px;background:var(--cerise);color:#fff;font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.06em;cursor:pointer}
+  .chatin button:disabled{opacity:.5}
+  .quickqs{display:flex;gap:8px;flex-wrap:wrap}
+  .who{display:flex;gap:10px;margin:8px 0 16px}
+  .who button{flex:1;padding:14px;border-radius:14px;border:1px solid var(--line);background:var(--paper-2);font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:16px;cursor:pointer}
+  .who button[aria-pressed="true"]{background:var(--midnight);color:var(--paper);border-color:var(--midnight)}
+  .voterow{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:10px 2px;border-bottom:1px dashed var(--line)}
+  .voterow .vn{font-size:14.5px}
+  .voterow .vn small{display:block;color:var(--ink-soft);font-size:12px}
+  .vbtns{display:flex;gap:4px}
+  .vbtns button{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--paper-2);cursor:pointer;font-size:15px;opacity:.45}
+  .vbtns button[aria-pressed="true"]{opacity:1;border-color:var(--midnight);background:#fff}
+  .vwho{font-family:"Space Mono",monospace;font-size:9px;letter-spacing:.1em;color:var(--ink-soft);text-align:center}
+  .exform{display:grid;grid-template-columns:110px 1fr auto;gap:8px;margin-bottom:10px}
+  .exform input{padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:var(--paper-2);font:inherit;font-size:15px}
+  .exform button{border:0;border-radius:12px;background:var(--teal);color:#fff;padding:0 16px;font-family:"Space Mono",monospace;font-size:11px;cursor:pointer}
+  .exrow{display:flex;justify-content:space-between;gap:10px;padding:8px 2px;border-bottom:1px dashed var(--line);font-size:14.5px}
+  .extot{margin-top:12px;font-family:"Space Mono",monospace;font-size:13px}
+  .extot b{color:var(--teal)}
+  .setupcard{background:rgba(244,179,51,.10);border:1px solid rgba(244,179,51,.42);border-radius:14px;padding:14px 16px;font-size:14px}
+  .setupcard code{font-family:"Space Mono",monospace;font-size:12px;background:var(--paper-2);padding:1px 6px;border-radius:6px}
+  .menu{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .mitem{display:flex;flex-direction:column;gap:4px;padding:18px 16px;border-radius:16px;border:1px solid var(--line);background:var(--paper-2);cursor:pointer;text-align:left;font:inherit}
+  .mitem b{font-family:"Bricolage Grotesque",sans-serif;font-size:17px}
+  .mitem span{font-size:12.5px;color:var(--ink-soft)}
+  .mitem:active{transform:scale(.97)}
+  .decode input{width:100%;padding:13px 16px;border-radius:100px;border:1px solid var(--line);background:var(--paper-2);font:inherit;font-size:15px;margin-bottom:10px}
+  .drow{display:flex;justify-content:space-between;gap:10px;align-items:baseline;padding:9px 2px;border-bottom:1px dashed var(--line);font-size:14.5px}
+  .drow .fr{font-weight:600}
+  .drow .en{color:var(--ink-soft);text-align:right}
+  .drow .say{border:1px solid var(--line);background:var(--paper-2);border-radius:100px;font-size:12px;padding:3px 10px;cursor:pointer;font-family:"Space Mono",monospace}
+  .ecard{border:1px solid var(--line);border-radius:14px;background:var(--paper-2);padding:14px 16px;margin-bottom:10px}
+  .ecard .et{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+  .ecard .ev{font-size:16px;font-weight:600;margin-top:2px}
+  .ecard a{color:var(--cerise)}
+  .homebtn{position:absolute;right:14px;bottom:14px;z-index:500;border:0;border-radius:100px;background:var(--midnight);color:var(--paper);font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.06em;padding:11px 16px;box-shadow:0 6px 20px rgba(16,26,51,.4);cursor:pointer}
+  .maphold{position:relative}
   /* installed-app polish */
   a,button{-webkit-tap-highlight-color:rgba(232,71,122,.18)}
   @media (display-mode: standalone){
@@ -475,12 +533,6 @@
     </div>
 
 
-    <div class="block">
-      <div class="when"><div class="t">Checklist</div><div class="sub">ticks save on this phone</div></div>
-      <div class="body">
-        <div class="check" id="checklist"></div>
-      </div>
-    </div>
     <div class="block">
       <div class="when"><div class="t">Good to know</div></div>
       <div class="body">
@@ -1184,6 +1236,105 @@
     </div>
   </section>
 
+  <!-- ============ MAP ============ -->
+  <section class="panel" id="map" role="tabpanel">
+    <div class="phead">
+      <div class="kicker"><span class="no">✦</span><span class="eyebrow">Every spot, one map</span></div>
+      <h2>The map</h2>
+    </div>
+    <div class="mapctl" id="mapfilters"></div>
+    <div class="maphold">
+      <div id="lmap"></div>
+      <button class="homebtn" id="gohome" type="button">⌂ Get me home</button>
+    </div>
+    <div class="mapctl" style="margin-top:14px">
+      <button class="act" id="nearme" type="button">📍 Near me now</button>
+      <span class="wx" id="nearstatus"></span>
+    </div>
+    <div class="nearlist" id="nearlist"></div>
+  </section>
+
+  <!-- ============ CHAT ============ -->
+  <section class="panel" id="chat" role="tabpanel">
+    <div class="phead">
+      <div class="kicker"><span class="no">✦</span><span class="eyebrow">Ask anything about the trip</span></div>
+      <h2>Concierge</h2>
+    </div>
+    <div id="chatsetup" class="setupcard" hidden><b>Needs one hookup:</b> deploy <code>mtlqc-concierge</code> on Railway, then put its URL in <code>config.js</code>. Until then this tab sleeps.</div>
+    <div class="chatbox" id="chatbox" hidden>
+      <div class="quickqs" id="quickqs"></div>
+      <div class="msgs" id="msgs"></div>
+      <div class="chatin"><input id="chatinput" type="text" placeholder="e.g. It's raining — replan our afternoon" enterkeyhint="send" /><button id="chatsend" type="button">Send</button></div>
+    </div>
+  </section>
+
+  <!-- ============ TRIP (SHARED) ============ -->
+  <section class="panel" id="trip" role="tabpanel">
+    <div class="phead">
+      <div class="kicker"><span class="no">✦</span><span class="eyebrow">Shared between your two phones</span></div>
+      <h2>Our trip</h2>
+    </div>
+    <div id="whoblock">
+      <p class="gsub" style="margin:0 0 8px">Whose phone is this?</p>
+      <div class="who"><button type="button" data-who="M">Mike</button><button type="button" data-who="Y">Yulia</button></div>
+    </div>
+    <div id="tripsetup" class="setupcard" style="margin-bottom:18px" hidden><b>Sync is off</b> (saving on this phone only). To sync between phones: create a Supabase project, run <code>supabase/schema.sql</code> in the SQL editor, and put the URL + anon key in <code>config.js</code>.</div>
+
+    <div class="grp"><h3>Checklist</h3><div class="check" id="checklist"></div></div>
+
+    <div class="grp"><h3>Vote on the open picks</h3>
+      <p class="gsub">👍 yes · 😐 maybe · 👎 pass — you'll both see each other's votes.</p>
+      <div id="votes"></div>
+    </div>
+
+    <div class="grp"><h3>Notes</h3>
+      <div class="exform" style="grid-template-columns:1fr auto"><input id="notein" type="text" placeholder="e.g. Damas looks amazing 😍" /><button id="noteadd" type="button">Add</button></div>
+      <div id="notes"></div>
+    </div>
+
+    <div class="grp"><h3>Spending</h3>
+      <div class="exform"><input id="examt" type="number" inputmode="decimal" placeholder="CAD" /><input id="exdesc" type="text" placeholder="What was it?" /><button id="exadd" type="button">Log</button></div>
+      <div id="exlist"></div>
+      <div class="extot" id="extot"></div>
+    </div>
+  </section>
+
+  <!-- ============ TOOLKIT ============ -->
+  <section class="panel" id="toolkit" role="tabpanel">
+    <div class="phead">
+      <div class="kicker"><span class="no">✦</span><span class="eyebrow">Pocket tools</span></div>
+      <h2>Toolkit</h2>
+    </div>
+    <div class="grp"><h3>Menu decoder</h3>
+      <p class="gsub">Québec menu French → English, with pronunciation. Tap 🔊 to hear it.</p>
+      <div class="decode"><input id="dsearch" type="text" placeholder="Search: bavette, tourtière, chèvre…" /><div id="dlist"></div></div>
+    </div>
+    <div class="grp"><h3>Emergency & essentials</h3>
+      <div class="ecard"><div class="et">Emergency</div><div class="ev"><a href="tel:911">911</a> — police / fire / ambulance</div></div>
+      <div class="ecard"><div class="et">Health advice (Québec, 24/7)</div><div class="ev"><a href="tel:811">811</a> — Info-Santé nurse line</div></div>
+      <div class="ecard"><div class="et">Host Sam (Airbnb)</div><div class="ev">Number is in the Airbnb app thread — save it to contacts before Sunday</div></div>
+      <div class="ecard"><div class="et">Hotel — Le Manoir d'Auteuil</div><div class="ev">49 Rue d'Auteuil, Québec · desk closes 10 PM</div></div>
+      <div class="ecard"><div class="et">VIA Rail</div><div class="ev"><a href="tel:18888427245">1-888-842-7245</a></div></div>
+      <div class="ecard"><div class="et">Yulia's documents</div><div class="ev">Green card + Russian passport together for both border crossings</div></div>
+      <div class="ecard"><div class="et">Pharmacies</div><div class="ev">Jean Coutu / Pharmaprix are everywhere; most open late</div></div>
+    </div>
+  </section>
+
+  <!-- ============ MORE ============ -->
+  <section class="panel" id="more" role="tabpanel">
+    <div class="phead">
+      <div class="kicker"><span class="no">✦</span><span class="eyebrow">Everything else</span></div>
+      <h2>More</h2>
+    </div>
+    <div class="menu">
+      <button class="mitem" data-go="plan"><b>Before you go</b><span>Flights, docs, the plan</span></button>
+      <button class="mitem" data-go="bookings"><b>Bookings</b><span>Confirmations & calendar</span></button>
+      <button class="mitem" data-go="index"><b>The index</b><span>Every spot + fresh finds</span></button>
+      <button class="mitem" data-go="toolkit"><b>Toolkit</b><span>Menu decoder · emergency</span></button>
+    </div>
+  </section>
+
+
 </main>
 
 <footer>
@@ -1194,21 +1345,25 @@
 </footer>
 
 <nav class="tabbar" role="tablist" aria-label="Sections">
-  <button class="tbtn" role="tab" aria-selected="false" data-tabbtn="home">
-    <svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg>
-    Home
-  </button>
   <button class="tbtn" role="tab" aria-selected="true" data-tabbtn="days">
     <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
     Days
   </button>
-  <button class="tbtn" role="tab" aria-selected="false" data-tabbtn="bookings">
-    <svg viewBox="0 0 24 24"><path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4Z"/><path d="M14 6v12" stroke-dasharray="2.6 2.6"/></svg>
-    Bookings
+  <button class="tbtn" role="tab" aria-selected="false" data-tabbtn="map">
+    <svg viewBox="0 0 24 24"><path d="M12 21s-6.5-5.7-6.5-10.2A6.5 6.5 0 0 1 12 4.3a6.5 6.5 0 0 1 6.5 6.5C18.5 15.3 12 21 12 21Z"/><circle cx="12" cy="10.7" r="2.3"/></svg>
+    Map
   </button>
-  <button class="tbtn" role="tab" aria-selected="false" data-tabbtn="index">
-    <svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r=".9" fill="currentColor"/><circle cx="4" cy="12" r=".9" fill="currentColor"/><circle cx="4" cy="18" r=".9" fill="currentColor"/></svg>
-    Index
+  <button class="tbtn" role="tab" aria-selected="false" data-tabbtn="chat">
+    <svg viewBox="0 0 24 24"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h11A2.5 2.5 0 0 1 20 6.5v7a2.5 2.5 0 0 1-2.5 2.5H10l-4.6 3.6c-.6.5-1.4 0-1.4-.7Z"/></svg>
+    Chat
+  </button>
+  <button class="tbtn" role="tab" aria-selected="false" data-tabbtn="trip">
+    <svg viewBox="0 0 24 24"><circle cx="8.5" cy="8" r="3"/><circle cx="16" cy="9.5" r="2.4"/><path d="M3.5 19c.6-3 2.7-4.7 5-4.7s4.4 1.7 5 4.7M13.4 19c.4-2 1.6-3.3 3.1-3.6 1.8-.3 3.6.9 4 3.6"/></svg>
+    Trip
+  </button>
+  <button class="tbtn" role="tab" aria-selected="false" data-tabbtn="more">
+    <svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg>
+    More
   </button>
 </nav>
 
@@ -1235,7 +1390,8 @@
 
   // ----- App navigation: bottom dock + day chips -----
   const DAYS = ['sun','mon','tue','wed','thu','fri'];
-  const TABPANEL = { home:'plan', bookings:'bookings', index:'index' };
+  const TABPANEL = { home:'plan', bookings:'bookings', index:'index', map:'map', chat:'chat', trip:'trip', toolkit:'toolkit', more:'more' };
+  const DOCK = { plan:'more', bookings:'more', index:'more', toolkit:'more', more:'more', map:'map', chat:'chat', trip:'trip' };
   const panels = Array.from(document.querySelectorAll('.panel'));
   const dockBtns = Array.from(document.querySelectorAll('.tbtn'));
   const chips = Array.from(document.querySelectorAll('.chip'));
@@ -1254,7 +1410,8 @@
   }
   function render(slide){
     document.body.dataset.tab = currentTab;
-    dockBtns.forEach(b => b.setAttribute('aria-selected', String(b.dataset.tabbtn === currentTab)));
+    const hl = currentTab === 'days' ? 'days' : (DOCK[TABPANEL[currentTab]] || DOCK[currentTab] || 'more');
+    dockBtns.forEach(b => b.setAttribute('aria-selected', String(b.dataset.tabbtn === hl)));
     chips.forEach(c => c.setAttribute('aria-selected', String(c.dataset.day === currentDay)));
     if(currentTab === 'days'){
       showPanelEl(currentDay, slide);
@@ -1264,10 +1421,11 @@
       showPanelEl(TABPANEL[currentTab], null);
     }
   }
-  function setTab(tab){ if(tab === currentTab){ window.scrollTo({top:0,behavior:'smooth'}); return; } currentTab = tab; render(null); }
+  function setTab(tab){ if(tab === currentTab){ window.scrollTo({top:0,behavior:'smooth'}); return; } currentTab = tab; render(null); document.dispatchEvent(new CustomEvent('tabshow',{detail:tab})); }
   function setDay(day, slide){ currentDay = day; currentTab = 'days'; render(slide); }
 
   dockBtns.forEach(b => b.addEventListener('click', () => setTab(b.dataset.tabbtn)));
+  document.addEventListener('gotab', e => setTab(e.detail));
   chips.forEach(c => c.addEventListener('click', () => {
     const from = DAYS.indexOf(currentDay), to = DAYS.indexOf(c.dataset.day);
     setDay(c.dataset.day, to > from ? 'slide-l' : (to < from ? 'slide-r' : null));
@@ -1388,33 +1546,6 @@
     document.getElementById('pfill').style.width=Math.round(ok/total*100)+'%';
   }catch(e){}
 
-  // Checklist (persists on this device)
-  try{
-    const ITEMS=[
-      ['pass','Passports ×2 in the bag'],
-      ['gc','Yulia: green card + Russian passport together'],
-      ['eta','Re-check eTA guidance on canada.ca'],
-      ['jb','Reserve Joe Beef — Tuesday'],
-      ['tan','Reserve Tanière³ — Thursday (Chez Boulay backup)'],
-      ['sun','Pick Sunday dinner: Damas or Le Majestique'],
-      ['bank','Tell the credit cards you\'re traveling'],
-      ['roam','Phone roaming plans on (both phones)'],
-      ['maps','Download offline Google Maps: Montréal + Québec'],
-      ['bags','Book Sunday-morning luggage storage'],
-      ['fit','Pack one dressy outfit each for the big dinners'],
-      ['rain','Rain layer + comfortable walking shoes']
-    ];
-    let saved={}; try{ saved=JSON.parse(localStorage.getItem('mtlqc-check')||'{}'); }catch(e){}
-    const wrap=document.getElementById('checklist');
-    ITEMS.forEach(([id,label])=>{
-      const l=document.createElement('label');
-      const c=document.createElement('input'); c.type='checkbox'; c.checked=!!saved[id];
-      const s=document.createElement('span'); s.textContent=label;
-      c.addEventListener('change',()=>{ saved[id]=c.checked; try{ localStorage.setItem('mtlqc-check',JSON.stringify(saved)); }catch(e){} });
-      l.appendChild(c); l.appendChild(s); wrap.appendChild(l);
-    });
-  }catch(e){}
-
   // Share
   try{
     const sb=document.getElementById('sharebtn');
@@ -1439,5 +1570,255 @@
     });
   }catch(e){}
 </script>
+
+<script>
+// ================= v3 features: map · near-me · concierge · shared trip · decoder =================
+(function(){
+const CFG = window.MTLQC_CONFIG || {};
+const $ = (s)=>document.querySelector(s);
+const $$ = (s)=>Array.from(document.querySelectorAll(s));
+
+// ---------- venue data ----------
+// cat: eat, drink, cafe, see, stay, transit | day tags for map filtering
+const V = [
+ ['Airbnb — 5579 Av du Parc',45.5216,-73.6050,'stay','sun'],
+ ['Le Manoir d\'Auteuil',46.8128,-71.2118,'stay','wed'],
+ ['Gare Centrale',45.4995,-73.5665,'transit','wed'],
+ ['Gare du Palais',46.8172,-71.2136,'transit','wed'],
+ ['Café Olimpico',45.5241,-73.6003,'cafe','sun'],
+ ['St-Viateur Bagel',45.5227,-73.6020,'cafe','sun'],
+ ['Fairmount Bagel',45.5222,-73.5975,'cafe','sun'],
+ ['Café Even',45.5352,-73.6170,'cafe','mon'],
+ ['Café Alphabet',45.5245,-73.6013,'cafe','mon'],
+ ['Café Club Social',45.5236,-73.6008,'drink','sun'],
+ ['Bruno Sport Bar',45.5331,-73.6061,'drink','sun'],
+ ['Monsieur Ricard',45.5174,-73.5901,'drink','sun'],
+ ['Damas',45.5226,-73.6132,'eat','sun'],
+ ['Le Majestique',45.5175,-73.5803,'eat','sun'],
+ ['Le Rouge Gorge',45.5273,-73.5779,'drink','sun'],
+ ['Kondiaronk Belvédère',45.5034,-73.5869,'see','mon'],
+ ['Jean-Talon Market',45.5361,-73.6149,'see','mon'],
+ ['Mauve — Vin & Fleurs',45.5324,-73.5877,'drink','mon'],
+ ['Le Violon',45.5308,-73.5827,'eat','mon'],
+ ['Leméac',45.5183,-73.5973,'eat','mon'],
+ ['Le Plongeoir',45.5246,-73.5967,'drink','mon'],
+ ['Joséphine',45.5209,-73.5756,'eat','mon'],
+ ['Dièse Onze',45.5209,-73.5793,'drink','mon'],
+ ['Notre-Dame Basilica',45.5045,-73.5561,'see','tue'],
+ ['Vieux-Port',45.5125,-73.5485,'see','tue'],
+ ['Museum of Fine Arts',45.4986,-73.5795,'see','tue'],
+ ['Atwater Market',45.4794,-73.5772,'see','tue'],
+ ['Joe Beef',45.4831,-73.5753,'eat','tue'],
+ ['Lux La Lumière',45.5245,-73.6046,'eat','tue'],
+ ['Terrasse Nelligan',45.5077,-73.5541,'drink','tue'],
+ ['Upstairs Jazz',45.4966,-73.5759,'drink','tue'],
+ ['Atwater Cocktail Club',45.4814,-73.5783,'drink','tue'],
+ ['Château Frontenac',46.8120,-71.2050,'see','wed'],
+ ['Quartier Petit-Champlain',46.8117,-71.2036,'see','wed'],
+ ['Savini',46.8129,-71.2073,'eat','wed'],
+ ['Steak Avenue',46.8156,-71.2016,'eat','wed'],
+ ['Le Bijou',46.8133,-71.2094,'drink','wed'],
+ ['Vieux Carré',46.8148,-71.2029,'drink','wed'],
+ ['La Bûche',46.8118,-71.2087,'eat','thu'],
+ ['Café La Maison Smith',46.8125,-71.2027,'cafe','thu'],
+ ['Plains of Abraham',46.8054,-71.2158,'see','thu'],
+ ['Montmorency Falls',46.8907,-71.1479,'see','thu'],
+ ['Tanière³',46.8177,-71.2022,'eat','thu'],
+ ['Chez Boulay',46.8138,-71.2117,'eat','thu'],
+ ['Paillard',46.8136,-71.2114,'cafe','fri'],
+ ['La Buvette Chez Simone',45.5188,-73.5934,'drink','thu'],
+ ['Bar Henrietta',45.5203,-73.5946,'drink','idx'],
+ ['Caviste Ninja',45.5352,-73.6115,'drink','idx'],
+ ['Bootlegger',45.5145,-73.5714,'drink','idx'],
+ ['Modavie',45.5075,-73.5537,'drink','idx'],
+ ['Casa del Popolo',45.5233,-73.5936,'drink','idx'],
+ ['Île Flottante',45.5232,-73.6017,'eat','idx'],
+].map(a=>({name:a[0],lat:a[1],lng:a[2],cat:a[3],day:a[4]}));
+const CATLABEL = {eat:'🍽 Food',drink:'🍷 Drinks',cafe:'☕ Cafés',see:'📷 Sights',stay:'🏠 Stays',transit:'🚉 Transit'};
+const CATCOLOR = {eat:'#E8477A',drink:'#F4B333',cafe:'#8a6f47',see:'#17998A',stay:'#101A33',transit:'#54607C'};
+
+// ---------- MAP ----------
+let map=null, markers=[], activeCats=new Set(Object.keys(CATLABEL));
+function whereTonight(){
+  const d=new Date(), k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  return (k>='2026-07-22'&&k<='2026-07-23') ? V[1] : V[0];
+}
+function buildMap(){
+  if(map || typeof L==='undefined') return;
+  map = L.map('lmap',{zoomControl:true}).setView([45.517,-73.59],13);
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
+  const fwrap=$('#mapfilters');
+  Object.entries(CATLABEL).forEach(([k,lab])=>{
+    const b=document.createElement('button'); b.className='act mfilter'; b.type='button'; b.textContent=lab; b.setAttribute('aria-pressed','true');
+    b.onclick=()=>{ if(activeCats.has(k)){activeCats.delete(k);b.setAttribute('aria-pressed','false')}else{activeCats.add(k);b.setAttribute('aria-pressed','true')} drawMarkers(); };
+    fwrap.appendChild(b);
+  });
+  const qbtn=document.createElement('button'); qbtn.className='act site'; qbtn.type='button'; qbtn.textContent='Jump: Québec'; 
+  qbtn.onclick=()=>{ const q=qbtn.textContent.includes('Québec'); map.setView(q?[46.813,-71.208]:[45.517,-73.59], q?15:13); qbtn.textContent=q?'Jump: Montréal':'Jump: Québec'; };
+  fwrap.appendChild(qbtn);
+  drawMarkers();
+  $('#gohome').onclick=()=>{ const t=whereTonight(); window.open('https://www.google.com/maps/dir/?api=1&destination='+t.lat+','+t.lng+'&travelmode=walking','_blank'); };
+  setTimeout(()=>map.invalidateSize(),150);
+}
+function drawMarkers(){
+  markers.forEach(m=>map.removeLayer(m)); markers=[];
+  V.filter(v=>activeCats.has(v.cat)).forEach(v=>{
+    const m=L.circleMarker([v.lat,v.lng],{radius:8,color:'#fff',weight:2,fillColor:CATCOLOR[v.cat],fillOpacity:.95}).addTo(map);
+    m.bindPopup('<b>'+v.name+'</b><br><a target="_blank" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(v.name+' '+(v.lat>46?'Quebec City':'Montreal'))+'">Open in Google Maps ↗</a>');
+    markers.push(m);
+  });
+}
+function haversine(a,b,c,d){const R=6371,x=(c-a)*Math.PI/180,y=(d-b)*Math.PI/180,h=Math.sin(x/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(y/2)**2;return 2*R*Math.asin(Math.sqrt(h));}
+$('#nearme').onclick=()=>{
+  $('#nearstatus').textContent='Locating…';
+  navigator.geolocation.getCurrentPosition(p=>{
+    const {latitude:la,longitude:lo}=p.coords;
+    $('#nearstatus').textContent='';
+    if(map){ map.setView([la,lo],15); L.circleMarker([la,lo],{radius:9,color:'#fff',weight:2,fillColor:'#2563eb',fillOpacity:1}).addTo(map).bindPopup('You are here'); }
+    const rows=V.map(v=>({v,d:haversine(la,lo,v.lat,v.lng)})).sort((a,b)=>a.d-b.d).slice(0,12);
+    $('#nearlist').innerHTML=rows.map(r=>{
+      const mins=Math.round(r.d/0.083); // ~5km/h walking
+      const dist=r.d<1?Math.round(r.d*1000)+' m':r.d.toFixed(1)+' km';
+      return '<div class="nearrow"><span><b>'+r.v.name+'</b></span><span class="dist">'+dist+' · ~'+mins+' min walk</span></div>';
+    }).join('');
+  },()=>{ $('#nearstatus').textContent='Location unavailable'; },{enableHighAccuracy:true,timeout:9000});
+};
+document.addEventListener('tabshow',e=>{ if(e.detail==='map') buildMap(); });
+
+// ---------- CONCIERGE ----------
+const hist=[];
+function addMsg(role,text,cls){ const d=document.createElement('div'); d.className='msg '+(role==='user'?'u':'a')+(cls?' '+cls:''); d.textContent=text; $('#msgs').appendChild(d); d.scrollIntoView({block:'end'}); return d; }
+async function sendChat(text){
+  if(!text.trim()) return;
+  addMsg('user',text); hist.push({role:'user',content:text});
+  $('#chatinput').value=''; $('#chatsend').disabled=true;
+  const th=addMsg('assistant','Thinking…','think');
+  try{
+    const r=await fetch(CFG.CONCIERGE_URL.replace(/\/$/,'')+'/chat',{method:'POST',headers:{'Content-Type':'application/json','X-Trip-Key':CFG.TRIP_KEY||'mtlqc'},body:JSON.stringify({messages:hist,today:new Date().toString()})});
+    const d=await r.json();
+    th.remove();
+    if(d.reply){ addMsg('assistant',d.reply); hist.push({role:'assistant',content:d.reply}); }
+    else addMsg('assistant','Hmm — '+(d.error||'no reply')+'. Try again?','think');
+  }catch(e){ th.remove(); addMsg('assistant','Can\'t reach the concierge (offline?).','think'); }
+  $('#chatsend').disabled=false;
+}
+function initChat(){
+  if(!CFG.CONCIERGE_URL){ $('#chatsetup').hidden=false; return; }
+  $('#chatbox').hidden=false;
+  if(!$('#quickqs').children.length){
+    ['What should we do right now?','It\'s raining — replan today','Pick tonight\'s dinner for us','What do we tip here?'].forEach(q=>{
+      const b=document.createElement('button'); b.className='act'; b.type='button'; b.textContent=q; b.onclick=()=>sendChat(q); $('#quickqs').appendChild(b);
+    });
+    addMsg('assistant','Bonjour! I know the whole itinerary — ask me anything, or tap a shortcut.');
+  }
+  $('#chatsend').onclick=()=>sendChat($('#chatinput').value);
+  $('#chatinput').onkeydown=e=>{ if(e.key==='Enter') sendChat($('#chatinput').value); };
+}
+document.addEventListener('tabshow',e=>{ if(e.detail==='chat') initChat(); });
+
+// ---------- SHARED TRIP (Supabase w/ local fallback) ----------
+let sb=null, me=null;
+try{ me=localStorage.getItem('mtlqc-who'); }catch(e){}
+function setWho(w){ me=w; try{localStorage.setItem('mtlqc-who',w);}catch(e){} $$('.who button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.who===w))); }
+$$('.who button').forEach(b=>b.onclick=()=>{ setWho(b.dataset.who); renderTrip(); });
+if(me) setWho(me);
+
+const state={check:{},vote:{},note:{},expense:{}};
+function localLoad(){ try{ const s=JSON.parse(localStorage.getItem('mtlqc-shared')||'{}'); Object.assign(state,s);}catch(e){} }
+function localSave(){ try{ localStorage.setItem('mtlqc-shared',JSON.stringify(state)); }catch(e){} }
+
+async function sbInit(){
+  if(sb!==null || !CFG.SUPABASE_URL || !CFG.SUPABASE_ANON_KEY){ if(!CFG.SUPABASE_URL) $('#tripsetup').hidden=false; return; }
+  try{
+    await new Promise((res,rej)=>{ const s=document.createElement('script'); s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js'; s.onload=res; s.onerror=rej; document.head.appendChild(s); });
+    sb = window.supabase.createClient(CFG.SUPABASE_URL, CFG.SUPABASE_ANON_KEY);
+    const {data,error}=await sb.from('mtlqc_items').select('kind,k,v').eq('trip_id',CFG.TRIP_ID);
+    if(error) throw error;
+    (data||[]).forEach(r=>{ state[r.kind]=state[r.kind]||{}; state[r.kind][r.k]=r.v; });
+    sb.channel('trip').on('postgres_changes',{event:'*',schema:'public',table:'mtlqc_items',filter:'trip_id=eq.'+CFG.TRIP_ID},payload=>{
+      const r=payload.new; if(r&&r.kind){ state[r.kind][r.k]=r.v; renderTrip(); }
+    }).subscribe();
+  }catch(e){ sb=false; $('#tripsetup').hidden=false; }
+}
+async function put(kind,k,v){
+  state[kind][k]=v; localSave(); renderTrip();
+  if(sb){ try{ await sb.from('mtlqc_items').upsert({trip_id:CFG.TRIP_ID,kind,k,v,updated_at:new Date().toISOString()},{onConflict:'trip_id,kind,k'}); }catch(e){} }
+}
+
+const CHECKS=[['pass','Passports ×2 in the bag'],['gc','Yulia: green card + Russian passport together'],['eta','Re-check eTA guidance on canada.ca'],['jb','Reserve Joe Beef — Tuesday'],['tan','Reserve Tanière³ — Thursday'],['sun','Pick Sunday dinner (vote below!)'],['bank','Tell the credit cards you\'re traveling'],['roam','Roaming plans on — both phones'],['maps','Download offline Google Maps: MTL + QC'],['bags','Book Sunday-morning luggage storage'],['fit','Pack dressy outfits for the big dinners'],['rain','Rain layer + comfy walking shoes']];
+const VOTES=[['sun-damas','Damas','Sunday dinner'],['sun-maj','Le Majestique','Sunday dinner'],['mon-violon','Le Violon','Monday dinner'],['mon-lemeac','Leméac','Monday dinner'],['mon-plong','Le Plongeoir','Monday dinner'],['mon-jos','Joséphine','Monday dinner'],['tue-joebeef','Joe Beef','Tuesday dinner'],['tue-lux','Lux La Lumière','Tuesday dinner'],['wed-savini','Savini','Wednesday · Québec'],['wed-steak','Steak Avenue','Wednesday · Québec'],['thu-taniere','Tanière³','Thursday · Québec'],['thu-boulay','Chez Boulay','Thursday · Québec']];
+const VOPTS=[['yes','👍'],['maybe','😐'],['no','👎']];
+
+function renderTrip(){
+  // checklist
+  const cw=$('#checklist'); if(cw){ cw.innerHTML='';
+    CHECKS.forEach(([id,label])=>{
+      const cur=state.check[id]||{}; const l=document.createElement('label');
+      const c=document.createElement('input'); c.type='checkbox'; c.checked=!!cur.done;
+      const s=document.createElement('span'); s.textContent=label+(cur.done&&cur.by?'  · '+(cur.by==='M'?'Mike':'Yulia'):'');
+      c.onchange=()=>put('check',id,{done:c.checked,by:me||'?'});
+      l.append(c,s); cw.appendChild(l);
+    });
+  }
+  // votes
+  const vw=$('#votes'); if(vw){ vw.innerHTML='';
+    VOTES.forEach(([k,name,grp])=>{
+      const cur=state.vote[k]||{};
+      const row=document.createElement('div'); row.className='voterow';
+      row.innerHTML='<div class="vn">'+name+'<small>'+grp+'</small></div>';
+      ['M','Y'].forEach(p=>{
+        const col=document.createElement('div');
+        col.innerHTML='<div class="vwho">'+(p==='M'?'MIKE':'YULIA')+'</div>';
+        const bs=document.createElement('div'); bs.className='vbtns';
+        VOPTS.forEach(([val,emo])=>{
+          const b=document.createElement('button'); b.type='button'; b.textContent=emo;
+          b.setAttribute('aria-pressed',String(cur[p]===val));
+          b.onclick=()=>{ if(me!==p){ return; } const nv={...cur}; nv[p]=cur[p]===val?null:val; put('vote',k,nv); };
+          if(me!==p) b.style.cursor='default';
+          bs.appendChild(b);
+        });
+        col.appendChild(bs); row.appendChild(col);
+      });
+      vw.appendChild(row);
+    });
+  }
+  // notes
+  const nw=$('#notes'); if(nw){ const items=Object.entries(state.note).sort((a,b)=>a[0]<b[0]?1:-1).slice(0,30);
+    nw.innerHTML=items.map(([k,n])=>'<div class="exrow"><span>'+(n.by==='M'?'Mike':'Yulia')+': '+String(n.text).replace(/</g,'&lt;')+'</span></div>').join('')||'<p class="gsub">No notes yet.</p>';
+  }
+  // expenses
+  const ew=$('#exlist'); if(ew){ const items=Object.entries(state.expense).sort((a,b)=>a[0]<b[0]?1:-1);
+    ew.innerHTML=items.slice(0,40).map(([k,x])=>'<div class="exrow"><span>'+String(x.desc||'—').replace(/</g,'&lt;')+' <small style="color:var(--ink-soft)">('+(x.by==='M'?'Mike':'Yulia')+')</small></span><b>$'+Number(x.amt).toFixed(2)+'</b></div>').join('')||'<p class="gsub">Nothing logged yet.</p>';
+    const tot=items.reduce((s,[k,x])=>s+(Number(x.amt)||0),0);
+    $('#extot').innerHTML=tot?('Total: <b>$'+tot.toFixed(2)+' CAD</b>'+(window._usd?(' ≈ $'+(tot*window._usd).toFixed(0)+' USD'):'')):'';
+  }
+}
+$('#noteadd').onclick=()=>{ const t=$('#notein').value.trim(); if(!t) return; put('note',Date.now().toString(),{text:t,by:me||'?'}); $('#notein').value=''; };
+$('#exadd').onclick=()=>{ const a=parseFloat($('#examt').value); const d=$('#exdesc').value.trim(); if(!a||a<=0) return; put('expense',Date.now().toString(),{amt:a,desc:d,by:me||'?'}); $('#examt').value=''; $('#exdesc').value=''; };
+fetch('https://api.frankfurter.app/latest?from=CAD&to=USD').then(r=>r.json()).then(d=>{ window._usd=d.rates.USD; renderTrip(); }).catch(()=>{});
+localLoad();
+document.addEventListener('tabshow',e=>{ if(e.detail==='trip'){ sbInit().then(renderTrip); } });
+renderTrip();
+
+// ---------- MORE menu ----------
+$$('.mitem').forEach(b=>b.onclick=()=>{
+  const id=b.dataset.go;
+  const tabByPanel={plan:'home',bookings:'bookings',index:'index',toolkit:'toolkit'};
+  document.dispatchEvent(new CustomEvent('gotab',{detail:tabByPanel[id]}));
+});
+
+// ---------- MENU DECODER ----------
+const GLOSS=[["bavette","flank steak"],["magret de canard","duck breast"],["confit","slow-cooked in fat"],["tourtière","Québec meat pie"],["cretons","pork spread (breakfast)"],["poutine","fries, curds & gravy"],["tartare","raw minced beef/salmon"],["boudin","blood sausage"],["ris de veau","veal sweetbreads"],["foie gras","fattened duck liver"],["joue de bœuf","beef cheek"],["onglet","hanger steak"],["saumon fumé","smoked salmon"],["homard","lobster"],["crevettes","shrimp"],["pétoncles","scallops"],["huîtres","oysters"],["moules","mussels"],["morue","cod"],["flétan","halibut"],["omble","arctic char"],["chèvre","goat cheese"],["fromage en grains","cheese curds"],["escargots","snails"],["potage","creamy soup"],["velouté","silky soup"],["salade de saison","seasonal salad"],["légumes racines","root vegetables"],["champignons","mushrooms"],["gourganes","broad beans"],["érable","maple"],["tire d'érable","maple taffy"],["tarte au sucre","sugar pie"],["pouding chômeur","maple 'poor man's pudding'"],["mille-feuille","layered puff pastry"],["pain perdu","french toast"],["viennoiserie","breakfast pastries"],["saucisson","dry sausage"],["charcuterie","cured meats"],["rillettes","potted meat spread"],["canard","duck"],["cerf","venison/deer"],["bison","bison"],["pintade","guinea fowl"],["caille","quail"],["agneau","lamb"],["veau","veal"],["porc","pork"],["poulet","chicken"],["saignant","rare"],["à point","medium-rare/medium"],["bien cuit","well done"],["l'addition","the check"],["apportez votre vin","bring your own wine"],["verre de vin","glass of wine"],["pichet","pitcher"],["pression","draft beer"],["cidre","cider"],["sans alcool","non-alcoholic"],["eau plate / pétillante","still / sparkling water"]];
+function renderGloss(q){
+  const list=$('#dlist'); const needle=(q||'').toLowerCase();
+  list.innerHTML=GLOSS.filter(([f,e])=>!needle||f.toLowerCase().includes(needle)||e.toLowerCase().includes(needle))
+    .map(([f,e],i)=>'<div class="drow"><span class="fr">'+f+'</span><span class="en">'+e+'</span><button class="say" data-say="'+f.replace(/"/g,'')+'">🔊</button></div>').join('')||'<p class="gsub">No match — ask the concierge!</p>';
+  list.querySelectorAll('.say').forEach(b=>b.onclick=()=>{ try{ const u=new SpeechSynthesisUtterance(b.dataset.say); u.lang='fr-CA'; speechSynthesis.cancel(); speechSynthesis.speak(u);}catch(e){} });
+}
+$('#dsearch').oninput=e=>renderGloss(e.target.value);
+renderGloss('');
+})();
+</script>
+
 </body>
 </html>
