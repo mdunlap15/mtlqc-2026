@@ -423,6 +423,16 @@
   .voterow{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:10px 2px;border-bottom:1px dashed var(--line)}
   .voterow .vn{font-size:14.5px}
   .voterow .vn small{display:block;color:var(--ink-soft);font-size:12px}
+  #winepick{border:1px solid var(--line);border-radius:14px;background:var(--paper-2);padding:12px 14px;margin:0 0 12px}
+  #winepick .pk-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+  #winepick .pk-t{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+  #winepick .pk-x{border:1px solid var(--line);background:var(--paper);border-radius:100px;padding:4px 12px;font-family:"Space Mono",monospace;font-size:10.5px;cursor:pointer}
+  .pkrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line)}
+  .pkrow:last-child{border-bottom:0}
+  .pkrow .pn{font-size:14px;line-height:1.3}
+  .pkrow .pn small{color:var(--ink-soft)}
+  .pkrow button{flex:0 0 auto;border:1px solid rgba(23,153,138,.5);color:#0d6f63;background:var(--paper);border-radius:100px;padding:6px 13px;font-family:"Space Mono",monospace;font-size:10.5px;cursor:pointer}
+  .pkrow button:disabled{opacity:.45}
   .winecard{display:grid;grid-template-columns:64px 1fr;gap:13px;padding:13px 0;border-bottom:1px dashed var(--line)}
   .winecard.nothumb{grid-template-columns:1fr}
   .winethumb{width:64px;height:84px;object-fit:cover;border-radius:10px;border:1px solid var(--line);background:var(--paper-2)}
@@ -1316,9 +1326,11 @@
       <p class="gsub">Snap the label — the sommelier reads it, links to the vintage, the maker, and where to buy. Or type it in.</p>
       <div class="acts" style="margin-bottom:10px">
         <label class="act site" style="cursor:pointer">📷 Snap label<input id="winephoto" type="file" accept="image/*" capture="environment" hidden /></label>
+        <label class="act site" style="cursor:pointer">📄 Snap wine menu<input id="winemenu" type="file" accept="image/*" capture="environment" hidden /></label>
       </div>
       <div class="exform" style="grid-template-columns:1fr auto"><input id="winetext" type="text" placeholder="…or type: producer, wine, year" /><button id="wineadd" type="button">ID it</button></div>
       <div id="winestatus" class="wx" style="display:block;margin:4px 0 8px"></div>
+      <div id="winepick" hidden></div>
       <div id="wines"></div>
     </div>
 
@@ -1908,15 +1920,46 @@ async function identifyWine(payload, thumb){
   $('#winestatus').textContent='';
   renderWines(); toast(data.confidence==='low'?'Saved (low confidence — check it)':'Added: '+(data.producer||data.cuvee));
 }
-function downscale(file){
+function downscale(file,MAX){
   return new Promise((res,rej)=>{
-    const go=(bmp,wd,ht)=>{ const MAX=600, sc=Math.min(1,MAX/Math.max(wd,ht));
+    MAX=MAX||600;
+    const go=(bmp,wd,ht)=>{ const sc=Math.min(1,MAX/Math.max(wd,ht));
       const c=document.createElement('canvas'); c.width=Math.round(wd*sc); c.height=Math.round(ht*sc);
       c.getContext('2d').drawImage(bmp,0,0,c.width,c.height); res(c.toDataURL('image/jpeg',0.82)); };
     if(window.createImageBitmap){ createImageBitmap(file,{imageOrientation:'from-image'}).then(b=>go(b,b.width,b.height)).catch(()=>{ const i=new Image(); i.onload=()=>go(i,i.naturalWidth,i.naturalHeight); i.onerror=rej; i.src=URL.createObjectURL(file); }); }
     else { const i=new Image(); i.onload=()=>go(i,i.naturalWidth,i.naturalHeight); i.onerror=rej; i.src=URL.createObjectURL(file); }
   });
 }
+
+async function menuFlow(file){
+  $('#winestatus').textContent='📄 Reading the wine list…';
+  let img=null;
+  try{ img=await downscale(file,1100); }catch(e){ toast('Could not read that photo'); $('#winestatus').textContent=''; return; }
+  const thumb=await downscale(file,420).catch(()=>null);
+  let wines=[];
+  try{
+    const r=await fetch(CFG.CONCIERGE_URL.replace(/\/$/,'')+'/wine',{method:'POST',headers:{'Content-Type':'application/json','X-Trip-Key':CFG.TRIP_KEY||'mtlqc'},body:JSON.stringify({image:img,mode:'menu'})});
+    const j=await r.json(); wines=j.wines||[];
+  }catch(e){}
+  $('#winestatus').textContent='';
+  const pk=$('#winepick');
+  if(!wines.length){ toast('Couldn\'t read wines off that — try a closer shot'); pk.hidden=true; return; }
+  pk.hidden=false;
+  pk.innerHTML='<div class="pk-h"><span class="pk-t">'+wines.length+' wines found — tap what you had</span><button class="pk-x" type="button">Done</button></div>'
+    + wines.map((w,i)=>{
+        const label=[w.name,w.vintage].filter(Boolean).join(' ');
+        const sub=[w.region,w.style,w.price].filter(Boolean).join(' · ');
+        return '<div class="pkrow"><span class="pn">'+String(label).replace(/</g,'&lt;')+(sub?'<br><small>'+String(sub).replace(/</g,'&lt;')+'</small>':'')+'</span><button type="button" data-pk="'+i+'">＋ We had this</button></div>';
+      }).join('');
+  pk.querySelector('.pk-x').onclick=()=>{ pk.hidden=true; pk.innerHTML=''; };
+  pk.querySelectorAll('[data-pk]').forEach(b=>b.onclick=()=>{
+    const w=wines[Number(b.dataset.pk)];
+    b.disabled=true; b.textContent='✓ Added';
+    identifyWine({text:[w.name,w.vintage,w.region].filter(Boolean).join(' ')}, thumb);
+  });
+}
+$('#winemenu').addEventListener('change',e=>{ const f=e.target.files&&e.target.files[0]; if(f) menuFlow(f); e.target.value=''; });
+
 $('#winephoto').addEventListener('change',async e=>{
   const f=e.target.files&&e.target.files[0]; if(!f) return; e.target.value='';
   try{ const img=await downscale(f); identifyWine({image:img}, img); }
