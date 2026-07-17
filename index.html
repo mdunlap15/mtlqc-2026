@@ -1943,7 +1943,6 @@ $('#exadd').onclick=()=>{ const a=parseFloat($('#examt').value); const d=$('#exd
 fetch('https://api.frankfurter.app/latest?from=CAD&to=USD').then(r=>r.json()).then(d=>{ window._usd=d.rates.USD; renderTrip(); }).catch(()=>{});
 localLoad();
 document.addEventListener('tabshow',e=>{ if(['trip','vote','journal'].includes(e.detail)){ sbInit().then(renderTrip); } });
-renderTrip();
 
 
 
@@ -2152,6 +2151,7 @@ function renderGloss(q){
 }
 $('#dsearch').oninput=e=>renderGloss(e.target.value);
 renderGloss('');
+renderTrip();
 })();
 </script>
 
