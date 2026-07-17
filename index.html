@@ -234,8 +234,17 @@
     font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:18px;
     margin:0;letter-spacing:-.01em;
   }
-  .card .arrow{color:var(--ink-soft);font-size:13px;flex:0 0 auto;font-family:"Space Mono",monospace}
-  .card:hover .arrow{color:var(--cerise)}
+  .acts{display:flex;gap:8px;margin-top:12px}
+  .act{
+    font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+    padding:7px 14px;border-radius:100px;border:1px solid var(--line);
+    color:var(--ink);background:var(--paper);text-decoration:none;
+    transition:transform .12s ease, border-color .15s ease;
+  }
+  .act:active{transform:scale(.93)}
+  .act:hover{border-color:var(--ink-soft)}
+  .act.site{border-color:rgba(232,71,122,.45);color:var(--cerise)}
+  .act.site:hover{border-color:var(--cerise)}
   .card .note{margin:6px 0 0;font-size:14.5px;color:var(--ink)}
   .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px}
   .tag{
@@ -615,16 +624,16 @@
       <div class="body">
         <p>Start where the neighborhood starts — a cappuccino at the counter, then a warm bagel eaten on the sidewalk. Wander Bernard and St-Viateur and the murals down St-Laurent (the Main).</p>
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Olimpico%20124%20Rue%20Saint%20Viateur%20Ouest%20Montreal">
-            <div class="top"><h4>Café Olimpico</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Café Olimpico</h4></div>
             <p class="note">The 50-year-old Italian counter that set the Mile End coffee standard. Order a cappuccino, take it outside, watch the street.</p>
             <div class="tags"><span class="tag">Café</span><span class="tag">St-Viateur O.</span><span class="tag warm">Open daily</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=St-Viateur%20Bagel%20263%20Rue%20Saint%20Viateur%20Ouest%20Montreal">
-            <div class="top"><h4>St-Viateur Bagel</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Olimpico%20124%20Rue%20Saint%20Viateur%20Ouest%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://cafeolimpico.com/">Website ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>St-Viateur Bagel</h4></div>
             <p class="note">Hand-rolled and wood-fired, sold warm since 1957. Get a sesame straight from the oven. You'll eat it before you get home.</p>
             <div class="tags"><span class="tag">Icon</span><span class="tag">Open 24h</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=St-Viateur%20Bagel%20263%20Rue%20Saint%20Viateur%20Ouest%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.stviateurbagel.com/">Website ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -634,21 +643,21 @@
       <div class="body">
         <p>The World Cup final kicks off at 3 PM — worth building the afternoon around. Grab a spot with a crowd by about 2 to get a seat (it runs ~2 hours, longer with extra time). Three near-home options by mood:</p>
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Bruno%20Sport%20Bar%20313%20Rue%20Beaubien%20Est%20Montreal">
-            <div class="top"><h4>Bruno Sport Bar</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Bruno Sport Bar</h4></div>
             <p class="note">The crowd. A beloved Italian sports bar in Little Italy with screens everywhere — it packs out for big matches and won't take reservations, so arrive by ~1:30. The surest bet for real atmosphere.</p>
             <div class="tags"><span class="tag">Sports bar</span><span class="tag">Little Italy</span><span class="tag warm">Arrive early</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Club%20Social%20180%20Rue%20Saint-Viateur%20Ouest%20Montreal">
-            <div class="top"><h4>Café Club Social</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Bruno%20Sport%20Bar%20313%20Rue%20Beaubien%20Est%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.google.com/search?q=Bruno+Sport+Bar+Montreal">Search ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>Café Club Social</h4></div>
             <p class="note">Closest to home (~5-min walk) and the local pick — an old-school Italian café that Tourisme Montréal rates one of the best soccer spots in the city. Small, so get there early.</p>
             <div class="tags"><span class="tag">Italian café</span><span class="tag">Mile End</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Monsieur%20Ricard%204543%20Avenue%20du%20Parc%20Montreal">
-            <div class="top"><h4>Monsieur Ricard</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Club%20Social%20180%20Rue%20Saint-Viateur%20Ouest%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.google.com/search?q=Café+Club+Social+Montreal">Search ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>Monsieur Ricard</h4></div>
             <p class="note">The convenient one — right on Avenue du Parc, an 8-minute walk south. A casual Plateau bar showing the match, with a terrasse. Open from 2 PM.</p>
             <div class="tags"><span class="tag">Bar</span><span class="tag">Av du Parc</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Monsieur%20Ricard%204543%20Avenue%20du%20Parc%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.monsieurricard.com/">Website ↗</a></div></div>
         </div>
         <p style="color:var(--ink-soft);font-size:14px">If a nation you're pulling for is in it, the community bars are the party — L'Barouf (St-Denis) for France, Bar St-Laurent Frappé (the Main) for Portugal or Brazil.</p>
       </div>
@@ -659,16 +668,16 @@
       <div class="body">
         <p>Two very different first-night moods, both open on a Sunday — pick by the energy you're after:</p>
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Damas%20restaurant%201209%20Avenue%20Van%20Horne%20Outremont%20Montreal">
-            <div class="top"><h4>Damas</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Damas</h4></div>
             <p class="note">The special one, and a ~5-minute walk on Van Horne. Acclaimed upscale Syrian — charcoal grills, generous mezze, a proper wine list, a gorgeous room. The way to open the trip in style.</p>
             <div class="tags"><span class="tag">Syrian</span><span class="tag">Outremont</span><span class="tag hot">$$$$ · reserve</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Le%20Majestique%204105%20Boul%20Saint-Laurent%20Montreal">
-            <div class="top"><h4>Le Majestique</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Damas%20restaurant%201209%20Avenue%20Van%20Horne%20Outremont%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.damas.ca/">Website ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>Le Majestique</h4></div>
             <p class="note">The fun one. A buzzy, eclectic Montréal institution on the Main — excellent oysters, playful sharing plates, cocktails and natural wine. Loud, alive, open late. Short cab south.</p>
             <div class="tags"><span class="tag">Oysters · small plates</span><span class="tag">The Main</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Le%20Majestique%204105%20Boul%20Saint-Laurent%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://restobarmajestique.com/">Website ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -677,11 +686,11 @@
       <div class="when"><div class="t">Nightcap</div><div class="sub">your plan: a last glass</div></div>
       <div class="body">
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Le%20Rouge%20Gorge%201234%20Avenue%20du%20Mont-Royal%20Est%20Montreal">
-            <div class="top"><h4>Le Rouge Gorge</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Le Rouge Gorge</h4></div>
             <p class="note">Cap the night here — wine bar up front, speakeasy tucked downstairs, and open on a Sunday when half the block isn't. A short hop across the Plateau from either dinner.</p>
             <div class="tags"><span class="tag">Wine bar</span><span class="tag">Plateau</span><span class="tag warm">Open Sun</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Le%20Rouge%20Gorge%201234%20Avenue%20du%20Mont-Royal%20Est%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.rougegorge.ca/">Website ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -700,16 +709,16 @@
       <div class="body">
         <p>Good espresso first, then up Mont Royal. Take bus 11 (or the stairs if you're feeling it) to the lookout for the postcard skyline, and walk back down through the park.</p>
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Even%20267%20Rue%20Saint-Zotique%20Ouest%20Montreal">
-            <div class="top"><h4>Café Even</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Café Even</h4></div>
             <p class="note">Serious single-origin espresso in a calm room off the tourist track. Locals rate it the best cup in the city.</p>
             <div class="tags"><span class="tag">Café</span><span class="tag">St-Zotique O.</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Kondiaronk%20Belvedere%20Mount%20Royal%20Montreal">
-            <div class="top"><h4>Kondiaronk Belvédère</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Even%20267%20Rue%20Saint-Zotique%20Ouest%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.cafeeven.com/">Website ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>Kondiaronk Belvédère</h4></div>
             <p class="note">The skyline view every Montréal photo is taken from. Duck into the chalet for shade, then wander back down toward Beaver Lake.</p>
             <div class="tags"><span class="tag">View</span><span class="tag">Mont Royal</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Kondiaronk%20Belvedere%20Mount%20Royal%20Montreal">Map ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -718,11 +727,11 @@
       <div class="when"><div class="t">Lunch</div><div class="sub">come hungry</div></div>
       <div class="body">
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Jean-Talon%20Market%207070%20Avenue%20Henri-Julien%20Montreal">
-            <div class="top"><h4>Jean-Talon Market</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Jean-Talon Market</h4></div>
             <p class="note">Open-air market in Little Italy — graze cheese, shuck oysters, Québec strawberries in July. Lunch is whatever you pick up along the aisles.</p>
             <div class="tags"><span class="tag">Market</span><span class="tag">Little Italy</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Jean-Talon%20Market%207070%20Avenue%20Henri-Julien%20Montreal">Map ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -732,11 +741,11 @@
       <div class="body">
         <p>Drift the Plateau — Avenue du Mont-Royal, the murals, the indie shops and record stores. When it's time for an aperitivo, this one's built for the two of you:</p>
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Mauve%20Vin%20%26%20Fleurs%201493%20Avenue%20Laurier%20Est%20Montreal">
-            <div class="top"><h4>Mauve — Vin &amp; Fleurs</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Mauve — Vin &amp; Fleurs</h4></div>
             <p class="note">A natural-wine bar inside a flower shop on Laurier Est. Order a glass, share a board, leave with a bouquet. Hard to beat for a date.</p>
             <div class="tags"><span class="tag">Wine + flowers</span><span class="tag">Laurier E.</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Mauve%20Vin%20%26%20Fleurs%201493%20Avenue%20Laurier%20Est%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.google.com/search?q=Mauve+—+Vin+&+Fleurs+Montreal">Search ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -746,26 +755,26 @@
       <div class="body">
         <p>Four good ways to eat well on a Monday — all near home and all open tonight:</p>
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Le%20Violon%204720%20Rue%20Marquette%20Montreal">
-            <div class="top"><h4>Le Violon</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Le Violon</h4></div>
             <p class="note">The showpiece — #15 on North America's 50 Best Restaurants. Chef Danny Smiles' refined, seasonal cooking in a warm Plateau room; à la carte or tasting menu, with an approachable wine list. One of the few of this calibre open Monday — reserve ahead.</p>
             <div class="tags"><span class="tag hot">NA's 50 Best</span><span class="tag">Plateau</span><span class="tag">Reserve</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Lem%C3%A9ac%201045%20Avenue%20Laurier%20Ouest%20Outremont%20Montreal">
-            <div class="top"><h4>Leméac</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Le%20Violon%204720%20Rue%20Marquette%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://leviolon.com/">Website ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>Leméac</h4></div>
             <p class="note">A beloved French brasserie in Outremont, a short walk away. Michelin-mentioned, classic bistro cooking, a deep wine list, and polished-but-easy service. The proper sit-down dinner.</p>
             <div class="tags"><span class="tag">French brasserie</span><span class="tag">Outremont</span><span class="tag hot">Reserve</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Le%20Plongeoir%205350%20Boul%20Saint-Laurent%20Montreal">
-            <div class="top"><h4>Le Plongeoir</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Lem%C3%A9ac%201045%20Avenue%20Laurier%20Ouest%20Outremont%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.restaurantlemeac.com/">Website ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>Le Plongeoir</h4></div>
             <p class="note">The most "you," and closest to home — a tiny Mile End natural-wine bar with sharp small plates and staff who'll pour tastes before you commit. Lighter and low-key before Tuesday's big feast.</p>
             <div class="tags"><span class="tag">Natural wine</span><span class="tag">Mile End</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Joséphine%204007%20Rue%20Saint-Denis%20Montreal">
-            <div class="top"><h4>Joséphine</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Le%20Plongeoir%205350%20Boul%20Saint-Laurent%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.plongeoir.ca/">Website ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>Joséphine</h4></div>
             <p class="note">For a seafood mood — an intimate St-Denis room known for pristine oysters and a daily fish special. Date-night, and a real deal for the quality.</p>
             <div class="tags"><span class="tag">Oysters · seafood</span><span class="tag">Plateau</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Joséphine%204007%20Rue%20Saint-Denis%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.google.com/search?q=Joséphine+Montreal">Search ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -774,11 +783,11 @@
       <div class="when"><div class="t">Nightcap</div><div class="sub">into the basement</div></div>
       <div class="body">
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Di%C3%A8se%20Onze%20Live%20Jazz%20Bar%204115%20Rue%20Saint-Denis%20Montreal">
-            <div class="top"><h4>Dièse Onze</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Dièse Onze</h4></div>
             <p class="note">Candlelit basement jazz on St-Denis — close, warm, feels like a private show. (Closed Wednesdays, so tonight's the night for it.)</p>
             <div class="tags"><span class="tag">Live jazz</span><span class="tag">Plateau</span><span class="tag hot">Reserve a table</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Di%C3%A8se%20Onze%20Live%20Jazz%20Bar%204115%20Rue%20Saint-Denis%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="http://dieseonze.com/">Website ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -796,16 +805,16 @@
       <div class="when"><div class="t">Morning</div><div class="sub">down to the water</div></div>
       <div class="body">
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Notre-Dame%20Basilica%20110%20Rue%20Notre-Dame%20Ouest%20Montreal">
-            <div class="top"><h4>Notre-Dame Basilica</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Notre-Dame Basilica</h4></div>
             <p class="note">A cobalt-and-gold interior that stops you at the door. The stained glass tells Montréal's own story rather than the Bible's — go early before the crowds.</p>
             <div class="tags"><span class="tag">Landmark</span><span class="tag">Ticketed</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Vieux-Port%20de%20Montreal%20Old%20Port">
-            <div class="top"><h4>Vieux-Port &amp; Old Montréal</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Notre-Dame%20Basilica%20110%20Rue%20Notre-Dame%20Ouest%20Montreal">Map ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>Vieux-Port &amp; Old Montréal</h4></div>
             <p class="note">Wander the waterfront and Place Jacques-Cartier. Best in the softer light of late afternoon or early evening.</p>
             <div class="tags"><span class="tag">Old town</span><span class="tag">Riverside</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Vieux-Port%20de%20Montreal%20Old%20Port">Map ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -815,16 +824,16 @@
       <div class="body">
         <p>One of two moods, depending on the weather and your legs:</p>
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Montreal%20Museum%20of%20Fine%20Arts%201380%20Rue%20Sherbrooke%20Ouest">
-            <div class="top"><h4>Museum of Fine Arts</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Museum of Fine Arts</h4></div>
             <p class="note">A sprawling, easy-to-wander collection across several pavilions — a cool refuge on a hot afternoon (open till 5).</p>
             <div class="tags"><span class="tag">Art</span><span class="tag">Sherbrooke O.</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=March%C3%A9%20Atwater%20138%20Avenue%20Atwater%20Montreal">
-            <div class="top"><h4>Atwater Market + Lachine Canal</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Montreal%20Museum%20of%20Fine%20Arts%201380%20Rue%20Sherbrooke%20Ouest">Map ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>Atwater Market + Lachine Canal</h4></div>
             <p class="note">Smaller market on the canal — grab cheese, charcuterie and a coffee, then walk the water. Little Burgundy is right here for dinner.</p>
             <div class="tags"><span class="tag">Market</span><span class="tag">Canal walk</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=March%C3%A9%20Atwater%20138%20Avenue%20Atwater%20Montreal">Map ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -834,16 +843,16 @@
       <div class="body">
         <p>Make tonight the meal — the big one before you leave town. Two ways to go, both open Tuesdays:</p>
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Joe%20Beef%202491%20Rue%20Notre-Dame%20Ouest%20Montreal">
-            <div class="top"><h4>Joe Beef</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Joe Beef</h4></div>
             <p class="note">The iconic Montréal feast in Little Burgundy — lobster spaghetti, oysters, smoked-meat croquettes, a serious wine list. Reserve well ahead; this one books out.</p>
             <div class="tags"><span class="tag">$$$$</span><span class="tag hot">Reserve now</span><span class="tag">Little Burgundy</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Lux%20La%20Lumi%C3%A8re%20214%20Rue%20Bernard%20Ouest%20Montreal">
-            <div class="top"><h4>Lux La Lumière</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Joe%20Beef%202491%20Rue%20Notre-Dame%20Ouest%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.joebeef.com/">Website ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>Lux La Lumière</h4></div>
             <p class="note">Tiny, candlelit, bohemian — home cooking and a deep natural-wine list run by a hands-on owner. The romantic wildcard, and back near your Airbnb.</p>
             <div class="tags"><span class="tag">Wine-led</span><span class="tag">Bernard O.</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Lux%20La%20Lumi%C3%A8re%20214%20Rue%20Bernard%20Ouest%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.google.com/search?q=Lux+La+Lumière+Montreal">Search ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -852,16 +861,16 @@
       <div class="when"><div class="t">Nightcap</div><div class="sub">a view or a set</div></div>
       <div class="body">
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Terrasse%20Nelligan%20106%20Rue%20Saint-Paul%20Ouest%20Montreal">
-            <div class="top"><h4>Terrasse Nelligan</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Terrasse Nelligan</h4></div>
             <p class="note">Rooftop over the Old Port with a clean panorama of the river. A spritz up here as the light goes is the easy win.</p>
             <div class="tags"><span class="tag">Rooftop</span><span class="tag">Old Montréal</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Upstairs%20Jazz%20Bar%20%26%20Grill%201254%20Rue%20Mackay%20Montreal">
-            <div class="top"><h4>Upstairs Jazz Bar &amp; Grill</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Terrasse%20Nelligan%20106%20Rue%20Saint-Paul%20Ouest%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.hotelnelligan.com/">Website ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>Upstairs Jazz Bar &amp; Grill</h4></div>
             <p class="note">Downtown club with real programming most nights. Go for the later set, order a drink, let the band run.</p>
             <div class="tags"><span class="tag">Live jazz</span><span class="tag hot">Reserve</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Upstairs%20Jazz%20Bar%20%26%20Grill%201254%20Rue%20Mackay%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.upstairsjazz.com/">Website ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -899,16 +908,16 @@
       <div class="body">
         <p>You'll pull in around noon — leave the bags at the hotel, grab a quick lunch, then wander. Start up top around the Château and the boardwalk, then drop into the lower town — the oldest streets on the continent.</p>
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Ch%C3%A2teau%20Frontenac%20Terrasse%20Dufferin%20Quebec%20City">
-            <div class="top"><h4>Château Frontenac &amp; Terrasse Dufferin</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Château Frontenac &amp; Terrasse Dufferin</h4></div>
             <p class="note">The most-photographed hotel on earth and the boardwalk beneath it, looking out over the St. Lawrence. Walk the ramparts from here.</p>
             <div class="tags"><span class="tag">Haute-Ville</span><span class="tag">River views</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Quartier%20Petit%20Champlain%20Quebec%20City">
-            <div class="top"><h4>Quartier Petit-Champlain &amp; Place-Royale</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Ch%C3%A2teau%20Frontenac%20Terrasse%20Dufferin%20Quebec%20City">Map ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>Quartier Petit-Champlain &amp; Place-Royale</h4></div>
             <p class="note">Cobblestones, tiny boutiques, the funicular down (or the Breakneck Stairs). Place-Royale is where the whole city started in 1608.</p>
             <div class="tags"><span class="tag">Basse-Ville</span><span class="tag">Walkable</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Quartier%20Petit%20Champlain%20Quebec%20City">Map ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -925,16 +934,16 @@
       <div class="body">
         <p>Keep tonight relaxed after the train — save the big blowout for tomorrow. Two solid choices near the hotel:</p>
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Savini%20Vieux-Quebec%2032%20Rue%20Sainte-Anne%20Quebec%20City">
-            <div class="top"><h4>Savini</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Savini</h4></div>
             <p class="note">Polished Italian and a good wine list on Rue Ste-Anne — the calm, grown-up choice for your first night in town.</p>
             <div class="tags"><span class="tag">Italian</span><span class="tag">Rue Ste-Anne</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Steak%20Avenue%20Vieux-Quebec%2015%20Rue%20du%20Sault-au-Matelot%20Quebec%20City">
-            <div class="top"><h4>Steak Avenue</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Savini%20Vieux-Quebec%2032%20Rue%20Sainte-Anne%20Quebec%20City">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://savini.ca/">Website ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>Steak Avenue</h4></div>
             <p class="note">A tucked-away lower-town steakhouse that locals rave about — filet, wagyu, a charming patio, near-perfect reviews.</p>
             <div class="tags"><span class="tag">Steak</span><span class="tag">Basse-Ville</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Steak%20Avenue%20Vieux-Quebec%2015%20Rue%20du%20Sault-au-Matelot%20Quebec%20City">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://steakavenue.com/">Website ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -943,16 +952,16 @@
       <div class="when"><div class="t">Nightcap</div><div class="sub">a hidden bar</div></div>
       <div class="body">
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Le%20Bijou%20Salon%20%C3%A0%20cocktails%202%20Rue%20Pierre-Olivier-Chauveau%20Quebec%20City">
-            <div class="top"><h4>Le Bijou</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Le Bijou</h4></div>
             <p class="note">A jewel-box cocktail salon that often has live jazz — check the night. Your kind of after-dinner room.</p>
             <div class="tags"><span class="tag">Cocktails</span><span class="tag warm">Jazz some nights</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Vieux%20Carr%C3%A9%2036%20Rue%20Saint-Pierre%20Quebec%20City">
-            <div class="top"><h4>Vieux Carré</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Le%20Bijou%20Salon%20%C3%A0%20cocktails%202%20Rue%20Pierre-Olivier-Chauveau%20Quebec%20City">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.google.com/search?q=Le+Bijou+Quebec+City">Search ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>Vieux Carré</h4></div>
             <p class="note">A speakeasy hidden inside a Michelin-listed restaurant — inventive cocktails and some of the best oysters in the city.</p>
             <div class="tags"><span class="tag">Speakeasy</span><span class="tag">Basse-Ville</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Vieux%20Carr%C3%A9%2036%20Rue%20Saint-Pierre%20Quebec%20City">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.google.com/search?q=Vieux+Carré+Quebec+City">Search ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -971,16 +980,16 @@
       <div class="body">
         <p>The day-trippers won't roll in till midday, so the cobblestones are yours. A proper breakfast, a slow loop of the ramparts and Terrasse Dufferin, maybe the funicular for the view.</p>
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Restaurant%20La%20Buche%2049%20Rue%20Saint-Louis%20Quebec%20City">
-            <div class="top"><h4>La Bûche</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>La Bûche</h4></div>
             <p class="note">Cabin-kitsch done right — a big Québécois breakfast of maple everything, crêpes and thick-cut bacon. Hearty and fun.</p>
             <div class="tags"><span class="tag">Québécois</span><span class="tag">Rue St-Louis</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20La%20Maison%20Smith%20Notre-Dame%20Quebec%20City">
-            <div class="top"><h4>Café La Maison Smith</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Restaurant%20La%20Buche%2049%20Rue%20Saint-Louis%20Quebec%20City">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.restolabuche.com/">Website ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>Café La Maison Smith</h4></div>
             <p class="note">Or keep it light: coffee and a croissant on the little square by the church in the lower town — the prettiest people-watching in Québec.</p>
             <div class="tags"><span class="tag">Café</span><span class="tag">Place-Royale</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20La%20Maison%20Smith%20Notre-Dame%20Quebec%20City">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.google.com/search?q=Café+La+Maison+Smith+Quebec+City">Search ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -990,16 +999,16 @@
       <div class="body">
         <p>With a full day, get beyond the postcard blocks. Two easy ways to spend it:</p>
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Plains%20of%20Abraham%20Quebec%20City">
-            <div class="top"><h4>Plains of Abraham &amp; the Citadelle</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Plains of Abraham &amp; the Citadelle</h4></div>
             <p class="note">The clifftop battlefield park turned green expanse, with the star-shaped Citadelle — still an active fort — at its edge. History, ramparts and river views; catch the changing of the guard in summer.</p>
             <div class="tags"><span class="tag">History</span><span class="tag">Haute-Ville</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Montmorency%20Falls%20Quebec%20City">
-            <div class="top"><h4>Montmorency Falls</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Plains%20of%20Abraham%20Quebec%20City">Map ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>Montmorency Falls</h4></div>
             <p class="note">A thundering waterfall taller than Niagara, 15 minutes from town — walk the suspension bridge across the top or ride the cable car. Dramatic and easy to reach.</p>
             <div class="tags"><span class="tag">Nature</span><span class="tag">15 min out</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Montmorency%20Falls%20Quebec%20City">Map ↗</a></div></div>
         </div>
         <p style="color:var(--ink-soft);font-size:14px">Wine-and-cider detour: Île d'Orléans, 20 minutes across the bridge, is a bucolic island of farms, vineyards and cider houses — a lovely half-day if you rent a car or grab a tour.</p>
       </div>
@@ -1010,16 +1019,16 @@
       <div class="body">
         <p>Tonight's the night to go all out — and staying over unlocks the table I couldn't get you before:</p>
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Tani%C3%A8re3%207%20Rue%20du%20Don-de-Dieu%20Quebec%20City">
-            <div class="top"><h4>Tanière³</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Tanière³</h4></div>
             <p class="note">#9 on North America's 50 Best Restaurants — an underground, stone-vaulted tasting-menu experience many call the best meal in Canada. It was closed the night you arrived, but it's open tonight. It books out well ahead — reserve now.</p>
             <div class="tags"><span class="tag hot">NA's 50 Best</span><span class="tag">Tasting menu</span><span class="tag hot">Reserve now</span></div>
-          </a>
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Chez%20Boulay%20bistro%20bor%C3%A9al%20Quebec%20City">
-            <div class="top"><h4>Chez Boulay</h4><span class="arrow">Map ↗</span></div>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Tani%C3%A8re3%207%20Rue%20du%20Don-de-Dieu%20Quebec%20City">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.taniere3.com/">Website ↗</a></div></div>
+          <div class="card">
+            <div class="top"><h4>Chez Boulay</h4></div>
             <p class="note">If Tanière³ is full: a warm, acclaimed "boreal" bistro built on Nordic Québec ingredients — game, foraged flavours, a strong local wine list. A destination in its own right.</p>
             <div class="tags"><span class="tag">Boreal bistro</span><span class="tag">Upper town</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Chez%20Boulay%20bistro%20bor%C3%A9al%20Quebec%20City">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://chezboulay.com/">Website ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -1038,11 +1047,11 @@
       <div class="body">
         <p>Check-out is 11 AM. Grab a proper breakfast, one final wander of the ramparts or Petit-Champlain, and pick up any edible souvenirs — maple, cider, a wedge of Québec cheese — before you roll the bags to Gare du Palais.</p>
         <div class="cards">
-          <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Paillard%201097%20Rue%20Saint-Jean%20Quebec%20City">
-            <div class="top"><h4>Paillard</h4><span class="arrow">Map ↗</span></div>
+          <div class="card">
+            <div class="top"><h4>Paillard</h4></div>
             <p class="note">A bustling café-boulangerie on Rue Saint-Jean — big windows, great coffee, croissants and macarons. An easy, cheerful last Québec breakfast near the walls.</p>
             <div class="tags"><span class="tag">Café · bakery</span><span class="tag">Rue Saint-Jean</span></div>
-          </a>
+          <div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Paillard%201097%20Rue%20Saint-Jean%20Quebec%20City">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.paillard.ca/">Website ↗</a></div></div>
         </div>
       </div>
     </div>
@@ -1070,14 +1079,29 @@
       <p class="lede">All the food, wine and music from the plan — plus a few extras — sorted so you can improvise.</p>
     </div>
 
+    
+    <div class="grp">
+      <h3>Still deciding? Pull up fresh options</h3>
+      <p class="gsub">One tap opens a live map search — new spots, current hours, today's reviews.</p>
+      <div class="acts" style="flex-wrap:wrap">
+        <a class="act site" target="_blank" rel="noopener" href="https://www.google.com/maps/search/restaurants+near+Mile+End+Montreal">Dinner near the Airbnb ↗</a>
+        <a class="act site" target="_blank" rel="noopener" href="https://www.google.com/maps/search/wine+bar+Plateau+Mile+End+Montreal">Wine bars nearby ↗</a>
+        <a class="act site" target="_blank" rel="noopener" href="https://www.google.com/maps/search/brunch+Mile+End+Montreal">Brunch nearby ↗</a>
+        <a class="act site" target="_blank" rel="noopener" href="https://www.google.com/maps/search/cocktail+bar+Montreal">Cocktail bars MTL ↗</a>
+        <a class="act site" target="_blank" rel="noopener" href="https://www.google.com/maps/search/live+music+tonight+Montreal">Live music tonight ↗</a>
+        <a class="act site" target="_blank" rel="noopener" href="https://www.google.com/maps/search/restaurants+Old+Quebec+City">Dinner in Old Québec ↗</a>
+        <a class="act site" target="_blank" rel="noopener" href="https://www.google.com/maps/search/cafe+Old+Quebec+City">Cafés in Old Québec ↗</a>
+      </div>
+    </div>
+
     <div class="grp">
       <h3>Dinners to book</h3>
       <p class="gsub">The ones worth a reservation.</p>
       <div class="cards">
-        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Joe%20Beef%202491%20Rue%20Notre-Dame%20Ouest%20Montreal"><div class="top"><h4>Joe Beef</h4><span class="arrow">Map ↗</span></div><p class="note">The Montréal feast. Little Burgundy. Books out.</p><div class="tags"><span class="tag hot">$$$$</span></div></a>
-        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Leila%20restaurant%205439%20Boul%20Saint-Laurent%20Montreal"><div class="top"><h4>Leila</h4><span class="arrow">Map ↗</span></div><p class="note">Mediterranean small plates, best table in Mile End.</p><div class="tags"><span class="tag">Mile End</span></div></a>
-        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=%C3%8Ele%20Flottante%20176%20Rue%20Saint%20Viateur%20Ouest%20Montreal"><div class="top"><h4>Île Flottante</h4><span class="arrow">Map ↗</span></div><p class="note">Blind tasting menu. Wed–Sat only.</p><div class="tags"><span class="tag">Tasting</span></div></a>
-        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Gino%27s%20Negroni%20%26%20Lasagna%204639%20Boul%20Saint-Laurent%20Montreal"><div class="top"><h4>Gino's Negroni &amp; Lasagna</h4><span class="arrow">Map ↗</span></div><p class="note">Negroni Sbagliato, then lasagna. Easy night.</p><div class="tags"><span class="tag">The Main</span></div></a>
+        <div class="card"><div class="top"><h4>Joe Beef</h4></div><p class="note">The Montréal feast. Little Burgundy. Books out.</p><div class="tags"><span class="tag hot">$$$$</span></div><div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Joe%20Beef%202491%20Rue%20Notre-Dame%20Ouest%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.joebeef.com/">Website ↗</a></div></div>
+        <div class="card"><div class="top"><h4>Leila</h4></div><p class="note">Mediterranean small plates, best table in Mile End.</p><div class="tags"><span class="tag">Mile End</span></div><div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Leila%20restaurant%205439%20Boul%20Saint-Laurent%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.google.com/search?q=Leila+Montreal">Search ↗</a></div></div>
+        <div class="card"><div class="top"><h4>Île Flottante</h4></div><p class="note">Blind tasting menu. Wed–Sat only.</p><div class="tags"><span class="tag">Tasting</span></div><div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=%C3%8Ele%20Flottante%20176%20Rue%20Saint%20Viateur%20Ouest%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://ileflottante.com/">Website ↗</a></div></div>
+        <div class="card"><div class="top"><h4>Gino's Negroni &amp; Lasagna</h4></div><p class="note">Negroni Sbagliato, then lasagna. Easy night.</p><div class="tags"><span class="tag">The Main</span></div><div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Gino%27s%20Negroni%20%26%20Lasagna%204639%20Boul%20Saint-Laurent%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.google.com/search?q=Gino's+Negroni+&+Lasagna+Montreal">Search ↗</a></div></div>
       </div>
     </div>
 
@@ -1085,10 +1109,10 @@
       <h3>Wine bars</h3>
       <p class="gsub">Mike's stretch of the map. A glass, a board, no agenda.</p>
       <div class="cards">
-        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Mauve%20Vin%20%26%20Fleurs%201493%20Avenue%20Laurier%20Est%20Montreal"><div class="top"><h4>Mauve — Vin &amp; Fleurs</h4><span class="arrow">Map ↗</span></div><p class="note">Natural wine inside a flower shop. Laurier Est.</p><div class="tags"><span class="tag">Date night</span></div></a>
-        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=La%20Buvette%20Chez%20Simone%204869%20Avenue%20du%20Parc%20Montreal"><div class="top"><h4>La Buvette Chez Simone</h4><span class="arrow">Map ↗</span></div><p class="note">The neighborhood classic — rotisserie chicken, a crowd. Closed Sun–Mon.</p><div class="tags"><span class="tag">Parc Ave</span></div></a>
-        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Bar%20Henrietta%20115%20Avenue%20Laurier%20Ouest%20Montreal"><div class="top"><h4>Bar Henrietta</h4><span class="arrow">Map ↗</span></div><p class="note">Raw fish and small plates on Laurier. Easy to linger.</p><div class="tags"><span class="tag">Laurier O.</span></div></a>
-        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caviste%20Ninja%2029%20Rue%20Beaubien%20Est%20Montreal"><div class="top"><h4>Caviste Ninja</h4><span class="arrow">Map ↗</span></div><p class="note">Tiny natural-wine cave near Beaubien — bottle + board.</p><div class="tags"><span class="tag">Little Italy</span></div></a>
+        <div class="card"><div class="top"><h4>Mauve — Vin &amp; Fleurs</h4></div><p class="note">Natural wine inside a flower shop. Laurier Est.</p><div class="tags"><span class="tag">Date night</span></div><div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Mauve%20Vin%20%26%20Fleurs%201493%20Avenue%20Laurier%20Est%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.google.com/search?q=Mauve+—+Vin+&+Fleurs+Montreal">Search ↗</a></div></div>
+        <div class="card"><div class="top"><h4>La Buvette Chez Simone</h4></div><p class="note">The neighborhood classic — rotisserie chicken, a crowd. Closed Sun–Mon.</p><div class="tags"><span class="tag">Parc Ave</span></div><div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=La%20Buvette%20Chez%20Simone%204869%20Avenue%20du%20Parc%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.google.com/search?q=La+Buvette+Chez+Simone+Montreal">Search ↗</a></div></div>
+        <div class="card"><div class="top"><h4>Bar Henrietta</h4></div><p class="note">Raw fish and small plates on Laurier. Easy to linger.</p><div class="tags"><span class="tag">Laurier O.</span></div><div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Bar%20Henrietta%20115%20Avenue%20Laurier%20Ouest%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://barhenrietta.com/">Website ↗</a></div></div>
+        <div class="card"><div class="top"><h4>Caviste Ninja</h4></div><p class="note">Tiny natural-wine cave near Beaubien — bottle + board.</p><div class="tags"><span class="tag">Little Italy</span></div><div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caviste%20Ninja%2029%20Rue%20Beaubien%20Est%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.google.com/search?q=Caviste+Ninja+Montreal">Search ↗</a></div></div>
       </div>
     </div>
 
@@ -1096,10 +1120,10 @@
       <h3>Coffee &amp; bagels</h3>
       <p class="gsub">The morning circuit.</p>
       <div class="cards">
-        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Olimpico%20124%20Rue%20Saint%20Viateur%20Ouest%20Montreal"><div class="top"><h4>Café Olimpico</h4><span class="arrow">Map ↗</span></div><p class="note">The old-school Italian counter. The standard.</p><div class="tags"><span class="tag">St-Viateur O.</span></div></a>
-        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Alphabet%205765%20Rue%20Clark%20Montreal"><div class="top"><h4>Café Alphabet</h4><span class="arrow">Map ↗</span></div><p class="note">The freddo everyone films. Bright corner, house roast.</p><div class="tags"><span class="tag">Clark</span></div></a>
-        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=St-Viateur%20Bagel%20263%20Rue%20Saint%20Viateur%20Ouest%20Montreal"><div class="top"><h4>St-Viateur Bagel</h4><span class="arrow">Map ↗</span></div><p class="note">Wood-fired since 1957. Sesame, warm, now.</p><div class="tags"><span class="tag">Icon</span></div></a>
-        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Fairmount%20Bagel%2074%20Avenue%20Fairmount%20Ouest%20Montreal"><div class="top"><h4>Fairmount Bagel</h4><span class="arrow">Map ↗</span></div><p class="note">The rival. Settle it for yourselves.</p><div class="tags"><span class="tag">Icon</span></div></a>
+        <div class="card"><div class="top"><h4>Café Olimpico</h4></div><p class="note">The old-school Italian counter. The standard.</p><div class="tags"><span class="tag">St-Viateur O.</span></div><div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Olimpico%20124%20Rue%20Saint%20Viateur%20Ouest%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://cafeolimpico.com/">Website ↗</a></div></div>
+        <div class="card"><div class="top"><h4>Café Alphabet</h4></div><p class="note">The freddo everyone films. Bright corner, house roast.</p><div class="tags"><span class="tag">Clark</span></div><div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Caf%C3%A9%20Alphabet%205765%20Rue%20Clark%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.google.com/search?q=Café+Alphabet+Montreal">Search ↗</a></div></div>
+        <div class="card"><div class="top"><h4>St-Viateur Bagel</h4></div><p class="note">Wood-fired since 1957. Sesame, warm, now.</p><div class="tags"><span class="tag">Icon</span></div><div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=St-Viateur%20Bagel%20263%20Rue%20Saint%20Viateur%20Ouest%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.stviateurbagel.com/">Website ↗</a></div></div>
+        <div class="card"><div class="top"><h4>Fairmount Bagel</h4></div><p class="note">The rival. Settle it for yourselves.</p><div class="tags"><span class="tag">Icon</span></div><div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Fairmount%20Bagel%2074%20Avenue%20Fairmount%20Ouest%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://fairmountbagel.com/">Website ↗</a></div></div>
       </div>
     </div>
 
@@ -1107,11 +1131,11 @@
       <h3>Live music &amp; late</h3>
       <p class="gsub">Something on most nights — check what's booked.</p>
       <div class="cards">
-        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Casa%20Del%20Popolo%204873%20Boul%20Saint-Laurent%20Montreal"><div class="top"><h4>Casa del Popolo</h4><span class="arrow">Map ↗</span></div><p class="note">Mile End's little room — indie &amp; experimental. Walkable.</p><div class="tags"><span class="tag">St-Laurent</span></div></a>
-        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Di%C3%A8se%20Onze%20Live%20Jazz%20Bar%204115%20Rue%20Saint-Denis%20Montreal"><div class="top"><h4>Dièse Onze</h4><span class="arrow">Map ↗</span></div><p class="note">Basement jazz, candlelit. Closed Wed.</p><div class="tags"><span class="tag">Plateau</span></div></a>
-        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Upstairs%20Jazz%20Bar%20%26%20Grill%201254%20Rue%20Mackay%20Montreal"><div class="top"><h4>Upstairs Jazz</h4><span class="arrow">Map ↗</span></div><p class="note">Downtown club, real programming, late sets.</p><div class="tags"><span class="tag">Downtown</span></div></a>
-        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Bootlegger%20Cocktail%20Bar%203481%20Boul%20Saint-Laurent%20Montreal"><div class="top"><h4>Bootlegger</h4><span class="arrow">Map ↗</span></div><p class="note">Prohibition cocktails + jazz nights + happy-hour oysters.</p><div class="tags"><span class="tag">The Main</span></div></a>
-        <a class="card" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Modavie%201%20Rue%20Saint-Paul%20Ouest%20Montreal"><div class="top"><h4>Modavie</h4><span class="arrow">Map ↗</span></div><p class="note">Old Montréal bistro with nightly jazz upstairs — dinner + set in one.</p><div class="tags"><span class="tag">Old Montréal</span></div></a>
+        <div class="card"><div class="top"><h4>Casa del Popolo</h4></div><p class="note">Mile End's little room — indie &amp; experimental. Walkable.</p><div class="tags"><span class="tag">St-Laurent</span></div><div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Casa%20Del%20Popolo%204873%20Boul%20Saint-Laurent%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.casadelpopolo.com/">Website ↗</a></div></div>
+        <div class="card"><div class="top"><h4>Dièse Onze</h4></div><p class="note">Basement jazz, candlelit. Closed Wed.</p><div class="tags"><span class="tag">Plateau</span></div><div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Di%C3%A8se%20Onze%20Live%20Jazz%20Bar%204115%20Rue%20Saint-Denis%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="http://dieseonze.com/">Website ↗</a></div></div>
+        <div class="card"><div class="top"><h4>Upstairs Jazz</h4></div><p class="note">Downtown club, real programming, late sets.</p><div class="tags"><span class="tag">Downtown</span></div><div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Upstairs%20Jazz%20Bar%20%26%20Grill%201254%20Rue%20Mackay%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://www.google.com/search?q=Upstairs+Jazz+Montreal">Search ↗</a></div></div>
+        <div class="card"><div class="top"><h4>Bootlegger</h4></div><p class="note">Prohibition cocktails + jazz nights + happy-hour oysters.</p><div class="tags"><span class="tag">The Main</span></div><div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Bootlegger%20Cocktail%20Bar%203481%20Boul%20Saint-Laurent%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://barbootlegger.com/">Website ↗</a></div></div>
+        <div class="card"><div class="top"><h4>Modavie</h4></div><p class="note">Old Montréal bistro with nightly jazz upstairs — dinner + set in one.</p><div class="tags"><span class="tag">Old Montréal</span></div><div class="acts"><a class="act" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Modavie%201%20Rue%20Saint-Paul%20Ouest%20Montreal">Map ↗</a><a class="act site" target="_blank" rel="noopener" href="https://modavie.com/">Website ↗</a></div></div>
       </div>
     </div>
   </section>
