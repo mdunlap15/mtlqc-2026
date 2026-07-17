@@ -362,6 +362,37 @@
   footer .mono{font-size:12px}
 
   :focus-visible{outline:3px solid var(--cerise);outline-offset:2px}
+
+  /* --- feature pack --- */
+  .wx{font-family:"Space Mono",monospace;font-size:12px;color:var(--ink-soft);white-space:nowrap}
+  .cwx{font-size:9.5px;line-height:1;color:var(--ink-soft);font-family:"Space Mono",monospace;margin-top:1px}
+  .chip.today{position:relative}
+  .chip.today::after{content:"";position:absolute;top:5px;right:7px;width:6px;height:6px;border-radius:50%;background:var(--cerise)}
+  #upnext{display:none;margin:0 0 18px;padding:12px 14px;border-radius:14px;background:var(--midnight);color:var(--paper);border:1px solid var(--line-dark)}
+  body[data-tab="days"] #upnext.on{display:block}
+  #upnext .un-k{font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.16em;color:var(--marigold);text-transform:uppercase}
+  #upnext .un-t{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:16px;margin-top:2px}
+  #upnext .un-s{font-size:12.5px;color:rgba(246,240,228,.75);margin-top:2px}
+  .sharebtn{display:none;margin-top:18px;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:9px 16px;border-radius:100px;border:1px solid var(--line-dark);background:rgba(255,255,255,.06);color:var(--paper);cursor:pointer}
+  .sharebtn.on{display:inline-block}
+  .sharebtn:active{transform:scale(.95)}
+  .check{margin-top:6px}
+  .check label{display:flex;gap:11px;align-items:flex-start;padding:9px 2px;border-bottom:1px dashed var(--line);cursor:pointer;font-size:14.5px}
+  .check label:last-child{border-bottom:0}
+  .check input{appearance:none;-webkit-appearance:none;flex:0 0 auto;width:21px;height:21px;margin-top:1px;border:1.5px solid var(--ink-soft);border-radius:7px;background:var(--paper-2);cursor:pointer;position:relative}
+  .check input:checked{background:var(--teal);border-color:var(--teal)}
+  .check input:checked::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700}
+  .check input:checked + span{color:var(--ink-soft);text-decoration:line-through}
+  .progress{margin:14px 0 4px}
+  .progress .pt{font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+  .progress .pt b{color:var(--teal)}
+  .pbar{height:8px;border-radius:100px;background:var(--line);overflow:hidden}
+  .pbar i{display:block;height:100%;border-radius:100px;background:linear-gradient(90deg,var(--teal),var(--marigold));transition:width .5s ease}
+  .v.code{cursor:pointer}
+  #toast{position:fixed;left:50%;transform:translateX(-50%) translateY(8px);bottom:calc(100px + env(safe-area-inset-bottom));z-index:70;background:var(--midnight);color:var(--paper);font-family:"Space Mono",monospace;font-size:12px;padding:9px 16px;border-radius:100px;border:1px solid var(--line-dark);opacity:0;pointer-events:none;transition:opacity .25s ease, transform .25s ease}
+  #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+  #a2hs{display:none;margin-top:10px;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;border-radius:100px;border:0;background:var(--marigold);color:var(--midnight);font-weight:700;cursor:pointer}
+  #a2hs.on{display:inline-block}
   /* installed-app polish */
   a,button{-webkit-tap-highlight-color:rgba(232,71,122,.18)}
   @media (display-mode: standalone){
@@ -383,27 +414,31 @@
     <p class="sub">Bagels warm off the wood fire, natural wine on Laurier, a skyline from the mountain, and — if you're game — a whole day in the old city up the river. Built for the two of you.</p>
 
     <div class="facts">
+      <span class="fact" id="tripcount" hidden></span>
       <span class="fact"><b>Sun → Fri</b> Jul 19–24</span>
       <span class="fact"><b>5</b> nights · <b>2</b> in Québec</span>
       <span class="fact"><b>Mile End</b> home base</span>
       <span class="fact"><b>Mike</b> &amp; Yulia</span>
     </div>
+    <button class="sharebtn" id="sharebtn" type="button">Share this app ↗</button>
   </div>
 </header>
 
 <header class="appchrome">
   <div class="appbar"><span class="brand">MONTRÉAL <span class="plus">+</span> QUÉBEC</span></div>
   <div class="daystrip" role="tablist" aria-label="Days">
-    <button class="chip" role="tab" aria-selected="true"  data-day="sun"><span class="dw">Sun</span><span class="dn">19</span></button>
-    <button class="chip" role="tab" aria-selected="false" data-day="mon"><span class="dw">Mon</span><span class="dn">20</span></button>
-    <button class="chip" role="tab" aria-selected="false" data-day="tue"><span class="dw">Tue</span><span class="dn">21</span></button>
-    <button class="chip" role="tab" aria-selected="false" data-day="wed"><span class="dw">Wed</span><span class="dn">22</span></button>
-    <button class="chip" role="tab" aria-selected="false" data-day="thu"><span class="dw">Thu</span><span class="dn">23</span></button>
-    <button class="chip" role="tab" aria-selected="false" data-day="fri"><span class="dw">Fri</span><span class="dn">24</span></button>
+    <button class="chip" role="tab" aria-selected="true"  data-day="sun"><span class="dw">Sun</span><span class="dn">19</span><span class="cwx" data-cwxday="sun"></span></button>
+    <button class="chip" role="tab" aria-selected="false" data-day="mon"><span class="dw">Mon</span><span class="dn">20</span><span class="cwx" data-cwxday="mon"></span></button>
+    <button class="chip" role="tab" aria-selected="false" data-day="tue"><span class="dw">Tue</span><span class="dn">21</span><span class="cwx" data-cwxday="tue"></span></button>
+    <button class="chip" role="tab" aria-selected="false" data-day="wed"><span class="dw">Wed</span><span class="dn">22</span><span class="cwx" data-cwxday="wed"></span></button>
+    <button class="chip" role="tab" aria-selected="false" data-day="thu"><span class="dw">Thu</span><span class="dn">23</span><span class="cwx" data-cwxday="thu"></span></button>
+    <button class="chip" role="tab" aria-selected="false" data-day="fri"><span class="dw">Fri</span><span class="dn">24</span><span class="cwx" data-cwxday="fri"></span></button>
   </div>
 </header>
 
 <main class="wrap">
+
+  <div id="upnext"><div class="un-k">Up next</div><div class="un-t"></div><div class="un-s"></div></div>
 
   <!-- ============ BEFORE YOU GO ============ -->
   <section class="panel is-active" id="plan" role="tabpanel">
@@ -439,10 +474,17 @@
       </div>
     </div>
 
+
+    <div class="block">
+      <div class="when"><div class="t">Checklist</div><div class="sub">ticks save on this phone</div></div>
+      <div class="body">
+        <div class="check" id="checklist"></div>
+      </div>
+    </div>
     <div class="block">
       <div class="when"><div class="t">Good to know</div></div>
       <div class="body">
-        <p><b>Money:</b> Canadian dollars; cards work everywhere; tip 15–20%. <b>Language:</b> French first — a "bonjour / merci" goes a long way, and everyone flips to English easily. <b>Getting around:</b> Mile End is walkable, the metro is quick (Laurier &amp; Rosemont stations), and BIXI bikes are all over. You'll barely need a car — the train handles Québec City (see Wednesday).</p>
+        <p><b>Money:</b> Canadian dollars; cards and tap work everywhere; the terminal will prompt for tip — 15–20% is standard (menu prices don't include the ~15% sales tax). <b>Language:</b> French first — a "bonjour / merci" goes a long way, and everyone flips to English easily. Handy five: <i>Bonjour</i> (hello) · <i>Merci</i> (thanks) · <i>Une table pour deux</i> (table for two) · <i>L'addition, s'il vous plaît</i> (the check, please) · <i>Parlez-vous anglais?</i></p><p style="margin-top:10px"> <b>Getting around:</b> Mile End is walkable, the metro is quick (Laurier &amp; Rosemont stations), and BIXI bikes are all over. You'll barely need a car — the train handles Québec City (see Wednesday).</p>
       </div>
     </div>
   </section>
@@ -452,7 +494,9 @@
     <div class="phead">
       <div class="kicker"><span class="no">✦</span><span class="eyebrow">Your confirmations &amp; logistics</span></div>
       <h2>Bookings tracker</h2>
-      <p class="lede">Everything you've locked in, in one place — with slots for what's still to come. One down so far; the rest fills in as you book. Add details right here as they land.</p>
+      <p class="lede">Everything locked in, in one place. Flights, both stays and both trains are confirmed — the two big dinner tables are all that's left.</p>
+      <div class="progress"><div class="pt" id="ptext"></div><div class="pbar"><i id="pfill" style="width:0%"></i></div></div>
+      <div class="acts" style="margin-top:14px"><a class="act site" href="trip.ics" download="montreal-quebec-trip.ics">＋ Add whole trip to calendar</a></div>
     </div>
 
     <div class="bookings">
@@ -606,7 +650,7 @@
   <!-- ============ SUNDAY ============ -->
   <section class="panel" id="sun" role="tabpanel">
     <div class="phead">
-      <div class="kicker"><span class="no">01</span><span class="eyebrow">Sunday · Jul 19</span></div>
+      <div class="kicker"><span class="no">01</span><span class="eyebrow">Sunday · Jul 19</span><span class="wx" data-wxday="sun"></span></div>
       <h2>Land &amp; settle into Mile&nbsp;End</h2>
       <p class="lede">Day one has one fixed point — the World Cup final at 3 PM. Land around 10, stash the bags (check-in isn't until 4), ease in with a coffee and a warm bagel, then go find a crowd for the match.</p>
     </div>
@@ -699,7 +743,7 @@
   <!-- ============ MONDAY ============ -->
   <section class="panel" id="mon" role="tabpanel">
     <div class="phead">
-      <div class="kicker"><span class="no">02</span><span class="eyebrow">Monday · Jul 20</span></div>
+      <div class="kicker"><span class="no">02</span><span class="eyebrow">Monday · Jul 20</span><span class="wx" data-wxday="mon"></span></div>
       <h2>The mountain, the market, the Main</h2>
       <p class="lede">The one big view, a long graze through Little Italy, and an easy neighborhood dinner before jazz in the basement.</p>
     </div>
@@ -796,7 +840,7 @@
   <!-- ============ TUESDAY / OLD MONTRÉAL ============ -->
   <section class="panel" id="tue" role="tabpanel">
     <div class="phead">
-      <div class="kicker"><span class="no">03</span><span class="eyebrow">Tuesday · Jul 21</span></div>
+      <div class="kicker"><span class="no">03</span><span class="eyebrow">Tuesday · Jul 21</span><span class="wx" data-wxday="tue"></span></div>
       <h2>Old Montréal, art &amp; the big dinner</h2>
       <p class="lede">Cobblestones and the waterfront by day, then the meal you plan the trip around — your last Montréal night before heading up the river.</p>
     </div>
@@ -879,7 +923,7 @@
   <!-- ============ WEDNESDAY / TO QUÉBEC CITY ============ -->
   <section class="panel" id="wed" role="tabpanel">
     <div class="phead">
-      <div class="kicker"><span class="no">04</span><span class="eyebrow">Wednesday · Jul 22</span></div>
+      <div class="kicker"><span class="no">04</span><span class="eyebrow">Wednesday · Jul 22</span><span class="wx" data-wxday="wed"></span></div>
       <h2>Up the river to Québec City</h2>
       <p class="lede">You're doing this properly — two nights, not a rushed day trip. A relaxed ride up, an afternoon in the old city, and the cobblestones to yourselves once the day-trippers clear out. Québec gets all of Thursday, too.</p>
     </div>
@@ -970,7 +1014,7 @@
   <!-- ============ THURSDAY / QUÉBEC → MONTRÉAL ============ -->
   <section class="panel" id="thu" role="tabpanel">
     <div class="phead">
-      <div class="kicker"><span class="no">05</span><span class="eyebrow">Thursday · Jul 23</span></div>
+      <div class="kicker"><span class="no">05</span><span class="eyebrow">Thursday · Jul 23</span><span class="wx" data-wxday="thu"></span></div>
       <h2>A full day in Québec City</h2>
       <p class="lede">The payoff of two nights — a whole unhurried day in the old city, the morning to yourselves before the day-trippers, and the best dinner of the trip waiting at the end of it.</p>
     </div>
@@ -1037,7 +1081,7 @@
   <!-- ============ FRIDAY / FLY HOME ============ -->
   <section class="panel" id="fri" role="tabpanel">
     <div class="phead">
-      <div class="kicker"><span class="no">06</span><span class="eyebrow">Friday · Jul 24</span></div>
+      <div class="kicker"><span class="no">06</span><span class="eyebrow">Friday · Jul 24</span><span class="wx" data-wxday="fri"></span></div>
       <h2>Québec, then the evening flight home</h2>
       <p class="lede">A calm last Québec morning, the ride back to Montréal in the early afternoon, and on to the 7:44 PM flight. No rush — but a travel day rather than a lazy one, so keep an eye on the train.</p>
     </div>
@@ -1170,8 +1214,10 @@
 
 <div class="install" role="dialog" aria-label="Install this itinerary as an app">
   <button class="x" type="button" aria-label="Dismiss" onclick="document.body.classList.remove('show-install')">×</button>
-  <b>Put this on your home screen:</b> tap the <span class="icn">Share</span> button <span class="icn">(the square with the ↑)</span> in Safari, then <b>“Add to Home Screen.”</b> It'll install like an app — its own icon, full screen, one tap away.
+  <span id="hint-ios"><b>Put this on your home screen:</b> tap the Share button (the square with the ↑) in Safari, then <b>“Add to Home Screen.”</b></span><span id="hint-android" hidden><b>Install this as an app:</b> tap the ⋮ menu in Chrome, then <b>“Add to Home screen.”</b></span> Its own icon, full screen — and once installed, <b>everything works offline</b>.<br><button id="a2hs" type="button">Install app</button>
 </div>
+
+<div id="toast" role="status"></div>
 
 <script>
   // ----- Offline support (hosted) -----
@@ -1253,6 +1299,145 @@
     if(tripDay[key]){ currentTab = 'days'; currentDay = tripDay[key]; }
     render(null);
   })();
+
+  // ===== Feature pack =====
+  const DAY_KEYS = {'2026-07-19':'sun','2026-07-20':'mon','2026-07-21':'tue','2026-07-22':'wed','2026-07-23':'thu','2026-07-24':'fri'};
+  function todayKey(){ const n=new Date(); return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0'); }
+
+  // Countdown / trip status pill
+  try{
+    const el=document.getElementById('tripcount');
+    const start=new Date(2026,6,19), end=new Date(2026,6,24);
+    const now=new Date(); const d0=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+    let txt=null;
+    if(d0<start){ const n=Math.round((start-d0)/864e5); txt='<b>'+n+'</b> day'+(n===1?'':'s')+' to go'; }
+    else if(d0<=end){ const n=Math.round((d0-start)/864e5)+1; txt='<b>Day '+n+'</b> of 6'; }
+    if(txt){ el.innerHTML=txt; el.hidden=false; }
+  }catch(e){}
+
+  // Today dot on chips
+  try{ const tk=DAY_KEYS[todayKey()]; if(tk){ const c=chips.find(c=>c.dataset.day===tk); if(c) c.classList.add('today'); } }catch(e){}
+
+  // Live weather (Open-Meteo, no key). MTL for Sun–Tue+Fri, QC for Wed–Thu.
+  try{
+    const ICON={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌦️',61:'🌧️',63:'🌧️',65:'🌧️',66:'🌧️',67:'🌧️',71:'🌨️',73:'🌨️',75:'🌨️',80:'🌧️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
+    const Q='daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=America%2FToronto&start_date=2026-07-19&end_date=2026-07-24';
+    const CITY={sun:'M',mon:'M',tue:'M',wed:'Q',thu:'Q',fri:'M'};
+    Promise.all([
+      fetch('https://api.open-meteo.com/v1/forecast?latitude=45.52&longitude=-73.59&'+Q).then(r=>r.json()),
+      fetch('https://api.open-meteo.com/v1/forecast?latitude=46.81&longitude=-71.21&'+Q).then(r=>r.json())
+    ]).then(([m,q])=>{
+      const idx={sun:0,mon:1,tue:2,wed:3,thu:4,fri:5};
+      for(const day of Object.keys(idx)){
+        const src=CITY[day]==='Q'?q:m; const i=idx[day];
+        if(!src||!src.daily||src.daily.temperature_2m_max?.[i]==null) continue;
+        const hi=Math.round(src.daily.temperature_2m_max[i]), lo=Math.round(src.daily.temperature_2m_min[i]);
+        const ic=ICON[src.daily.weather_code[i]]||'🌡️';
+        const wx=document.querySelector('.wx[data-wxday="'+day+'"]');
+        if(wx) wx.textContent=ic+' '+hi+'° / '+lo+'°'+(CITY[day]==='Q'?' · QC':'');
+        const cw=document.querySelector('.cwx[data-cwxday="'+day+'"]');
+        if(cw) cw.textContent=ic+hi+'°';
+      }
+    }).catch(()=>{});
+  }catch(e){}
+
+  // Up-next ticker (during the trip, Days tab)
+  try{
+    const EV=[
+      [2026,6,19,8,19,'AA 4550 departs LGA → YUL','Lands 9:54 · stash bags, then Olimpico'],
+      [2026,6,19,13,0,'Find a seat for the final','Kickoff 3 PM — Bruno by 1:30, or Club Social'],
+      [2026,6,19,15,0,'World Cup Final kicks off','Dinner after: Damas or Le Majestique'],
+      [2026,6,19,16,0,'Airbnb check-in opens','5579 Av du Parc · lockbox 4896'],
+      [2026,6,22,8,0,'Leave the Airbnb','Train at 8:36 from Gare Centrale'],
+      [2026,6,22,8,36,'VIA #22 departs → Québec','Car 4 · seats 3A & 3B · arrive 11:47'],
+      [2026,6,22,16,0,'Le Manoir d\'Auteuil check-in','Desk closes 10 PM'],
+      [2026,6,24,11,0,'Hotel checkout','Roll bags to Gare du Palais'],
+      [2026,6,24,12,32,'VIA #37 departs → Montréal','Car 5 · seats 6C & 6D · arrive 3:54'],
+      [2026,6,24,16,45,'Head to YUL','Flight 7:44 · US pre-clearance — be there by 5'],
+      [2026,6,24,19,44,'DL 5449 departs YUL → LGA','Home 9:20 PM. Bon voyage!']
+    ].map(e=>({t:new Date(e[0],e[1],e[2],e[3],e[4]),title:e[5],sub:e[6]}));
+    const box=document.getElementById('upnext');
+    function fmt(d){ return d.toLocaleString('en-US',{weekday:'short',hour:'numeric',minute:'2-digit'}); }
+    function tick(){
+      const now=new Date();
+      if(now<new Date(2026,6,19)||now>new Date(2026,6,25)){ box.classList.remove('on'); return; }
+      const nxt=EV.find(e=>e.t>now);
+      if(!nxt){ box.classList.remove('on'); return; }
+      box.querySelector('.un-t').textContent=fmt(nxt.t)+' — '+nxt.title;
+      box.querySelector('.un-s').textContent=nxt.sub;
+      box.classList.add('on');
+    }
+    tick(); setInterval(tick,60000);
+  }catch(e){}
+
+  // Toast + tap-to-copy confirmation codes
+  function toast(msg){ try{ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('on'),1800);}catch(e){} }
+  try{
+    document.querySelectorAll('.v.code').forEach(el=>{
+      el.title='Tap to copy';
+      el.addEventListener('click',()=>{ const v=el.textContent.trim(); (navigator.clipboard?navigator.clipboard.writeText(v):Promise.reject()).then(()=>toast('Copied '+v)).catch(()=>toast(v)); });
+    });
+  }catch(e){}
+
+  // Bookings progress
+  try{
+    const ok=document.querySelectorAll('.bk-badge.ok').length;
+    const wait=document.querySelectorAll('.bk-badge.wait').length;
+    const total=ok+wait;
+    document.getElementById('ptext').innerHTML='<b>'+ok+' of '+total+'</b> locked in';
+    document.getElementById('pfill').style.width=Math.round(ok/total*100)+'%';
+  }catch(e){}
+
+  // Checklist (persists on this device)
+  try{
+    const ITEMS=[
+      ['pass','Passports ×2 in the bag'],
+      ['gc','Yulia: green card + Russian passport together'],
+      ['eta','Re-check eTA guidance on canada.ca'],
+      ['jb','Reserve Joe Beef — Tuesday'],
+      ['tan','Reserve Tanière³ — Thursday (Chez Boulay backup)'],
+      ['sun','Pick Sunday dinner: Damas or Le Majestique'],
+      ['bank','Tell the credit cards you\'re traveling'],
+      ['roam','Phone roaming plans on (both phones)'],
+      ['maps','Download offline Google Maps: Montréal + Québec'],
+      ['bags','Book Sunday-morning luggage storage'],
+      ['fit','Pack one dressy outfit each for the big dinners'],
+      ['rain','Rain layer + comfortable walking shoes']
+    ];
+    let saved={}; try{ saved=JSON.parse(localStorage.getItem('mtlqc-check')||'{}'); }catch(e){}
+    const wrap=document.getElementById('checklist');
+    ITEMS.forEach(([id,label])=>{
+      const l=document.createElement('label');
+      const c=document.createElement('input'); c.type='checkbox'; c.checked=!!saved[id];
+      const s=document.createElement('span'); s.textContent=label;
+      c.addEventListener('change',()=>{ saved[id]=c.checked; try{ localStorage.setItem('mtlqc-check',JSON.stringify(saved)); }catch(e){} });
+      l.appendChild(c); l.appendChild(s); wrap.appendChild(l);
+    });
+  }catch(e){}
+
+  // Share
+  try{
+    const sb=document.getElementById('sharebtn');
+    if(navigator.share){ sb.classList.add('on'); sb.addEventListener('click',()=>navigator.share({title:'Montréal + Québec — our trip app',url:location.href}).catch(()=>{})); }
+  }catch(e){}
+
+  // Platform-aware install banner + native install prompt (Android/Chrome)
+  try{
+    var ua2=navigator.userAgent||'';
+    var isAndroid=/Android/.test(ua2);
+    var standalone2=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+    if(isAndroid&&!standalone2){
+      document.getElementById('hint-ios').hidden=true;
+      document.getElementById('hint-android').hidden=false;
+      document.body.classList.add('show-install');
+    }
+    let deferred=null;
+    window.addEventListener('beforeinstallprompt',(e)=>{
+      e.preventDefault(); deferred=e;
+      const b=document.getElementById('a2hs'); b.classList.add('on');
+      b.onclick=()=>{ deferred.prompt(); deferred.userChoice.finally(()=>{ document.body.classList.remove('show-install'); deferred=null; }); };
+    });
+  }catch(e){}
 </script>
 </body>
 </html>

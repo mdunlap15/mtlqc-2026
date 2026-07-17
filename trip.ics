@@ -1,0 +1,112 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//MTL+QC Trip//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Montréal + Québec — Mike & Yulia
+BEGIN:VTIMEZONE
+TZID:America/Toronto
+BEGIN:DAYLIGHT
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+TZNAME:EDT
+DTSTART:19700308T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+TZNAME:EST
+DTSTART:19701101T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:mtlqc-2026-flight-out@mtlqc
+DTSTAMP:20260716T120000Z
+DTSTART;TZID=America/Toronto:20260719T081900
+DTEND;TZID=America/Toronto:20260719T095400
+SUMMARY:✈️ AA 4550 — LGA → YUL
+LOCATION:LaGuardia Airport (LGA)
+DESCRIPTION:American Eagle (Republic) · Seats 2F & 2D · Business (J) · Conf NGQLCZ. Lands ~10 AM — stash bags in Mile End\, then the day is yours.
+BEGIN:VALARM
+TRIGGER:-PT3H
+ACTION:DISPLAY
+DESCRIPTION:Leave for LGA
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:mtlqc-2026-wcfinal@mtlqc
+DTSTAMP:20260716T120000Z
+DTSTART;TZID=America/Toronto:20260719T150000
+DTEND;TZID=America/Toronto:20260719T170000
+SUMMARY:⚽ World Cup Final — grab seats by 2
+LOCATION:Bruno Sport Bar or Café Club Social, Montréal
+DESCRIPTION:Kickoff 3 PM. Bruno (Little Italy) for the big crowd — arrive ~1:30. Club Social for the walkable local vibe.
+BEGIN:VALARM
+TRIGGER:-PT90M
+ACTION:DISPLAY
+DESCRIPTION:Head to the bar for the final
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:mtlqc-2026-airbnb-in@mtlqc
+DTSTAMP:20260716T120000Z
+DTSTART;TZID=America/Toronto:20260719T160000
+DTEND;TZID=America/Toronto:20260719T163000
+SUMMARY:🏠 Airbnb check-in — Mile End
+LOCATION:5579 Av du Parc, Montréal, QC H2V 4S8
+DESCRIPTION:Authentic Vintage Apartment · Host Sam. Lockbox right of main door below the 5577 mailbox — code 4896\, turn knob ¼ clockwise & pull. Keys on green wristband\; spare set on living-room shelf. Quiet after 11 PM.
+END:VEVENT
+BEGIN:VEVENT
+UID:mtlqc-2026-via22@mtlqc
+DTSTAMP:20260716T120000Z
+DTSTART;TZID=America/Toronto:20260722T083600
+DTEND;TZID=America/Toronto:20260722T114700
+SUMMARY:🚆 VIA #22 — Montréal → Québec City
+LOCATION:Gare Centrale, Montréal
+DESCRIPTION:Car 4 · Seats 3A (Yulia\, window) & 3B (Mike\, aisle) · Economy. Leave the Airbnb by 8:00. Arrive Gare du Palais 11:47 — bags to Le Manoir d'Auteuil\, then lunch.
+BEGIN:VALARM
+TRIGGER:-PT80M
+ACTION:DISPLAY
+DESCRIPTION:Check out & leave for Gare Centrale
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:mtlqc-2026-hotel-in@mtlqc
+DTSTAMP:20260716T120000Z
+DTSTART;TZID=America/Toronto:20260722T160000
+DTEND;TZID=America/Toronto:20260722T163000
+SUMMARY:🏰 Le Manoir d'Auteuil check-in
+LOCATION:49 Rue d'Auteuil, Québec City, QC G1R 4C2
+DESCRIPTION:Superior Room · 2 nights · Hotels.com itinerary 72076835922132. Front desk closes 10 PM — no after-hours check-in.
+END:VEVENT
+BEGIN:VEVENT
+UID:mtlqc-2026-via37@mtlqc
+DTSTAMP:20260716T120000Z
+DTSTART;TZID=America/Toronto:20260724T123200
+DTEND;TZID=America/Toronto:20260724T155400
+SUMMARY:🚆 VIA #37 — Québec City → Montréal
+LOCATION:Gare du Palais, Québec City
+DESCRIPTION:Car 5 · Seats 6D (Yulia\, window) & 6C (Mike\, aisle) · Economy. Hotel checkout 11:00. Arrive Gare Centrale 3:54 PM — taxi to YUL.
+BEGIN:VALARM
+TRIGGER:-PT100M
+ACTION:DISPLAY
+DESCRIPTION:Check out — train at 12:32
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:mtlqc-2026-flight-home@mtlqc
+DTSTAMP:20260716T120000Z
+DTSTART;TZID=America/Toronto:20260724T194400
+DTEND;TZID=America/Toronto:20260724T212000
+SUMMARY:✈️ DL 5449 — YUL → LGA
+LOCATION:Montréal–Trudeau (YUL)
+DESCRIPTION:Delta Connection (Endeavor) · Seats 13D & 13C · Delta Main · Conf GXHKSM. Be at YUL by ~5 PM — US pre-clearance takes time.
+BEGIN:VALARM
+TRIGGER:-PT3H
+ACTION:DISPLAY
+DESCRIPTION:Head to YUL — pre-clearance
+END:VALARM
+END:VEVENT
+END:VCALENDAR
