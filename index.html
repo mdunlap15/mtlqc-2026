@@ -423,6 +423,12 @@
   .voterow{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:10px 2px;border-bottom:1px dashed var(--line)}
   .voterow .vn{font-size:14.5px}
   .voterow .vn small{display:block;color:var(--ink-soft);font-size:12px}
+  .vchips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
+  .vchip{font-size:13.5px;padding:8px 13px;border-radius:100px;border:1px solid var(--line);background:var(--paper-2);cursor:pointer;font-family:"Inter";transition:all .14s ease}
+  .vchip:active{transform:scale(.94)}
+  .vchip[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#fff}
+  .vchip[aria-pressed="true"]::before{content:"✓ "}
+  .vcity{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:14px 0 2px}
   .vghead{font-family:"Space Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:20px 0 4px;padding-bottom:6px;border-bottom:2px solid var(--line)}
   .vghead:first-child{margin-top:4px}
   .voterow .vn a{color:inherit;text-decoration:none;border-bottom:1.5px solid rgba(232,71,122,.5);font-weight:600}
@@ -1289,6 +1295,13 @@
       <div id="votes"></div>
     </div>
 
+    <div class="grp"><h3>Where we actually went</h3>
+      <p class="gsub">Tap what you visit as you go — the recap writes itself.</p>
+      <div class="extot" id="vsum" style="margin:0 0 10px"></div>
+      <div id="visits"></div>
+      <div class="acts" style="margin-top:14px"><button class="act site" id="recapcopy" type="button">Copy trip recap</button></div>
+    </div>
+
     <div class="grp"><h3>Notes</h3>
       <div class="exform" style="grid-template-columns:1fr auto"><input id="notein" type="text" placeholder="e.g. Damas looks amazing 😍" /><button id="noteadd" type="button">Add</button></div>
       <div id="notes"></div>
@@ -1816,6 +1829,7 @@ function renderTrip(){
   const nw=$('#notes'); if(nw){ const items=Object.entries(state.note).sort((a,b)=>a[0]<b[0]?1:-1).slice(0,30);
     nw.innerHTML=items.map(([k,n])=>'<div class="exrow"><span>'+(n.by==='M'?'Mike':'Yulia')+': '+String(n.text).replace(/</g,'&lt;')+'</span></div>').join('')||'<p class="gsub">No notes yet.</p>';
   }
+  renderVisits();
   // expenses
   const ew=$('#exlist'); if(ew){ const items=Object.entries(state.expense).sort((a,b)=>a[0]<b[0]?1:-1);
     ew.innerHTML=items.slice(0,40).map(([k,x])=>'<div class="exrow"><span>'+String(x.desc||'—').replace(/</g,'&lt;')+' <small style="color:var(--ink-soft)">('+(x.by==='M'?'Mike':'Yulia')+')</small></span><b>$'+Number(x.amt).toFixed(2)+'</b></div>').join('')||'<p class="gsub">Nothing logged yet.</p>';
@@ -1829,6 +1843,38 @@ fetch('https://api.frankfurter.app/latest?from=CAD&to=USD').then(r=>r.json()).th
 localLoad();
 document.addEventListener('tabshow',e=>{ if(e.detail==='trip'){ sbInit().then(renderTrip); } });
 renderTrip();
+
+
+// ---------- VISITED TRACKER ----------
+const VISITV = V.filter(v=>['eat','drink','cafe','see'].includes(v.cat));
+function renderVisits(){
+  const w=$('#visits'); if(!w) return;
+  state.visit=state.visit||{};
+  const groups=[['Montréal',VISITV.filter(v=>v.lat<46)],['Québec City',VISITV.filter(v=>v.lat>=46)]];
+  w.innerHTML='';
+  groups.forEach(([city,list])=>{
+    const hd=document.createElement('div'); hd.className='vcity'; hd.textContent=city; w.appendChild(hd);
+    const box=document.createElement('div'); box.className='vchips';
+    list.forEach(v=>{
+      const on=!!(state.visit[v.name]&&state.visit[v.name].done);
+      const b=document.createElement('button'); b.type='button'; b.className='vchip'; b.textContent=v.name;
+      b.setAttribute('aria-pressed',String(on));
+      b.onclick=()=>put('visit',v.name,{done:!on,by:me||'?',at:new Date().toISOString().slice(0,10)});
+      box.appendChild(b);
+    });
+    w.appendChild(box);
+  });
+  const done=VISITV.filter(v=>state.visit[v.name]&&state.visit[v.name].done).length;
+  $('#vsum').innerHTML='Visited <b>'+done+' of '+VISITV.length+'</b> spots'+(done>=VISITV.length*0.6&&done>0?' — strong showing':'');
+}
+$('#recapcopy').onclick=()=>{
+  state.visit=state.visit||{};
+  const vis=c=>VISITV.filter(v=>(c==='M'?v.lat<46:v.lat>=46)&&state.visit[v.name]&&state.visit[v.name].done).map(v=>v.name);
+  const m=vis('M'), q=vis('Q');
+  if(!m.length&&!q.length){ toast('Nothing checked off yet'); return; }
+  const txt='Montréal + Québec · Jul 19–24 2026 — where we went ('+(m.length+q.length)+' spots)\n\nMONTRÉAL:\n'+(m.map(n=>'• '+n).join('\n')||'• —')+'\n\nQUÉBEC CITY:\n'+(q.map(n=>'• '+n).join('\n')||'• —');
+  (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>toast('Recap copied — paste anywhere')).catch(()=>toast('Copy failed'));
+};
 
 // ---------- MORE menu ----------
 $$('.mitem').forEach(b=>b.onclick=()=>{
