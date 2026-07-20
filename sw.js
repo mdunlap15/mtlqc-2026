@@ -1,7 +1,7 @@
 // MTL + Québec — offline support
 // Strategy: network-first for the page itself (so edits you push go live),
 // cache-first for everything else (fonts, icons) so it all works offline.
-const CACHE = 'mtlqc-v3';
+const CACHE = 'mtlqc-v4';
 const CORE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-180.png', './trip.ics'];
 
 self.addEventListener('install', (e) => {

@@ -59,6 +59,20 @@ LOCATION:5579 Av du Parc, Montréal, QC H2V 4S8
 DESCRIPTION:Authentic Vintage Apartment · Host Sam. Lockbox right of main door below the 5577 mailbox — code 4896\, turn knob ¼ clockwise & pull. Keys on green wristband\; spare set on living-room shelf. Quiet after 11 PM.
 END:VEVENT
 BEGIN:VEVENT
+UID:mtlqc-2026-josephine@mtlqc
+DTSTAMP:20260717T120000Z
+DTSTART;TZID=America/Toronto:20260720T190000
+DTEND;TZID=America/Toronto:20260720T210000
+SUMMARY:🦪 Dinner — Joséphine
+LOCATION:4007 Rue Saint-Denis, Montréal
+DESCRIPTION:Table for 2\, 7–9 PM. Modify: https://url.nowbookit.ca/v2/41ecV63YA7Pb7
+BEGIN:VALARM
+TRIGGER:-PT45M
+ACTION:DISPLAY
+DESCRIPTION:Head to Joséphine
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:mtlqc-2026-via22@mtlqc
 DTSTAMP:20260716T120000Z
 DTSTART;TZID=America/Toronto:20260722T083600
